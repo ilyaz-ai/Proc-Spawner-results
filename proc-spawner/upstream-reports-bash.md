@@ -24,10 +24,11 @@ rules are quoted from the texts listed under "Sources".
 judgement from the wording of the standard and of the manual, and from whether bash behaves the same way elsewhere.  It
 is not a measurement.
 
-How to use the table: copy a row's command as one line and run it in a new empty directory (row 1 writes the file
+How to use the table: copy a row's command as one line and run it in bash, in a new empty directory (row 1 writes the file
 `s.sh` there).  The column "bash prints" is what that command printed on 2026-11-27 (bash 5.2.21-2ubuntu4, dash
 0.5.12-6ubuntu5, Ubuntu 24.04); the column "dash prints" is what the same command printed with every `bash --posix`
-replaced by `dash`.  Each `echo $?` prints the exit status of the command just before it.  The number of each row
+replaced by `dash`.  The output columns show standard output and standard error together, one output line per line, as a terminal
+shows them.  Each `echo $?` prints the exit status of the command just before it.  The number of each row
 links to a section with more detail and the rules quoted in full.
 
 | # | Run this, in an empty directory | bash prints | dash prints | Why it looks wrong | Snippets | Intended? |

@@ -27,7 +27,8 @@ How to use the table: copy a row's command as one line and run it in bash, in a 
 the files `t` and `p/foo` there; row 9 needs `strace`).  The column "dash prints" is what that command printed on
 2026-11-27 (dash 0.5.12-6ubuntu5, bash 5.2.21-2ubuntu4, Ubuntu 24.04); the column "bash prints" is what the same
 command printed with every `dash` replaced by `bash --posix` (bash in its POSIX mode; plain `bash` differs in rows 5
-and 6).  Each `echo $?` prints the exit status of the command just before it; `DIR` stands for the directory the
+and 6).  The output columns show standard output and standard error together, one output line per line, as a terminal
+shows them.  Each `echo $?` prints the exit status of the command just before it; `DIR` stands for the directory the
 command ran in.  In the Markdown source of the table, `\|` stands for `|`.  The number of each row links to a section
 with more detail and the rules quoted in full.
 
@@ -232,7 +233,7 @@ followed by two newlines.  It depends on timing, and is easy to see.  In 60 trie
 $ dash -c 'nosuchA | nosuchB'
 ```
 
-the two messages came out mixed 2 times in one series and 6 times in another, for example
+the two messages came out mixed between 1 and 6 times (five series of 60), for example
 
 ```
 dash: 1: dash: 1: nosuchA: not found
