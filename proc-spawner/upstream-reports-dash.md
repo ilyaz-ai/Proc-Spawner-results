@@ -9,31 +9,33 @@ from public collections, were run in dash (`dash -c TEXT`), in bash 5.2.21 (`bas
 each in a fresh directory, as an unprivileged user, for at most 5 seconds, and the results compared.  The runs are in
 this repository, <https://github.com/ilyaz-ai/Proc-Spawner-results>.  Every place where dash and bash differed was read,
 and the cases below are the ones a dialect difference does not explain.  A snippet's ID names its collection (`TL:` the
-tldr pages, `NB:` NL2Bash, `SC:` ShellCheck's test cases, `PB:` the pure bash bible) and its place there; its text is in
+tldr pages, `NB:` NL2Bash, `SC:` ShellCheck's test cases, `PB:` the pure bash bible) and where in it the snippet is (a
+file and line, an item's number, or a test's name); its text is in
 the file `samples.jsonl` of the collections
 [`proc-spawner/2026-11-22-post-0.13/`](https://github.com/ilyaz-ai/Proc-Spawner-results/tree/main/proc-spawner/2026-11-22-post-0.13)
 and
 [`proc-spawner/2026-11-26-post-0.13-rejected/`](https://github.com/ilyaz-ai/Proc-Spawner-results/tree/main/proc-spawner/2026-11-26-post-0.13-rejected).
 
 **Checked.**  Each command below was run again on 2026-11-27, in an empty directory, and printed what is shown (`$`
-starts a command; `[status N]` is its exit status).  The rules are quoted from the texts listed under "Sources".
+starts a command; `[status N]` is the exit status of that whole command line).  The rules are quoted from the texts listed under "Sources".
 
 **Intended?** is an estimate of the probability that the behaviour is deliberate, or allowed by the standard: a
 judgement from the wording of the standard and of the manual, and from whether dash behaves the same way elsewhere.  It
 is not a measurement.
 
-Run each command in an empty directory (some write small files there: `s.sh`, `t`, `p/`).  The two columns of
-output were filled by running exactly these commands on 2026-11-27 (dash 0.5.12-6ubuntu5, bash 5.2.21-2ubuntu4, Ubuntu
-24.04); `DIR` stands for that directory, and the last line of output is the exit status that `echo $?` prints.  The
-second shell's column comes from the same command with the other shell's name.  In the Markdown source of the table,
-`\|` stands for `|`.  Row 9 needs `strace`.  Each row's number links to a section with more detail and the rules
-quoted in full.
+How to use the table: copy a row's command as one line and run it in a new empty directory (rows 9 and 10 write
+the files `t` and `p/foo` there; row 9 needs `strace`).  The column "dash prints" is what that command printed on
+2026-11-27 (dash 0.5.12-6ubuntu5, bash 5.2.21-2ubuntu4, Ubuntu 24.04); the column "bash prints" is what the same
+command printed with every `dash` replaced by `bash --posix` (bash in its POSIX mode; plain `bash` differs in rows 5
+and 6).  Each `echo $?` prints the exit status of the command just before it; `DIR` stands for the directory the
+command ran in.  In the Markdown source of the table, `\|` stands for `|`.  The number of each row links to a section
+with more detail and the rules quoted in full.
 
 | # | Run this, in an empty directory | dash prints | bash prints | Why it looks wrong | Snippets | Intended? |
 |---|---|---|---|---|---|---|
 | [1](#1-a-quote-right-after--is-not-a-quote) | `dash -c 'false && echo ${x"y"}; echo ok'; echo $?` | <code>dash: 1: Syntax error: Unterminated quoted string</code><br><code>2</code> | <code>ok</code><br><code>0</code> | The `${…}` is never run, yet the whole script fails to parse. POSIX 2.3 rule 5, 2.6.2: quotes inside `${…}` are skipped over | `SC:Analytics.hs:prop_checkBadParameterSubstitution6`, `SC:Analytics.hs:prop_checkBadParameterSubstitution10` | 15% |
-| [2](#2-with-home-empty--gives-no-field) | `dash -c 'HOME=; set -- ~; echo $#'` | <code>0</code> | <code>1</code> | POSIX.1-2024 2.6.1: `~` with `HOME` empty gives one empty field | `NB:10096`, `NB:10108`, `NB:10109` and 85 more | 20% |
-| [3](#3-type-and-alias-do-not-discard---) | `dash -c 'type -- ls'; echo $?; dash -c 'alias -- a=b'; echo $?` | <code>--: not found</code><br><code>ls is /usr/bin/ls</code><br><code>127</code><br><code>alias: -- not found</code><br><code>1</code> | <code>ls is /usr/bin/ls</code><br><code>0</code><br><code>0</code> | POSIX 1.4: a utility without options discards a first `--` | `NB:8077`, `SC:Checks/ShellSupport.hs:prop_checkBashisms124` | 20% |
+| [2](#2-with-home-empty--gives-no-field) | `dash -c 'HOME=; set -- ~; echo $#'; echo $?` | <code>0</code><br><code>0</code> | <code>1</code><br><code>0</code> | POSIX.1-2024 2.6.1: `~` with `HOME` empty gives one empty field | 88 in all, among them `NB:10096`, `NB:10108`, `NB:10109` | 20% |
+| [3](#3-type-and-alias-do-not-discard---) | `dash -c 'type -- ls'; echo $?; dash -c 'alias -- a=b'; echo $?` | <code>--: not found</code><br><code>ls is /usr/bin/ls</code><br><code>127</code><br><code>alias: -- not found</code><br><code>1</code> | <code>ls is /usr/bin/ls</code><br><code>0</code><br><code>0</code> | POSIX 1.4: a utility that takes no options must discard a first `--`; `type` and `alias` take none | `NB:8077`, `SC:Checks/ShellSupport.hs:prop_checkBashisms124` | 20% |
 | [4](#4-cd-nosuch-succeeds) | `cd /tmp; dash -c 'cd nosuch/.. && pwd'; echo $?` | <code>/tmp</code><br><code>0</code> | <code>bash: line 1: cd: nosuch/..: No such file or directory</code><br><code>1</code> | POSIX `cd` step 8.b.i: if `nosuch` is not a directory, an error and nothing more | `SC:Analytics.hs:prop_checkUncheckedPopd13` | 30% |
 | [5](#5-kill--l-lists-0-and-kill--l-0-refuses-it) | `dash -c 'kill -l \| head -n 2 \| cut -c 1-20; kill -l 0'; echo $?` | <code>0</code><br><code>HUP</code><br><code>dash: 1: kill: invalid signal number or exit status: 0</code><br><code>2</code> | <code>HUP INT QUIT ILL TRA</code><br><code>EXIT</code><br><code>0</code> | `0` is not a signal name, and dash refuses to name it. POSIX `kill -l`; dash's manual | `TL:common/kill.md:13`, `TL:linux/kill.md:13` | 35% |
 | [6](#6--without-an-operand-succeeds) | `dash -c '.; echo after'; echo $?` | <code>after</code><br><code>0</code> | <code>bash: line 1: .: filename argument required</code><br><code>.: usage: . filename [arguments]</code><br><code>2</code> | POSIX `dot`: the file operand is required; 2.8.1: a special built-in's error ends a non-interactive shell | `TL:common/regex.md:10` | 40% |
@@ -224,20 +226,20 @@ completion fish | source` recorded this standard error:
 /usr/bin/dash: 1: /usr/bin/dash: 1: gcrane: not foundsource: not found
 ```
 
-followed by two newlines.  It depends on timing, and is easy to see: in 60 tries here,
+followed by two newlines.  It depends on timing, and is easy to see.  In 60 tries of
 
 ```
 $ dash -c 'nosuchA | nosuchB'
 ```
 
-printed twice
+the two messages came out mixed 2 times in one series and 6 times in another, for example
 
 ```
 dash: 1: dash: 1: nosuchA: not found
 nosuchB: not found
 ```
 
-and two whole lines the other times.  No rule;
+(the message of `nosuchB` can also come first); the other times they came out as two whole lines.  No rule;
 output quality.
 
 Snippets: `TL:linux/gcrane-completion.md:21`, `TL:linux/abbr.md:21`.  Intended: 75%.
@@ -261,7 +263,8 @@ st=127
 (`DIR` stands for the current directory.)  127 is right: XBD 8.3, PATH, is searched "until an executable file
 with the specified name and appropriate execution permissions is found", and POSIX.1-2017 2.9.1.1: "If the search is
 unsuccessful, the command shall fail with an exit status of 127".  But the message says "Permission denied", as for a
-file found and not executable (126).  bash says 126 both times.  An empty command name gets the same message.
+file found and not executable (126).  bash says 126 for the first two commands; for the empty command name `""` it
+says ": command not found", status 127.
 
 Snippets: `PB:README.md:1630` (`"$BASH"`, empty in dash), `PB:README.md:1636`, `PB:README.md:1672`,
 `PB:README.md:1682`.  Intended: 80%.
