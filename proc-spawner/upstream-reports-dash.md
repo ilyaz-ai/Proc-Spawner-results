@@ -1,51 +1,289 @@
 # Possible bugs of dash 0.5.12
 
-Where dash seems to contradict POSIX, its own manual, or itself, found while comparing it with bash on shell
-snippets taken from public collections (tldr pages, NL2Bash, ShellCheck's test cases, the pure bash and pure sh
-bibles, the bash Cookbook).  dash ran as `dash -c TEXT`, each snippet in a fresh directory, as an unprivileged user,
-for at most 5 seconds.  The runs are in this repository:
+Eleven places where dash 0.5.12 (Ubuntu's 0.5.12-6ubuntu5, Ubuntu 24.04) seems to contradict POSIX, its own manual,
+or itself.  The bash report is [`upstream-reports-bash.md`](upstream-reports-bash.md).
 
-- the 1,195 snippets that Proc-Spawner's parser rejects and on which dash and bash differ
-  ([`2026-11-26-post-0.13-rejected/`](2026-11-26-post-0.13-rejected/), every one read);
-- the runs of [`2026-11-22-post-0.13/`](2026-11-22-post-0.13/) and the records of the distribution Proc-Spawner made
-  from them: `large-subset-match.tsv` (each snippet over all its environments), `large-subset-threeway-differences.tsv`
-  and `large-subset-builtins-differences.tsv` (single commands run by both shells);
-- probes run by the distribution (`doc/large-subset/dialect-cases/cases.txt`), where a row says so.
+**Where they come from.**  The Perl module Proc::ShellSpawn, of the CPAN distribution Proc-Spawner
+(<https://github.com/ilyaz-ai/Proc-Spawner>), runs shell text itself.  To test it, 41,952 snippets of shell text, taken
+from public collections, were run in dash (`dash -c TEXT`), in bash 5.2.21 (`bash --posix -c TEXT`) and in the module,
+each in a fresh directory, as an unprivileged user, for at most 5 seconds, and the results compared.  The runs are in
+this repository, <https://github.com/ilyaz-ai/Proc-Spawner-results>.  Every place where dash and bash differed was read,
+and the cases below are the ones a dialect difference does not explain.  A snippet's ID names its collection (`TL:` the
+tldr pages, `NB:` NL2Bash, `SC:` ShellCheck's test cases, `PB:` the pure bash bible) and its place there; its text is in
+the file `samples.jsonl` of the collections
+[`proc-spawner/2026-11-22-post-0.13/`](https://github.com/ilyaz-ai/Proc-Spawner-results/tree/main/proc-spawner/2026-11-22-post-0.13)
+and
+[`proc-spawner/2026-11-26-post-0.13-rejected/`](https://github.com/ilyaz-ai/Proc-Spawner-results/tree/main/proc-spawner/2026-11-26-post-0.13-rejected).
 
-The snippet IDs name the collection a snippet comes from (`TL:` tldr, `NB:` NL2Bash, `SC:` ShellCheck's tests, `PB:`
-the pure bash bible) and its place there; each collection's `samples.jsonl` has the text.  Every command in the table
-was run again on 2026-11-27 (dash 0.5.12-6ubuntu5, bash 5.2.21-2ubuntu4, Ubuntu 24.04) and gave what is shown.  The
-quoted rules are from the texts listed under "Sources".  The last column is an estimate of the probability that the
-behaviour is intended (a deliberate choice, or one the standard allows).  The other shell's report:
-[`upstream-reports-bash.md`](upstream-reports-bash.md).
+**Checked.**  Each command below was run again on 2026-11-27, in an empty directory, and printed what is shown (`$`
+starts a command; `[status N]` is its exit status).  The rules are quoted from the texts listed under "Sources".
 
-| # | What happens | The rule, quoted | Snippets | Intended? |
-|---|---|---|---|---|
-| 1 | A quote right after `${` or `${NAME` does not open a quoted string, so the quotes after it pair wrongly and the whole text fails to parse, also where that part never runs: `false && echo ${x"y"}; echo ok` and `if false; then echo ${'x'}; fi; echo ok` give "Syntax error: Unterminated quoted string", status 2.  bash prints `ok`. | POSIX 2.3, rule 5: "if instances of expansions or quoting are found nested within the substitution, the shell shall recursively process them in the manner specified for the construct that is found."  2.6.2: "The matching closing brace shall be determined by counting brace levels, skipping over enclosed quoted strings, and command substitutions." | `SC:Analytics.hs:prop_checkBadParameterSubstitution6` (`${"bar"}`), `…10` (`${'foo'}`) | 15% |
-| 2 | With `HOME` empty, `~` alone gives no field at all: `HOME=; set -- ~; echo $#` prints 0.  bash prints 1 (one empty field). | POSIX.1-2017, 2.6.1: "The pathname resulting from tilde expansion shall be treated as if quoted to prevent it being altered by field splitting and pathname expansion."  POSIX.1-2024, 2.6.1: "If the word being expanded consists of only the <tilde> character and HOME is set to the null string, this produces an empty field (as opposed to zero fields) as the expanded word." | 88 snippets in their example environments with `HOME` empty (the ruling of `large-subset-match.tsv` that names this bug), among them `NB:10096`, `NB:10108`, `NB:10109` | 20% |
-| 3 | `type` and `alias` do not discard a first `--`: `type -- ls` prints "--: not found" and ends with 127; `alias -- a=b` says "alias: -- not found", status 1 (the alias is set).  Its `command`, `umask`, `cd`, `read` and others do discard it. | POSIX 1.4, Utility Description Defaults, OPTIONS: "Standard utilities that do not accept options, but that do accept operands, shall recognize "--" as a first argument to be discarded."  `type` and `alias`, OPTIONS: "None." (Both are regular built-ins; 2.14 lifts the rule only for special built-ins) | `NB:8077` (`type -p $0`), `SC:Checks/ShellSupport.hs:prop_checkBashisms124` (`type -p test`) | 20% |
-| 4 | `cd nosuch/..` and `cd ../../.../..` succeed (status 0), though `nosuch` and `...` do not exist.  bash fails, status 1. | POSIX `cd`, step 8.b.i: "If the preceding component does not refer (in the context of pathname resolution with symbolic links followed) to a directory, then the cd utility shall display an appropriate error message and no further steps shall be taken." | `SC:Analytics.hs:prop_checkUncheckedPopd13` (`cd ../../.../..`) | 30% |
-| 5 | `kill -l` lists `0` first among the signal names, but `kill -l 0` refuses it ("invalid signal number or exit status: 0", status 2). | POSIX `kill`, `-l`: "Write all values of signal_name supported by the implementation".  dash's manual: "List available signal names without the SIG prefix (sigspecs).  If signum specified, display just the sigspec for that signal." | `TL:common/kill.md:13`, `TL:linux/kill.md:13` | 35% |
-| 6 | `.` with no operand does nothing and returns 0.  bash --posix: "filename argument required", status 2. | POSIX `dot`, SYNOPSIS: "`. file`" (the operand is required); 2.8.1: "Special built-in utility error: shall exit" | `TL:common/regex.md:10` | 40% |
-| 7 | `trap f SIGKILL` prints "trap: SIGKILL: bad trap" without the `dash: LINE:` prefix that its other messages have (status 1 and going on are right). | none; only inconsistent with itself | `SC:Checks/Commands.hs:prop_checkNonportableSignals4`, `SC:Checks/Commands.hs:prop_checkTrapQuotes3` | 70% |
-| 8 | `[ ! -a file ]` and `[ ! -o x ]`: "unexpected operator", status 2.  `[ ! = x ]` follows the rule (status 1); bash applies it to `-a` and `-o` too (status 0). | POSIX.1-2017 `test`, 3 arguments: "If $2 is a binary primary, perform the binary test of $1 and $3."  `-a` and `-o` are binary primaries there (XSI, marked obsolescent); POSIX.1-2024: "The -a and -o binary primaries and the '(' and ')' operators have been removed." | `SC:Checks/ShellSupport.hs:prop_checkNegatedUnaryOps5`, `SC:Analytics.hs:prop_checkUnaryTestA2` | 75% |
-| 9 | A message is written in three pieces (`dash: 1: `, the text, the newline: seen with `strace`), so the messages of two commands of a pipeline can mix: the run of `gcrane completion fish \| source` recorded `dash: 1: dash: 1: gcrane: not foundsource: not found` and two newlines. | none; output quality | `TL:linux/gcrane-completion.md:21`, `TL:linux/abbr.md:21` | 75% |
-| 10 | A file found on `PATH` that is not executable: "foo: Permission denied" with status 127; the same file named by its path gives 126.  bash gives 126 both ways.  (In the snippets, an empty command name: `""` gives ": Permission denied", 127.) | XBD 8.3, PATH: searched "until an executable file with the specified name and appropriate execution permissions is found"; POSIX 2.9.1.1: "If the search is unsuccessful, the command shall fail with an exit status of 127".  So 127 is right; the message says otherwise | `PB:README.md:1630` (`"$BASH"`), `PB:README.md:1636`, `PB:README.md:1672`, `PB:README.md:1682` | 80% |
-| 11 | `type nosuchcmd` writes "nosuchcmd: not found" to standard output (status 127); so does `command -V`.  bash writes it to standard error. | POSIX `type`, STDOUT: "information about each operand in an unspecified format".  dash's manual: "Possible resolutions are: shell keyword, alias, shell builtin, command, tracked alias and not found." | `NB:5652` | 90% |
+**Intended?** is an estimate of the probability that the behaviour is deliberate, or allowed by the standard: a
+judgement from the wording of the standard and of the manual, and from whether dash behaves the same way elsewhere.  It
+is not a measurement.
 
-What was left out as intended: bash's own syntax and builtins (`[[`, `((`, arrays, `$'…'`, `<(…)`, `source`,
-`shopt`, `declare`, `pushd`, …), which dash refuses or runs as programs that are not found; options of `read`,
-`type`, `set -o` and others that only bash has; `$RANDOM` and the other variables only bash sets; brace expansion;
-the different wording of messages and the different statuses of the same error (dash usually 2, bash 1); endless
-loops that both shells run until they are stopped.
+| # | What happens | Snippets | Intended? |
+|---|---|---|---|
+| [1](#1-a-quote-right-after--is-not-a-quote) | A quote right after `${` is not paired, so a script with an invalid `${…}` fails to parse even where it never runs | `SC:Analytics.hs:prop_checkBadParameterSubstitution6`, `SC:Analytics.hs:prop_checkBadParameterSubstitution10` | 15% |
+| [2](#2-with-home-empty--gives-no-field) | With `HOME` empty, `~` gives no field instead of an empty one | `NB:10096`, `NB:10108`, `NB:10109` and 85 more | 20% |
+| [3](#3-type-and-alias-do-not-discard---) | `type` and `alias` do not discard a first `--` | `NB:8077`, `SC:Checks/ShellSupport.hs:prop_checkBashisms124` | 20% |
+| [4](#4-cd-nosuch-succeeds) | `cd nosuch/..` succeeds | `SC:Analytics.hs:prop_checkUncheckedPopd13` | 30% |
+| [5](#5-kill--l-lists-0-and-kill--l-0-refuses-it) | `kill -l` lists `0`, and `kill -l 0` refuses it | `TL:common/kill.md:13`, `TL:linux/kill.md:13` | 35% |
+| [6](#6--without-an-operand-succeeds) | `.` without an operand succeeds silently | `TL:common/regex.md:10` | 40% |
+| [7](#7-traps-message-lacks-the-shells-prefix) | `trap`'s error message lacks the `dash: LINE:` prefix | `SC:Checks/Commands.hs:prop_checkNonportableSignals4`, `SC:Checks/Commands.hs:prop_checkTrapQuotes3` | 70% |
+| [8](#8----a-file--is-an-error) | `[ ! -a file ]` is an error | `SC:Checks/ShellSupport.hs:prop_checkNegatedUnaryOps5`, `SC:Analytics.hs:prop_checkUnaryTestA2` | 75% |
+| [9](#9-a-message-is-written-in-three-pieces) | A message is written in three pieces, so messages of a pipeline can mix | `TL:linux/gcrane-completion.md:21`, `TL:linux/abbr.md:21` | 75% |
+| [10](#10-a-non-executable-file-on-path-permission-denied-with-status-127) | A non-executable file on `PATH`: "Permission denied" with status 127 | `PB:README.md:1630`, `PB:README.md:1636`, `PB:README.md:1672`, `PB:README.md:1682` | 80% |
+| [11](#11-type-writes-not-found-to-standard-output) | `type` writes "not found" to standard output | `NB:5652` | 90% |
+
+## 1. A quote right after `${` is not a quote
+
+```
+$ dash -c 'false && echo ${x"y"}; echo ok'
+dash: 1: Syntax error: Unterminated quoted string
+[status 2]
+$ dash -c "if false; then echo \${'x'}; fi; echo ok"
+dash: 1: Syntax error: Unterminated quoted string
+[status 2]
+$ bash --posix -c 'false && echo ${x"y"}; echo ok'
+ok
+[status 0]
+```
+
+The first `"` (or `'`) after `${x` is not taken as opening a quoted string; the next one then opens a string that
+runs to the end of the text.  So the whole text fails to parse, although the invalid expansion is never reached.
+
+POSIX.1-2017, 2.3 Token Recognition, rule 5: "if instances of expansions or quoting are found nested within the
+substitution, the shell shall recursively process them in the manner specified for the construct that is found."
+2.6.2 Parameter Expansion: "The matching closing brace shall be determined by counting brace levels, skipping over
+enclosed quoted strings, and command substitutions."
+
+Snippets: `SC:Analytics.hs:prop_checkBadParameterSubstitution6` (`${"bar"}`),
+`SC:Analytics.hs:prop_checkBadParameterSubstitution10` (`${'foo'}`).  Intended: 15%.
+
+## 2. With `HOME` empty, `~` gives no field
+
+```
+$ dash -c 'HOME=; set -- ~; echo $#'
+0
+[status 0]
+$ bash --posix -c 'HOME=; set -- ~; echo $#'
+1
+[status 0]
+```
+
+POSIX.1-2024, 2.6.1 Tilde Expansion: "If the word being expanded consists of only the <tilde> character and HOME is
+set to the null string, this produces an empty field (as opposed to zero fields) as the expanded word."  POSIX.1-2017
+says less, but points the same way: "The pathname resulting from tilde expansion shall be treated as if quoted to
+prevent it being altered by field splitting and pathname expansion" (a quoted empty string is an empty field).
+
+Snippets: 88, in example environments that set `HOME` empty (the record `large-subset-match.tsv` of Proc-Spawner lists
+them), among them `NB:10096`, `NB:10108`, `NB:10109`.  Intended: 20%.
+
+## 3. `type` and `alias` do not discard `--`
+
+```
+$ dash -c 'type -- ls; echo "st=$?"'
+--: not found
+ls is /usr/bin/ls
+st=127
+[status 0]
+$ dash -c 'alias -- a=b; echo "st=$?"; alias a'
+alias: -- not found
+st=1
+a='b'
+[status 0]
+$ dash -c 'command -V -- ls; echo "st=$?"'
+ls is /usr/bin/ls
+st=0
+[status 0]
+```
+
+`type` takes `--` for a name to look up, and fails (127); `alias` complains about it but sets the alias.  dash's
+`command`, `umask`, `cd` and `read` do discard a first `--`.
+
+POSIX.1-2017, 1.4 Utility Description Defaults, OPTIONS: "Standard utilities that do not accept options, but that do
+accept operands, shall recognize "--" as a first argument to be discarded."  The OPTIONS of `type` and of `alias`:
+"None."  (2.14 lifts the rule only for some special built-ins; `type` and `alias` are not special built-ins.)
+
+Snippets: `NB:8077` (`SCRIPT=$( readlink -m $( type -p $0 ))`), `SC:Checks/ShellSupport.hs:prop_checkBashisms124`
+(`type -p test`).  Both pass `-p`, which `type` need not accept; trying them showed the `--` case.  Intended: 20%.
+
+## 4. `cd nosuch/..` succeeds
+
+```
+$ dash -c 'cd /tmp && cd nosuch/.. && pwd'
+/tmp
+[status 0]
+$ bash --posix -c 'cd /tmp && cd nosuch/.. && pwd'
+bash: line 1: cd: nosuch/..: No such file or directory
+[status 1]
+```
+
+(`/tmp` has no `nosuch`.)  POSIX.1-2017, `cd`, DESCRIPTION, step 8.b (the default, logical handling of `..`): "For each
+dot-dot component, if there is a preceding component and it is neither root nor dot-dot, then: i. If the preceding
+component does not refer (in the context of pathname resolution with symbolic links followed) to a directory, then the
+cd utility shall display an appropriate error message and no further steps shall be taken."
+
+Snippet: `SC:Analytics.hs:prop_checkUncheckedPopd13` (`cd ../../.../..`, where `...` does not exist).  Intended: 30%.
+
+## 5. `kill -l` lists `0`, and `kill -l 0` refuses it
+
+```
+$ dash -c 'kill -l | head -3'
+0
+HUP
+INT
+[status 0]
+$ dash -c 'kill -l 0'
+dash: 1: kill: invalid signal number or exit status: 0
+[status 2]
+```
+
+`0` is not a signal name, and dash itself refuses to name a signal 0.  POSIX.1-2017, `kill`, `-l`: "Write all values
+of signal_name supported by the implementation, if no operand is given."  dash's manual: "List available signal names
+without the SIG prefix (sigspecs).  If signum specified, display just the sigspec for that signal."
+
+Snippets: `TL:common/kill.md:13`, `TL:linux/kill.md:13` (`kill -l`).  Intended: 35%.
+
+## 6. `.` without an operand succeeds
+
+```
+$ dash -c '.; echo "after, st=$?"'
+after, st=0
+[status 0]
+$ bash --posix -c '.; echo after'
+bash: line 1: .: filename argument required
+.: usage: . filename [arguments]
+[status 2]
+```
+
+POSIX.1-2017, `dot`, SYNOPSIS: `. file` (the operand is required; a missing one is a usage error).  2.8.1
+Consequences of Shell Errors, for a non-interactive shell: "Special built-in utility error: shall exit", with a
+diagnostic message.
+
+Snippet: `TL:common/regex.md:10` (`.`).  Intended: 40%.
+
+## 7. `trap`'s message lacks the shell's prefix
+
+```
+$ dash -c 'trap f SIGKILL; echo "st=$?"; local'
+trap: SIGKILL: bad trap
+st=1
+dash: 1: local: not in a function
+[status 2]
+```
+
+The other messages start with the shell's name and the line number (`dash: 1:`); this one does not.  The status 1
+and going on after it are right.  No rule; only inconsistent with the rest of dash.
+
+Snippets: `SC:Checks/Commands.hs:prop_checkNonportableSignals4` (`trap f SIGKILL`),
+`SC:Checks/Commands.hs:prop_checkTrapQuotes3`.  Intended: 70%.
+
+## 8. `[ ! -a file ]` is an error
+
+```
+$ dash -c '[ ! -a file ]; echo "st=$?"; [ ! = x ]; echo "st=$?"'
+dash: 1: [: -a: unexpected operator
+st=2
+st=1
+[status 0]
+$ bash --posix -c '[ ! -a file ]; echo "st=$?"'
+st=0
+[status 0]
+```
+
+POSIX.1-2017, `test`, 3 arguments: "If $2 is a binary primary, perform the binary test of $1 and $3."  dash does so for
+`[ ! = x ]` (the strings `!` and `x` differ: 1), but not for `-a` (and `-o`), which are binary primaries there (XSI,
+marked obsolescent); bash gives 0 (`!` and `file` are both non-empty).  POSIX.1-2024, `test`: "The -a and -o binary
+primaries and the '(' and ')' operators have been removed", so by 2024 the result is unspecified.
+
+Snippets: `SC:Checks/ShellSupport.hs:prop_checkNegatedUnaryOps5`, `SC:Analytics.hs:prop_checkUnaryTestA2`.
+Intended: 75%.
+
+## 9. A message is written in three pieces
+
+```
+$ strace -e trace=write -o trace.txt dash -c nosuchcmd1 2>/dev/null; grep '^write' trace.txt
+write(2, "dash: 1: ", 9)                = 9
+write(2, "nosuchcmd1: not found", 21)   = 21
+write(2, "\n", 1)                       = 1
+```
+
+So when two commands of a pipeline fail at the same moment, their messages can mix.  The run of the snippet `gcrane
+completion fish | source` recorded this standard error:
+
+```
+/usr/bin/dash: 1: /usr/bin/dash: 1: gcrane: not foundsource: not found
+```
+
+followed by two newlines.  It depends on timing, and is easy to see: in 60 tries here,
+
+```
+$ dash -c 'nosuchA | nosuchB'
+```
+
+printed twice
+
+```
+dash: 1: dash: 1: nosuchA: not found
+nosuchB: not found
+```
+
+and two whole lines the other times.  No rule;
+output quality.
+
+Snippets: `TL:linux/gcrane-completion.md:21`, `TL:linux/abbr.md:21`.  Intended: 75%.
+
+## 10. A non-executable file on `PATH`: "Permission denied" with status 127
+
+```
+$ mkdir p && printf 'echo hi\n' > p/foo && chmod 644 p/foo
+$ dash -c 'PATH=$PWD/p; foo; echo "st=$?"; $PWD/p/foo; echo "st=$?"'
+dash: 1: foo: Permission denied
+st=127
+dash: 1: /tmp/repro/p/foo: Permission denied
+st=126
+[status 0]
+$ dash -c '""; echo "st=$?"'
+dash: 1: : Permission denied
+st=127
+[status 0]
+```
+
+(`/tmp/repro` stands for the current directory.)  127 is right: XBD 8.3, PATH, is searched "until an executable file
+with the specified name and appropriate execution permissions is found", and POSIX.1-2017 2.9.1.1: "If the search is
+unsuccessful, the command shall fail with an exit status of 127".  But the message says "Permission denied", as for a
+file found and not executable (126).  bash says 126 both times.  An empty command name gets the same message.
+
+Snippets: `PB:README.md:1630` (`"$BASH"`, empty in dash), `PB:README.md:1636`, `PB:README.md:1672`,
+`PB:README.md:1682`.  Intended: 80%.
+
+## 11. `type` writes "not found" to standard output
+
+```
+$ dash -c 'type nosuchcmd 2>/dev/null; echo "st=$?"'
+nosuchcmd: not found
+st=127
+[status 0]
+```
+
+bash writes it to standard error.  Allowed: POSIX.1-2017, `type`, STDOUT: "The standard output of type contains
+information about each operand in an unspecified format."  dash's manual: "Possible resolutions are: shell keyword,
+alias, shell builtin, command, tracked alias and not found."  Listed because a script that captures `$(type -p x)`
+gets the text: `NB:5652` (`file $(readlink -f $(type -p rename))`).  Intended: 90%.
+
+## Not listed
+
+Differences that dash's dialect explains: bash's syntax and builtins (`[[`, `((`, arrays, `$'…'`, `<(…)`, `source`,
+`shopt`, `declare`, `pushd`, …), which dash refuses or looks up as programs; options that only bash's builtins have;
+variables only bash sets (`$RANDOM`, …); brace expansion; the wording of messages; the status of the same error (dash
+usually 2, bash 1); endless loops.
 
 ## Sources
 
 - POSIX.1-2017 (The Open Group Base Specifications Issue 7, 2018 edition), read on 2026-11-27 at
-  <https://pubs.opengroup.org/onlinepubs/9699919799/>: XCU chapter 1 (1.4), chapter 2 (2.3, 2.5.2, 2.6.1, 2.6.2, 2.8.1,
-  2.8.2, 2.9.1.1, 2.14), XBD chapter 8 (8.3); the utilities `sh`, `cd`, `kill`, `type`, `alias`, `test`, `dot` from
-  the Ubuntu package manpages-posix 2017a-2.
-- POSIX.1-2024 (Issue 8), read the same day at <https://pubs.opengroup.org/onlinepubs/9799919799/>: XCU chapter 2
-  (2.6.1, 2.8.2), the utilities `sh`, `test`, `kill`.
-- bash's manual page and info manual ("Bash POSIX Mode"), from the Ubuntu package bash 5.2.21-2ubuntu4; dash's manual
-  page, from dash 0.5.12-6ubuntu5.
+  <https://pubs.opengroup.org/onlinepubs/9699919799/>: XCU 1.4, 2.3, 2.6.1, 2.6.2, 2.8.1, 2.9.1.1, 2.14; XBD 8.3; the
+  utilities `cd`, `kill`, `type`, `alias`, `test`, `dot` (from the Ubuntu package manpages-posix 2017a-2).
+- POSIX.1-2024 (Issue 8), read the same day at <https://pubs.opengroup.org/onlinepubs/9799919799/>: XCU 2.6.1, `test`.
+- dash's manual page, from the Ubuntu package dash 0.5.12-6ubuntu5.

@@ -1,46 +1,201 @@
 # Possible bugs of bash 5.2.21
 
-Where bash seems to contradict POSIX, its own manual, or itself, found while comparing it with dash on shell
-snippets taken from public collections (tldr pages, NL2Bash, ShellCheck's test cases, the pure bash and pure sh
-bibles, the bash Cookbook).  bash ran as `bash --posix -c TEXT`, each snippet in a fresh directory, as an unprivileged user,
-for at most 5 seconds.  The runs are in this repository:
+Six places where bash 5.2.21 (Ubuntu's 5.2.21-2ubuntu4, Ubuntu 24.04) seems to contradict POSIX, its own manual, or
+itself.  The dash report is [`upstream-reports-dash.md`](upstream-reports-dash.md).
 
-- the 1,195 snippets that Proc-Spawner's parser rejects and on which dash and bash differ
-  ([`2026-11-26-post-0.13-rejected/`](2026-11-26-post-0.13-rejected/), every one read);
-- the runs of [`2026-11-22-post-0.13/`](2026-11-22-post-0.13/) and the records of the distribution Proc-Spawner made
-  from them: `large-subset-match.tsv` (each snippet over all its environments), `large-subset-threeway-differences.tsv`
-  and `large-subset-builtins-differences.tsv` (single commands run by both shells);
-- probes run by the distribution (`doc/large-subset/dialect-cases/cases.txt`), where a row says so.
+**Where they come from.**  The Perl module Proc::ShellSpawn, of the CPAN distribution Proc-Spawner
+(<https://github.com/ilyaz-ai/Proc-Spawner>), runs shell text itself.  To test it, 41,952 snippets of shell text, taken
+from public collections, were run in bash in its POSIX mode (`bash --posix -c TEXT`), in dash 0.5.12 (`dash -c TEXT`)
+and in the module, each in a fresh directory, as an unprivileged user, for at most 5 seconds, and the results compared.
+The runs are in this repository, <https://github.com/ilyaz-ai/Proc-Spawner-results>.  Every place where bash and dash
+differed was read, and the cases below are the ones a dialect difference does not explain.  A snippet's ID names its
+collection (`NB:` NL2Bash, `SC:` ShellCheck's test cases) and its place there; its text is in the file `samples.jsonl`
+of the collections
+[`proc-spawner/2026-11-22-post-0.13/`](https://github.com/ilyaz-ai/Proc-Spawner-results/tree/main/proc-spawner/2026-11-22-post-0.13)
+and
+[`proc-spawner/2026-11-26-post-0.13-rejected/`](https://github.com/ilyaz-ai/Proc-Spawner-results/tree/main/proc-spawner/2026-11-26-post-0.13-rejected).
 
-The snippet IDs name the collection a snippet comes from (`TL:` tldr, `NB:` NL2Bash, `SC:` ShellCheck's tests, `PB:`
-the pure bash bible) and its place there; each collection's `samples.jsonl` has the text.  Every command in the table
-was run again on 2026-11-27 (dash 0.5.12-6ubuntu5, bash 5.2.21-2ubuntu4, Ubuntu 24.04) and gave what is shown.  The
-quoted rules are from the texts listed under "Sources".  The last column is an estimate of the probability that the
-behaviour is intended (a deliberate choice, or one the standard allows).  The other shell's report:
-[`upstream-reports-dash.md`](upstream-reports-dash.md).
+**Checked.**  Each command below was run again on 2026-11-27, in an empty directory, and printed what is shown (`$`
+starts a command; `[status N]` is its exit status).  All use `bash --posix`, except where `bash` alone is shown.  The
+rules are quoted from the texts listed under "Sources".
 
-| # | What happens | The rule, quoted | Snippets | Intended? |
-|---|---|---|---|---|
-| 1 | In `bash --posix`, a fatal error in a `-c` string ends the shell with status **127**: an expansion error (`${x?}`, `set -u` with an unset variable, `$((4/0))`, a bad substitution) or a syntax error inside `$( )` (`echo a $(;) b`).  Plain bash does the same for `${x?}`, `set -u` and the syntax error.  The same text from a file, from standard input or in a subshell gives 1 (2 for the syntax error); dash gives 2 everywhere. | POSIX 2.8.2: "If a command fails during word expansion or redirection, its exit status shall be between 1 and 125 inclusive."  `sh`, EXIT STATUS: "1-125 A non-interactive shell detected an error other than command_file not found or executable, including but not limited to syntax, redirection, or variable assignment errors"; "127 A specified command_file could not be found" | `NB:4769`, `SC:Analytics.hs:prop_checkUnassignedReferences35`, `SC:Checks/Commands.hs:prop_checkExportedExpansions4`, `SC:Checks/ShellSupport.hs:prop_checkBashisms93`, `SC:Checks/ShellSupport.hs:prop_checkMultiDimensionalArrays5`, `SC:Analytics.hs:prop_checkBadParameterSubstitution1`, `…4`, `…6`, `…7`, `…8`, `…10`, `…11`, `SC:Analytics.hs:prop_checkExpansionWithRedirection3`, `SC:Analytics.hs:prop_checkUnassignedReferences28`, `SC:Analytics.hs:prop_checkUnsupported5`, `…6` | 10% |
-| 2 | In `bash --posix -c`, `shift 3; echo after` with fewer arguments and `n=1x; export "$n=2"; echo after` print an error and then `after`, status 0.  `set -o nosuch` and `unset -x` do end the shell (status 2).  dash ends the shell (status 2). | bash's manual, "Bash POSIX Mode", item 24: "If a POSIX special builtin returns an error status, a non-interactive shell exits."  POSIX 2.8.1: "Special built-in utility error: shall exit" (non-interactive shell) | probes `shiftover`, `exportbad` of the distribution's `doc/large-subset/dialect-cases/cases.txt`; in the corpus: `NB:9215` (`shift [n]`), `SC:Checks/Commands.hs:prop_checkExportedExpansions2` (`export "$foo"`), which end at the error | 15% |
-| 3 | `$(( a[$i] ))` with `i` empty prints "a[]: bad array subscript" **twice**, then expands to 0 with status 0; `(( a[$i] ))` gives 1. | none in the manual; one error gives two messages, and an error is reported while the expansion succeeds | `SC:Analytics.hs:prop_checkArithmeticDeref6` | 25% |
-| 4 | An error inside a function defined in the `-c` string is labelled `environment: line 1:` instead of the shell's name: `bash --posix -c 'f(){ nosuchcmd; }; f; nosuchcmd' myname` prints `environment: line 1: …`, then `myname: line 1: …`.  `${BASH_SOURCE[0]}` there is `environment`. | bash's manual, `-c`: "the first argument is assigned to $0 … The assignment to $0 sets the name of the shell, which is used in warning and error messages." | `SC:Analytics.hs:prop_checkUnused16b` | 30% |
-| 5 | `${a[-1]}` of an empty array prints "a: bad array subscript" and expands to nothing with status 0; the script goes on. | none (arrays are not POSIX; the manual describes negative subscripts but not this case); a message with success is inconsistent | `NB:4741` (`cd "${dirs[-1]}"`) | 70% |
-| 6 | `set -"$-"` (restoring the options) fails, because `$-` under `-c` holds `c`, which `set` refuses ("set: -c: invalid option").  dash's `$-` is empty there. | POSIX 2.5.2, `-`: "Expands to the current option flags … as specified on invocation, by the set special built-in command, or implicitly by the shell."  bash's manual says the same; nothing promises that `set` takes them back | `SC:Checks/ShellSupport.hs:prop_checkBashisms89` | 85% |
+**Intended?** is an estimate of the probability that the behaviour is deliberate, or allowed by the standard: a
+judgement from the wording of the standard and of the manual, and from whether bash behaves the same way elsewhere.  It
+is not a measurement.
 
-What was left out as intended: bash's own syntax and builtins (`[[`, `((`, arrays, `$'…'`, `<(…)`, `source`,
-`shopt`, `declare`, `pushd`, …), which dash refuses or runs as programs that are not found; options of `read`,
-`type`, `set -o` and others that only bash has; `$RANDOM` and the other variables only bash sets; brace expansion;
-the different wording of messages and the different statuses of the same error (dash usually 2, bash 1); endless
-loops that both shells run until they are stopped.
+| # | What happens | Snippets | Intended? |
+|---|---|---|---|
+| [1](#1-a-fatal-error-in--c-ends-the-shell-with-status-127) | A fatal error in a `-c` string ends the shell with status 127; the same in a file gives 1 | `NB:4769`, `SC:Analytics.hs:prop_checkUnassignedReferences35`, `SC:Checks/Commands.hs:prop_checkExportedExpansions4` and 13 more | 10% |
+| [2](#2-a-special-builtins-error-does-not-end-the-shell) | `shift 3` and `export "1x=2"` fail, and the shell goes on | probes `shiftover`, `exportbad`; `NB:9215`, `SC:Checks/Commands.hs:prop_checkExportedExpansions2` | 15% |
+| [3](#3--a-i--with-i-empty-two-messages-and-success) | `$(( a[$i] ))` with `i` empty: two messages, and success | `SC:Analytics.hs:prop_checkArithmeticDeref6` | 25% |
+| [4](#4-errors-in-a-function-are-labelled-environment) | Errors inside a function of a `-c` string are labelled `environment` | `SC:Analytics.hs:prop_checkUnused16b` | 30% |
+| [5](#5-a-1-of-an-empty-array-a-message-and-success) | `${a[-1]}` of an empty array: a message, and success | `NB:4741` | 70% |
+| [6](#6-set---cannot-restore-the-options) | `set -"$-"` cannot restore the options | `SC:Checks/ShellSupport.hs:prop_checkBashisms89` | 85% |
+
+## 1. A fatal error in `-c` ends the shell with status 127
+
+```
+$ bash --posix -c 'echo ${x?}; echo after'
+bash: line 1: x: parameter not set
+[status 127]
+$ bash --posix -c 'set -u; echo $y; echo after'
+bash: line 1: y: unbound variable
+[status 127]
+$ bash --posix -c 'echo $((4/0)); echo after'
+bash: line 1: 4/0: division by 0 (error token is "0")
+[status 127]
+$ bash --posix -c 'echo ${foo$n}; echo after'
+bash: line 1: ${foo$n}: bad substitution
+[status 127]
+$ bash --posix -c 'echo a $(;) b; echo after'
+bash: -c: line 1: syntax error near unexpected token `;'
+bash: -c: line 1: `echo a $(;) b; echo after'
+[status 127]
+```
+
+The same error elsewhere gives 1:
+
+```
+$ printf 'echo ${x?}; echo after\n' > s.sh
+$ bash --posix s.sh
+s.sh: line 1: x: parameter not set
+[status 1]
+$ bash --posix -s < s.sh
+bash: line 1: x: parameter not set
+[status 1]
+$ bash --posix -c '(echo ${x?}); echo "subshell: $?"'
+bash: line 1: x: parameter not set
+subshell: 1
+[status 0]
+```
+
+Without `--posix`, `bash -c 'echo ${x?}'` also ends with 127; `bash -c 'echo $((4/0)); echo after'` ends with 1.
+dash ends with 2 in every case above.  127 is the status of a command that is not found; here every command was
+found.
+
+POSIX.1-2017, 2.8.2 Exit Status for Commands: "If a command fails during word expansion or redirection, its exit
+status shall be between 1 and 125 inclusive."  `sh`, EXIT STATUS: "1-125 A non-interactive shell detected an error
+other than command_file not found or executable, including but not limited to syntax, redirection, or variable
+assignment errors"; "127 A specified command_file could not be found by a non-interactive shell."
+
+Snippets (16, each ending with 127 in bash): `NB:4769` (`echo $[4/0] || exit $?`),
+`SC:Analytics.hs:prop_checkUnassignedReferences35` (`echo ${arr[foo-bar]:?fail}`),
+`SC:Checks/Commands.hs:prop_checkExportedExpansions4` (`export ${foo?}`), `SC:Checks/ShellSupport.hs:prop_checkBashisms93`,
+`SC:Checks/ShellSupport.hs:prop_checkMultiDimensionalArrays5`, and the bad substitutions
+`SC:Analytics.hs:prop_checkBadParameterSubstitution1`, `…4`, `…6`, `…7`, `…8`, `…10`, `…11`,
+`SC:Analytics.hs:prop_checkExpansionWithRedirection3`, `SC:Analytics.hs:prop_checkUnassignedReferences28`,
+`SC:Analytics.hs:prop_checkUnsupported5`, `…6`.  Intended: 10%.
+
+## 2. A special builtin's error does not end the shell
+
+```
+$ bash --posix -c 'shift 3; echo after'
+bash: line 1: shift: 3: shift count out of range
+after
+[status 0]
+$ bash --posix -c 'n=1x; export "$n=2"; echo after'
+bash: line 1: export: `1x=2': not a valid identifier
+after
+[status 0]
+$ bash --posix -c 'set -o nosuch; echo after'
+bash: line 1: set: nosuch: invalid option name
+[status 2]
+```
+
+`shift` and `export` are special builtins, as `set` is; `set`'s error ends the shell, theirs do not.  dash ends the
+shell in all three.
+
+bash's manual, "Bash POSIX Mode", item 24: "If a POSIX special builtin returns an error status, a non-interactive
+shell exits."  POSIX.1-2017, 2.8.1 Consequences of Shell Errors, for a non-interactive shell: "Special built-in utility
+error: shall exit."
+
+Seen in the probes `shiftover` and `exportbad` of Proc-Spawner's `doc/large-subset/dialect-cases/cases.txt` (the two
+commands above).  The corpus snippets with such an error end at it, so they show the message but not whether the
+shell goes on: `NB:9215` (`shift [n]`), `SC:Checks/Commands.hs:prop_checkExportedExpansions2` (`export "$foo"`).
+Intended: 15%.
+
+## 3. `$(( a[$i] ))` with `i` empty: two messages, and success
+
+```
+$ bash --posix -c 'i=; echo $(( a[$i] )); echo "st=$?"'
+bash: line 1: a[]: bad array subscript
+bash: line 1: a[]: bad array subscript
+0
+st=0
+[status 0]
+$ bash --posix -c 'i=; (( a[$i] )); echo "st=$?"'
+bash: line 1: a[]: bad array subscript
+bash: line 1: a[]: bad array subscript
+st=1
+[status 0]
+```
+
+One error gives two messages, and the expansion that reports it succeeds (0), where other arithmetic errors, such as
+`$((4/0))` in item 1, end the shell.  No rule in the manual; inconsistent with the rest of bash.
+
+Snippet: `SC:Analytics.hs:prop_checkArithmeticDeref6` (`(( a[$i] ))`).  Intended: 25%.
+
+## 4. Errors in a function are labelled `environment`
+
+```
+$ bash --posix -c 'f(){ nosuchcmd; }; f; nosuchcmd' myname
+environment: line 1: nosuchcmd: command not found
+myname: line 1: nosuchcmd: command not found
+[status 127]
+$ bash --posix -c 'f(){ echo "${BASH_SOURCE[0]}"; }; f' myname
+environment
+[status 0]
+```
+
+The same error is labelled `myname` outside the function and `environment` inside it (the name bash uses for functions
+imported from the environment).  bash's manual, `-c`: "If there are arguments after the command_string, the first
+argument is assigned to $0 … The assignment to $0 sets the name of the shell, which is used in warning and error
+messages."
+
+Snippet: `SC:Analytics.hs:prop_checkUnused16b` (`f() { local -x foo; foo=42; bar; }; f`).  Intended: 30%.
+
+## 5. `${a[-1]}` of an empty array: a message, and success
+
+```
+$ bash --posix -c 'a=(); echo "[${a[-1]}]"; echo "st=$?"'
+bash: line 1: a: bad array subscript
+[]
+st=0
+[status 0]
+```
+
+An error is reported, and the expansion and the command succeed.  Arrays are not POSIX; the manual describes negative
+subscripts ("an index of -1 references the last element") but not this case.
+
+Snippet: `NB:4741` (`cd "${dirs[-1]}"`).  Intended: 70%.
+
+## 6. `set -"$-"` cannot restore the options
+
+```
+$ bash --posix -c 'echo "[$-]"; set -"$-"; echo "st=$?"'
+[hBc]
+bash: line 1: set: -c: invalid option
+set: usage: set [-abefhkmnptuvxBCEHPT] [-o option-name] [--] [-] [arg ...]
+[status 2]
+```
+
+Under `-c`, `$-` holds `c`, which `set` refuses; since `set` is a special builtin, the shell ends.  So a script that
+saves `$-` and restores it with `set` fails under `bash -c`.  (dash's `$-` is empty there: `dash -c 'echo "[$-]"'`
+prints `[]`.)  Allowed: POSIX.1-2017, 2.5.2, `-`: "Expands to the current option flags (the single-letter option names
+concatenated into a string) as specified on invocation, by the set special built-in command, or implicitly by the
+shell"; bash's manual says the same, and neither promises that `set` takes them back.
+
+Snippet: `SC:Checks/ShellSupport.hs:prop_checkBashisms89` (`opts=$-; set -"$opts"`).  Intended: 85%.
+
+## Not listed
+
+Differences that bash's own features explain: its syntax and builtins that dash lacks, options that only its builtins
+have, variables only it sets, brace expansion; the wording of messages; the status of the same error where both are
+between 1 and 125 (dash usually 2, bash 1); endless loops.
 
 ## Sources
 
 - POSIX.1-2017 (The Open Group Base Specifications Issue 7, 2018 edition), read on 2026-11-27 at
-  <https://pubs.opengroup.org/onlinepubs/9699919799/>: XCU chapter 1 (1.4), chapter 2 (2.3, 2.5.2, 2.6.1, 2.6.2, 2.8.1,
-  2.8.2, 2.9.1.1, 2.14), XBD chapter 8 (8.3); the utilities `sh`, `cd`, `kill`, `type`, `alias`, `test`, `dot` from
-  the Ubuntu package manpages-posix 2017a-2.
-- POSIX.1-2024 (Issue 8), read the same day at <https://pubs.opengroup.org/onlinepubs/9799919799/>: XCU chapter 2
-  (2.6.1, 2.8.2), the utilities `sh`, `test`, `kill`.
-- bash's manual page and info manual ("Bash POSIX Mode"), from the Ubuntu package bash 5.2.21-2ubuntu4; dash's manual
-  page, from dash 0.5.12-6ubuntu5.
+  <https://pubs.opengroup.org/onlinepubs/9699919799/>: XCU 2.5.2, 2.8.1, 2.8.2; the utility `sh` (from the Ubuntu
+  package manpages-posix 2017a-2).
+- bash's manual page and info manual ("Bash POSIX Mode"), from the Ubuntu package bash 5.2.21-2ubuntu4.
