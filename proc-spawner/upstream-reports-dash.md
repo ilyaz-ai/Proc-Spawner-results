@@ -3,8 +3,11 @@
 Eleven places where dash 0.5.12 (Ubuntu's 0.5.12-6ubuntu5, Ubuntu 24.04) seems to contradict POSIX, its own manual,
 or itself.  The bash report is [`upstream-reports-bash.md`](upstream-reports-bash.md).
 
+**Configuration** of the machine of the runs: Ubuntu's package `dash` 0.5.12-6ubuntu5 (amd64), Ubuntu 24.04, in a
+container; `uname -a`: `Linux vm 6.18.44-fc-v880 #1 SMP PREEMPT_DYNAMIC @0 x86_64 x86_64 x86_64 GNU/Linux`.  Not yet checked against the latest release of dash or its development version.
+
 **Where they come from.**  The Perl module Proc::ShellSpawn, of the CPAN distribution Proc-Spawner
-(<https://github.com/ilyaz-ai/Proc-Spawner>), runs shell text itself.  To test it, 41,952 snippets of shell text, taken
+(<https://metacpan.org/dist/Proc-Spawner>), runs shell text itself.  To test it, 41,952 snippets of shell text, taken
 from public collections, were run in dash (`dash -c TEXT`), in bash 5.2.21 (`bash --posix -c TEXT`) and in the module,
 each in a fresh directory, as an unprivileged user, for at most 5 seconds, and the results compared.  The runs are in
 this repository, <https://github.com/ilyaz-ai/Proc-Spawner-results>.  Every place where dash and bash differed was read,
@@ -87,8 +90,16 @@ set to the null string, this produces an empty field (as opposed to zero fields)
 says less, but points the same way: "The pathname resulting from tilde expansion shall be treated as if quoted to
 prevent it being altered by field splitting and pathname expansion" (a quoted empty string is an empty field).
 
-Snippets: 88, in example environments that set `HOME` empty (the record `large-subset-match.tsv` of Proc-Spawner lists
-them), among them `NB:10096`, `NB:10108`, `NB:10109`.  Intended: 20%.
+Snippets: 88, each run, among other environments, in one that sets `HOME` empty, where dash's result differed for
+this reason:
+
+<details><summary>the 88 IDs</summary>
+
+`NB:10096`, `NB:10108`, `NB:10109`, `NB:10450`, `NB:10451`, `NB:10452`, `NB:10454`, `NB:10544`, `NB:10835`, `NB:10836`, `NB:10893`, `NB:11229`, `NB:11230`, `NB:11292`, `NB:11294`, `NB:11296`, `NB:11356`, `NB:11513`, `NB:11522`, `NB:11574`, `NB:1166`, `NB:12317`, `NB:12318`, `NB:1352`, `NB:1371`, `NB:2263`, `NB:2422`, `NB:2672`, `NB:2761`, `NB:2831`, `NB:2832`, `NB:2833`, `NB:2835`, `NB:2836`, `NB:2837`, `NB:2881`, `NB:3147`, `NB:3152`, `NB:3160`, `NB:3235`, `NB:3278`, `NB:3295`, `NB:3296`, `NB:3299`, `NB:348`, `NB:3548`, `NB:3558`, `NB:3586`, `NB:3814`, `NB:3952`, `NB:4130`, `NB:4365`, `NB:4768`, `NB:5075`, `NB:5076`, `NB:5077`, `NB:5103`, `NB:52`, `NB:5298`, `NB:5398`, `NB:6297`, `NB:6578`, `NB:6608`, `NB:8172`, `NB:8955`, `NB:8960`, `NB:8964`, `NB:8965`, `NB:8966`, `NB:8998`, `SC:Analytics.hs:prop_checkUncheckedCd2`, `SC:Analytics.hs:prop_checkUncheckedCd3`, `TL:common/antibody.md:8`, `TL:common/gh-completion.md:12`, `TL:common/gh-completion.md:16`, `TL:common/gh-copilot.md:21`, `TL:common/gh-copilot.md:25`, `TL:common/kubectl-completion.md:16`, `TL:common/kubectl-completion.md:28`, `TL:common/nix.md:11`, `TL:common/npm-completion.md:12`, `TL:common/npm-completion.md:16`, `TL:common/ssh-keyscan.md:20`, `TL:common/starship-init.md:12`, `TL:common/starship-init.md:16`, `TL:common/~.md:8`, `TL:linux/conky.md:12`, `TL:linux/gcrane-completion.md:33`
+
+</details>
+
+Intended: 20%.
 
 ## 3. `type` and `alias` do not discard `--`
 

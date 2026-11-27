@@ -3,8 +3,27 @@
 Six places where bash 5.2.21 (Ubuntu's 5.2.21-2ubuntu4, Ubuntu 24.04) seems to contradict POSIX, its own manual, or
 itself.  The dash report is [`upstream-reports-dash.md`](upstream-reports-dash.md).
 
+**Configuration**, as `bashbug` (bash 5.2.21-2ubuntu4) fills it in for a report from the machine of the runs:
+
+```
+Configuration Information [Automatically generated, do not change]:
+Machine: x86_64
+OS: linux-gnu
+Compiler: gcc
+Compilation CFLAGS: -g -O2 -fno-omit-frame-pointer -mno-omit-leaf-frame-pointer -flto=auto -ffat-lto-objects -fstack-protector-strong -fstack-clash-protection -Wformat -Werror=format-security -fcf-protection -Wall
+uname output: Linux vm 6.18.44-fc-v880 #1 SMP PREEMPT_DYNAMIC @0 x86_64 x86_64 x86_64 GNU/Linux
+Machine Type: x86_64-pc-linux-gnu
+
+Bash Version: 5.2
+Patch Level: 21
+Release Status: release
+```
+
+Ubuntu's package `bash` 5.2.21-2ubuntu4 (amd64), Ubuntu 24.04, in a container.  Not yet checked against the latest
+release of bash or its development version (bash's manual asks for that before a report).
+
 **Where they come from.**  The Perl module Proc::ShellSpawn, of the CPAN distribution Proc-Spawner
-(<https://github.com/ilyaz-ai/Proc-Spawner>), runs shell text itself.  To test it, 41,952 snippets of shell text, taken
+(<https://metacpan.org/dist/Proc-Spawner>), runs shell text itself.  To test it, 41,952 snippets of shell text, taken
 from public collections, were run in bash in its POSIX mode (`bash --posix -c TEXT`), in dash 0.5.12 (`dash -c TEXT`)
 and in the module, each in a fresh directory, as an unprivileged user, for at most 5 seconds, and the results compared.
 The runs are in this repository, <https://github.com/ilyaz-ai/Proc-Spawner-results>.  Every place where bash and dash
@@ -121,8 +140,7 @@ bash's manual, "Bash POSIX Mode", item 24: "If a POSIX special builtin returns a
 shell exits."  POSIX.1-2017, 2.8.1 Consequences of Shell Errors, for a non-interactive shell: "Special built-in utility
 error: shall exit."
 
-Seen in the probes `shiftover` and `exportbad` of Proc-Spawner's `doc/large-subset/dialect-cases/cases.txt` (the two
-commands above).  The corpus snippets with such an error end at it, so they show the message but not whether the
+Seen first in two probes run in both shells, which are the first two commands above.  The corpus snippets with such an error end at it, so they show the message but not whether the
 shell goes on: `NB:9215` (`shift [n]`), `SC:Checks/Commands.hs:prop_checkExportedExpansions2` (`export "$foo"`).
 Intended: 15%.
 
