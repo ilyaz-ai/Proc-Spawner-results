@@ -23,7 +23,7 @@ starts a command; `[status N]` is the exit status of that whole command line).  
 judgement from the wording of the standard and of the manual, and from whether dash behaves the same way elsewhere.  It
 is not a measurement.
 
-How to use the table: copy a row's command as one line and run it in a new empty directory (rows 9 and 10 write
+How to use the table: copy a row's command as one line and run it in bash, in a new empty directory (rows 9 and 10 write
 the files `t` and `p/foo` there; row 9 needs `strace`).  The column "dash prints" is what that command printed on
 2026-11-27 (dash 0.5.12-6ubuntu5, bash 5.2.21-2ubuntu4, Ubuntu 24.04); the column "bash prints" is what the same
 command printed with every `dash` replaced by `bash --posix` (bash in its POSIX mode; plain `bash` differs in rows 5
