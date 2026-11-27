@@ -51,9 +51,8 @@ is not a measurement.
 
 How to use the table: copy a row's command as one line and run it in bash, in a new empty directory (row 1 writes the file
 `s.sh` there).  The column "bash prints" is what that command printed on 2026-11-27 with bash 5.3.20 and dash 0.5.13.6
-first on `PATH`; the column "dash prints" is what the same command printed with every `bash --posix` replaced by
-`dash`.  bash 5.4-devel, and Ubuntu's bash 5.2.21 and dash 0.5.12, printed the same in every row.  The output columns show standard output and standard error together, one output line per line, as a terminal
-shows them.  Each `echo $?` prints the exit status of the command just before it.  The number of each row
+found first on `PATH` (their directory before `/usr/bin`); the column "dash prints" is what the same command printed with every `bash --posix` replaced by
+`dash`.  bash 5.4-devel, and Ubuntu's bash 5.2.21 and dash 0.5.12, printed the same in every row.  The output columns show standard output and standard error together (as with `2>&1`), one output line per line.  Each `echo $?` prints the exit status of the command just before it.  The number of each row
 links to a section with more detail and the rules quoted in full.
 
 | # | Run this, in an empty directory | bash prints | dash prints | Why it looks wrong | Snippets | Intended? |
@@ -85,7 +84,7 @@ bash: -c: line 1: `echo a $(;) b; echo after'
 [status 127]
 ```
 
-The same error elsewhere gives 1:
+The same error in a script file, on standard input or in a subshell gives 1:
 
 ```
 $ printf 'echo ${x?}; echo after\n' > s.sh

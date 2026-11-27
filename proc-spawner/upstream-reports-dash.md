@@ -25,8 +25,7 @@ and
 
 **Checked.**  Each command below was run on 2026-11-27, in an empty directory, with dash 0.5.13.6 and bash 5.3.20 (the
 latest releases, built from source), and printed what is shown (`$` starts a command; `[status N]` is the exit status
-of that whole command line).  Ubuntu's dash 0.5.12 printed the same, apart from section 3 and the form of `alias`'s
-listing there; Ubuntu's bash 5.2.21 apart from the wording of its usage line in section 6.  The rules are quoted from the texts listed under "Sources".
+of that whole command line).  Ubuntu's dash 0.5.12 printed the same, apart from `alias a` in section 3 (`a='b'` instead of `'a=b'`); Ubuntu's bash 5.2.21 apart from the wording of its usage line in section 6.  The rules are quoted from the texts listed under "Sources".
 
 **Intended?** is an estimate of the probability that the behaviour is deliberate, or allowed by the standard: a
 judgement from the wording of the standard and of the manual, and from whether dash behaves the same way elsewhere.  It
@@ -34,18 +33,16 @@ is not a measurement.
 
 How to use the table: copy a row's command as one line and run it in bash, in a new empty directory (rows 9 and 10 write
 the files `t` and `p/foo` there; row 9 needs `strace`).  The column "dash prints" is what that command printed on
-2026-11-27 with dash 0.5.13.6 and bash 5.3.20 first on `PATH`; the column "bash prints" is what the same command
+2026-11-27 with dash 0.5.13.6 and bash 5.3.20 found first on `PATH` (their directory before `/usr/bin`); the column "bash prints" is what the same command
 printed with every `dash` replaced by `bash --posix` (bash in its POSIX mode; plain `bash` differs in rows 5
-and 6).  The output columns show standard output and standard error together, one output line per line, as a terminal
-shows them.  Each `echo $?` prints the exit status of the command just before it; `DIR` stands for the directory the
-command ran in.  In the Markdown source of the table, `\|` stands for `|`.  The number of each row links to a section
+and 6).  The output columns show standard output and standard error together (as with `2>&1`), one output line per line.  Each `echo $?` prints the exit status of the command just before it; `DIR` stands for the absolute path of the directory the command ran in.  In the Markdown source of the table, `\|` stands for `|`.  The number of each row links to a section
 with more detail and the rules quoted in full.
 
 | # | Run this, in an empty directory | dash prints | bash prints | Why it looks wrong | Snippets | Intended? |
 |---|---|---|---|---|---|---|
 | [1](#1-a-quote-right-after--is-not-a-quote) | `dash -c 'false && echo ${x"y"}; echo ok'; echo $?` | <code>dash: 1: Syntax error: Unterminated quoted string</code><br><code>2</code> | <code>ok</code><br><code>0</code> | The `${…}` is never run, yet the whole script fails to parse. POSIX 2.3 rule 5, 2.6.2: quotes inside `${…}` are skipped over | `SC:Analytics.hs:prop_checkBadParameterSubstitution6`, `SC:Analytics.hs:prop_checkBadParameterSubstitution10` | 15% |
 | [2](#2-with-home-empty--gives-no-field) | `dash -c 'HOME=; set -- ~; echo $#'; echo $?` | <code>0</code><br><code>0</code> | <code>1</code><br><code>0</code> | POSIX.1-2024 2.6.1: `~` with `HOME` empty gives one empty field | 88 in all, among them `NB:10096`, `NB:10108`, `NB:10109` | 20% |
-| [3](#3-alias-does-not-discard---) | `dash -c 'alias -- a=b'; echo $?` | <code>alias: -- not found</code><br><code>1</code> | <code>0</code> | POSIX 1.4: a utility that takes no options must discard a first `--`; `alias` takes none (`type --` was the same in 0.5.12; fixed) | `NB:8077`, `SC:Checks/ShellSupport.hs:prop_checkBashisms124` (both `type`) | 20% |
+| [3](#3-alias-does-not-discard---) | `dash -c 'alias -- a=b'; echo $?` | <code>alias: -- not found</code><br><code>1</code> | <code>0</code> | POSIX 1.4: a utility that takes no options must discard a first `--`; `alias` takes none (in 0.5.12 `type --` failed the same way; fixed in 0.5.13) | `NB:8077`, `SC:Checks/ShellSupport.hs:prop_checkBashisms124` (both `type`) | 20% |
 | [4](#4-cd-nosuch-succeeds) | `cd /tmp; dash -c 'cd nosuch/.. && pwd'; echo $?` | <code>/tmp</code><br><code>0</code> | <code>bash: line 1: cd: nosuch/..: No such file or directory</code><br><code>1</code> | POSIX `cd` step 8.b.i: if `nosuch` is not a directory, an error and nothing more | `SC:Analytics.hs:prop_checkUncheckedPopd13` | 30% |
 | [5](#5-kill--l-lists-0-and-kill--l-0-refuses-it) | `dash -c 'kill -l \| head -n 2 \| cut -c 1-20; kill -l 0'; echo $?` | <code>0</code><br><code>HUP</code><br><code>dash: 1: kill: invalid signal number or exit status: 0</code><br><code>2</code> | <code>HUP INT QUIT ILL TRA</code><br><code>EXIT</code><br><code>0</code> | `0` is not a signal name, and dash refuses to name it. POSIX `kill -l`; dash's manual | `TL:common/kill.md:13`, `TL:linux/kill.md:13` | 35% |
 | [6](#6--without-an-operand-succeeds) | `dash -c '.; echo after'; echo $?` | <code>after</code><br><code>0</code> | <code>bash: line 1: .: filename argument required</code><br><code>.: usage: . [-p path] filename [arguments]</code><br><code>2</code> | POSIX `dot`: the file operand is required; 2.8.1: a special built-in's error ends a non-interactive shell | `TL:common/regex.md:10` | 40% |
@@ -246,7 +243,9 @@ followed by two newlines.  It depends on timing, and is easy to see.  In 60 trie
 $ dash -c 'nosuchA | nosuchB'
 ```
 
-the two messages came out mixed between 1 and 6 times (five series of 60), for example
+the two messages came out mixed in some runs and not in others, depending on timing and on where the output goes:
+between 0 and 6 times in a series of 60 with the output captured by `$(…)`, 23 times in 600 with it written to a
+file.  For example
 
 ```
 dash: 1: dash: 1: nosuchA: not found
