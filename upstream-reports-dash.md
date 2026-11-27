@@ -310,13 +310,6 @@ st=127
 
 dash 0.5.13.6 prints `ls is /usr/bin/ls` and `st=0`, as bash does.
 
-## Not listed
-
-Differences that dash's dialect explains: bash's syntax and builtins (`[[`, `((`, arrays, `$'…'`, `<(…)`, `source`,
-`shopt`, `declare`, `pushd`, …), which dash refuses or looks up as programs; options that only bash's builtins have;
-variables only bash sets (`$RANDOM`, …); brace expansion; the wording of messages; the status of the same error (dash
-usually 2, bash 1); endless loops.
-
 ## Sources
 
 - POSIX.1-2017 (The Open Group Base Specifications Issue 7, 2018 edition), read on 2026-11-27 at

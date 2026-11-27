@@ -225,12 +225,6 @@ myname: line 1: nosuchcmd: command not found
 bash 5.3.20 prints `myname: line 1:` both times (and `${BASH_SOURCE[0]}` is `myname`, not `environment`).  (Snippet:
 `SC:Analytics.hs:prop_checkUnused16b`.)
 
-## Not listed
-
-Differences that bash's own features explain: its syntax and builtins that dash lacks, options that only its builtins
-have, variables only it sets, brace expansion; the wording of messages; the status of the same error where both are
-between 1 and 125 (dash usually 2, bash 1); endless loops.
-
 ## Sources
 
 - POSIX.1-2017 (The Open Group Base Specifications Issue 7, 2018 edition), read on 2026-11-27 at
