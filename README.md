@@ -1,8 +1,19 @@
 # Proc-Spawner-results
 
 The records of the measurements made for the CPAN distribution
-[Proc-Spawner](https://github.com/ilyaz-ai/Proc-Spawner), kept here because they are too large for the distribution.
+[Proc-Spawner](https://metacpan.org/dist/Proc-Spawner), kept here because they are too large for the distribution.
 The distribution's documents and its smaller records are made from them.
+
+## Possible bugs of dash and bash
+
+Comparing dash and bash on these snippets turned up places where one of them seems to contradict POSIX, its own
+manual, or itself.  Each report gives, for every case, a command to paste, what each shell prints, the rule quoted,
+the snippets that showed it, and whether the latest version still has it:
+
+- [`upstream-reports-dash.md`](upstream-reports-dash.md): 11 cases, all still in dash 0.5.13.6, the latest release
+  (one of them only in part);
+- [`upstream-reports-bash.md`](upstream-reports-bash.md): 5 cases still in bash 5.3.20, the latest release, and in
+  its development version, and 2 more fixed in 5.3.
 
 ## What was measured
 
@@ -95,6 +106,4 @@ the environments written for them:
 [`proc-spawner/2026-11-26-post-0.13-rejected-envs/`](proc-spawner/2026-11-26-post-0.13-rejected-envs/).  The other
 1,518 rejected snippets, including the other 9 candidates, ran in the base environment only.  What came out, and
 whether the parser should accept the candidates: the distribution's `README.md`, "The rejected snippets".  Where
-dash or bash themselves seem to be wrong, in these runs and in the others:
-[`proc-spawner/upstream-reports-dash.md`](proc-spawner/upstream-reports-dash.md) and
-[`proc-spawner/upstream-reports-bash.md`](proc-spawner/upstream-reports-bash.md).
+dash or bash themselves seem to be wrong: "Possible bugs of dash and bash", above.
