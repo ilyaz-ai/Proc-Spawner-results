@@ -94,4 +94,6 @@ of the author keeps rejected.  25 of the 34 read something from their environmen
 the environments written for them:
 [`proc-spawner/2026-11-26-post-0.13-rejected-envs/`](proc-spawner/2026-11-26-post-0.13-rejected-envs/).  The other
 1,518 rejected snippets, including the other 9 candidates, ran in the base environment only.  What came out, and
-whether the parser should accept the candidates: the distribution's `README.md`, "The rejected snippets".
+whether the parser should accept the candidates: the distribution's `README.md`, "The rejected snippets".  Where
+dash or bash themselves seem to be wrong, in these runs and in the others:
+[`proc-spawner/upstream-reports-dash-bash.md`](proc-spawner/upstream-reports-dash-bash.md).
