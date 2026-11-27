@@ -27,10 +27,10 @@ is not a measurement.
 |---|---|---|---|
 | [1](#1-a-fatal-error-in--c-ends-the-shell-with-status-127) | A fatal error in a `-c` string ends the shell with status 127; the same in a file gives 1 | `NB:4769`, `SC:Analytics.hs:prop_checkUnassignedReferences35`, `SC:Checks/Commands.hs:prop_checkExportedExpansions4` and 13 more | 10% |
 | [2](#2-a-special-builtins-error-does-not-end-the-shell) | `shift 3` and `export "1x=2"` fail, and the shell goes on | probes `shiftover`, `exportbad`; `NB:9215`, `SC:Checks/Commands.hs:prop_checkExportedExpansions2` | 15% |
-| [3](#3--a-i--with-i-empty-two-messages-and-success) | `$(( a[$i] ))` with `i` empty: two messages, and success | `SC:Analytics.hs:prop_checkArithmeticDeref6` | 25% |
+| [3](#3--ai--with-i-empty-two-messages-and-success) | `$(( a[$i] ))` with `i` empty: two messages, and success | `SC:Analytics.hs:prop_checkArithmeticDeref6` | 25% |
 | [4](#4-errors-in-a-function-are-labelled-environment) | Errors inside a function of a `-c` string are labelled `environment` | `SC:Analytics.hs:prop_checkUnused16b` | 30% |
 | [5](#5-a-1-of-an-empty-array-a-message-and-success) | `${a[-1]}` of an empty array: a message, and success | `NB:4741` | 70% |
-| [6](#6-set---cannot-restore-the-options) | `set -"$-"` cannot restore the options | `SC:Checks/ShellSupport.hs:prop_checkBashisms89` | 85% |
+| [6](#6-set----cannot-restore-the-options) | `set -"$-"` cannot restore the options | `SC:Checks/ShellSupport.hs:prop_checkBashisms89` | 85% |
 
 ## 1. A fatal error in `-c` ends the shell with status 127
 
