@@ -64,6 +64,11 @@ Why the parser refuses each is in `samples.tsv`, column `why`; the most frequent
 They ran once in dash and in bash alone on 2026-11-26, in the environment of the base run:
 [`proc-spawner/2026-11-26-post-0.13-rejected/`](proc-spawner/2026-11-26-post-0.13-rejected/) (Proc-Spawner's `make
 corpus-rejected`, 2½ minutes).  A try of 2026-11-23 had stopped at 1,196 of them: bash's `suspend -f` stops its own
-process group, and with it the runner's `timeout` (Proc-Spawner's known issue X85, fixed).  Which further environments
-each one needs cannot come from Proc-Spawner's tools, which work on the parse tree: it would be decided by reading
-them, as for the 93 of `large-subset-ai-classes.tsv`.
+process group, and with it the runner's `timeout` (Proc-Spawner's known issue X85, fixed).
+
+Which further environments a rejected snippet needs cannot come from Proc-Spawner's tools, which work on the parse
+tree.  For the 34 candidates of Proc-Spawner's work list (snippets within its lower yardstick that no decision keeps
+rejected) they were written by reading the snippets, and the 25 candidates that read something from their environment
+ran again in those environments, in dash and bash alone, on 2026-11-26:
+[`proc-spawner/2026-11-26-post-0.13-rejected-envs/`](proc-spawner/2026-11-26-post-0.13-rejected-envs/) (Proc-Spawner's
+`make corpus-rejected-envs`).  The other 1,509 rejected snippets ran in the base environment only.
