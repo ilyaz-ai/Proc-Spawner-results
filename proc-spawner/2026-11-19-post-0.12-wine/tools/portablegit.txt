@@ -1,0 +1,1 @@
+4f3f21f4effcb659566883ee1ed3ae403e5b3d7a0699cee455f6cd765e1ac39c  PortableGit-2.47.1-64-bit.7z.exe (https://github.com/git-for-windows/git/releases/download/v2.47.1.windows.1/; unpacked with 7z x to /runwin/pgit)

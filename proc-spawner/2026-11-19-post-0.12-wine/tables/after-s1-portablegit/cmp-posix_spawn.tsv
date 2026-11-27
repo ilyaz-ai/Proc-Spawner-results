@@ -1,0 +1,528 @@
+# id	class	parts	noisy	text	details (L: Linux, W: Windows; normalized, err as recorded)
+BC:ch11/default_date	timeout-both			#!/usr/bin/env bash # cookbook filename: default_date  # Use noon time to prevent a script running around midnight and a
+BC:ch14/finding_tools	msg	err		#!/usr/bin/env bash # cookbook filename: finding_tools  # Export may or may not also be needed, depending on what you ar	err: L=	err: W=sh: /bin/uname: Permission denied\n
+BC:ch16/inputrc	differs	err,rec		# cookbook filename: inputrc # settings/inputrc: # readline settings # To reread (and implement changes to this file) us	err: L=sh: /etc/inputrc: Permission denied\nsh: Bash: not found\nsh: \\C-i:: not found\nsh: \\C-xp:: not found\nsh: \\C-x":: not found\nsh: \\C-x\\:: not found\nsh: \\C-xq:: not found\nsh: \\C-xr:: not found\nsh: \\C-xe:: not found\nsh: mode=emacs: not found\nsh: \\e[1~:: not found\nsh: \\e[4~:: not found\nsh: \\e[3~:: not found\nsh: \\e[2~:: not found\nsh: \\e[A:: not found\nsh: \\e[B:: not found\nsh: \\eOH:: not found\nsh: \\eOF:: not	err: W=sh: /etc/inputrc: Permission denied\nsh: \\C-i:: not found\nsh: \\C-xp:: not found\nsh: \\C-x":: not found\nsh: \\C-x\\:: not found\nsh: \\C-xq:: not found\nsh: \\C-xr:: not found\nsh: \\C-xe:: not found\nsh: mode=emacs: not found\nsh: \\e[1~:: not found\nsh: \\e[4~:: not found\nsh: \\e[3~:: not found\nsh: \\e[2~:: not found\nsh: \\e[A:: not found\nsh: \\e[B:: not found\nsh: \\eOH:: not found\nsh: \\eOF:: not found\nsh: \\e[H:: no	rec: L=	rec: W=bash
+NB:10030	same-paths			find $HOME/. -name "*.txt" -ok rm {} \;
+NB:10096	same-paths			find ~ -type f -mtime 0 -ls
+NB:10108	same-paths			find ~ -iname '*.jpg' -exec ls {} \;
+NB:10109	same-paths			find ~ -iname '*.jpg' -exec ls {} +
+NB:10123	differs	out		find / -print0 -type d | xargs -0 ls -al	out: L=total 36\ndrwxr-xr-x 4 rc1 rc1 4096 Jan  1  2020 .\ndrwxr-xr-x 3 rc1 rc1 4096 Jan  1  2020 ..\n-rw-r--r-- 1 rc1 rc1    2 Jan  1  2020 .hidden\n-rw-r--r-- 1 rc1 rc1   11 Jan  1  2020 a.txt\n-rw-r--r-- 1 rc1 rc1    8 Jan  1  2020 b.txt\n-rw-r--r-- 1 rc1 rc1    2 Jan  1  2020 c.log\ndrwxr-xr-x 3 rc1 rc1 4096 Jan  1  2020 dir\n-rw-r--r-- 1 rc1 rc1    0 Jan  1  2020 empty\n-rw-r--r-- 1 rc1 rc1   12 Jan  1  2020	out: W=total 36\ndrwxr-xr-x 4 rc1 rc1 4096 Jan  1  2020 .\ndrwxr-xr-x 4 rc1 rc1 4096 Nov 19 10:40 ..\n-rw-r--r-- 1 rc1 rc1    2 Jan  1  2020 .hidden\n-rw-r--r-- 1 rc1 rc1   11 Jan  1  2020 a.txt\n-rw-r--r-- 1 rc1 rc1    8 Jan  1  2020 b.txt\n-rw-r--r-- 1 rc1 rc1    2 Jan  1  2020 c.log\ndrwxr-xr-x 3 rc1 rc1 4096 Jan  1  2020 dir\n-rw-r--r-- 1 rc1 rc1    0 Jan  1  2020 empty\n-rw-r--r-- 1 rc1 rc1   12 Jan  1  2020
+NB:10133	differs	files	noisy	find . -name "filename including space" -print0 | xargs -0 ls -aldF > log.txt	files: L=.hidden 2 91ee5e9f42ba\na.txt 11 e49c81e2d2f8\nb.txt 8 2dbb4a503f15\nc.log 2 73cb3858a687\ndir/\ndir/sub/\ndir/sub/y.sh 7 6d1239d99196\ndir/x.txt 7 867087258aca\nempty 0 e3b0c44298fc\nfile.txt 12 a948904f2f0f\nhome/\nhome/.profile 0 e3b0c44298fc\nlog.txt 42 f6708ce2776b	files: W=.hidden 2 91ee5e9f42ba\na.txt 11 e49c81e2d2f8\nb.txt 8 2dbb4a503f15\nc.log 2 73cb3858a687\ndir/\ndir/sub/\ndir/sub/y.sh 7 6d1239d99196\ndir/x.txt 7 867087258aca\nempty 0 e3b0c44298fc\nfile.txt 12 a948904f2f0f\nhome/\nhome/.profile 0 e3b0c44298fc\nlog.txt 42 6869aeb02ac5
+NB:10169	same-paths			find $HOME -not -iname "*.c" -print
+NB:10170	same-paths			find $HOME \! -iname "*.c" print
+NB:10444	same-paths			find $HOME -print
+NB:10449	same-paths			find $HOME -size -500b
+NB:10450	same-paths			find ~ -size -500b
+NB:10451	same-paths			find ~ -name 'arrow*'
+NB:10452	same-paths			find ~ -name 'arrow*.xbm'
+NB:10454	same-paths			find ~ -name '*.xbm'
+NB:10534	same-paths			find ~/ -daystart -type f -mtime 1
+NB:10544	same-paths			find ~ -name "*.txt" — print -o -name ".*" — print
+NB:10576	same-paths			find $HOME/projects/ -name ".*" -ls > foo.txt
+NB:10577	same-paths			find $HOME -name ".*" -ls
+NB:10761	same-paths			find $HOME -name '*.c' -print | xargs grep -l sprintf
+NB:10817	same-paths			find ~/lpi103-2/ -depth -print0 | cpio --null -o > ../lpicpio.2
+NB:10835	same-paths			find ~ -newer /tmp/timestamp
+NB:10836	same-paths			find ~ -mtime 1 -daystart
+NB:10893	same-paths			find ~ -mtime 2 -mtime -4 -daystart
+NB:1100	same-paths			ln -s `pwd`/current/app/webroot public_html
+NB:1102	same-paths			find $PWD -name '.[^.]*' -exec ln -s '{}' /path/to/dir \;
+NB:1104	same-paths			cat results2.txt | xargs -I{} ln -s {} ~/newlinks
+NB:1105	same-paths			find $PWD -type f -exec ln -st $tmpdir {} +
+NB:1106	same-paths			ln -s "$source" -t ~/newlinks
+NB:1113	same-paths			ln -s "`pwd`" $1/link
+NB:11148	differs	status,err,rec,files		find <dir> -mtime +7	status: L=0	status: W=2	err: L=	err: W=sh: cannot open dir: Permission denied\n	rec: L=find|+7^unreadable	rec: W=	files: L=-mtime 0 e3b0c44298fc\n.hidden 2 91ee5e9f42ba\na.txt 11 e49c81e2d2f8\nb.txt 8 2dbb4a503f15\nc.log 2 73cb3858a687\ndir/\ndir/sub/\ndir/sub/y.sh 7 6d1239d99196\ndir/x.txt 7 867087258aca\nempty 0 e3b0c44298fc\nfile.txt 12 a948904f2f0f\nhome/\nhome/.profile 0 e3b0c44298fc	files: W=.hidden 2 91ee5e9f42ba\na.txt 11 e49c81e2d2f8\nb.txt 8 2dbb4a503f15\nc.log 2 73cb3858a687\ndir/\ndir/sub/\ndir/sub/y.sh 7 6d1239d99196\ndir/x.txt 7 867087258aca\nempty 0 e3b0c44298fc\nfile.txt 12 a948904f2f0f\nhome/\nhome/.profile 0 e3b0c44298fc
+NB:1115	same-paths			ln -s $HOME/downloads/fnord $HOME/bin/
+NB:11176	same-paths			find $PWD -exec echo -n '"{}" ' \; | tr '\n' ' '
+NB:11178	same-paths			find $PWD | sed -e 's/^/"/g' -e 's/$/"/g' | tr '\n' ' '
+NB:11229	same-paths			find ~ -type f -name test-a -exec mv {} test-10 \;
+NB:11230	same-paths			find ~ -type f -name test-a -execdir mv {} test-10 \;
+NB:1127	same-paths			ln -s "/Applications/Sublime Text 2.app/Contents/SharedSupport/bin/subl" ~/bin/subl
+NB:1128	same-paths			ln -s "/Applications/Sublime Text.app/Contents/SharedSupport/bin/subl" ~/bin/subl
+NB:11287	same-paths			find ~/Music/ -name "Automatically Add*"
+NB:11288	same-paths			find $HOME -mtime -2 -mtime +1
+NB:11292	same-paths			find ~ -size +2000000c -regex '.*[^gz]' -exec gzip '{}' ';'
+NB:11294	same-paths			find ~ -size -300b
+NB:11296	same-paths			find ~ -iname '*.tex'
+NB:11297	same-paths			find $HOME -newer ~joeuser/lastbatch.txt
+NB:11300	same-paths			find $HOME -mmin -30
+NB:11356	same-paths			find ~ -atime 100
+NB:11407	same-paths			find $HOME -type f -atime +30 -size 100k
+NB:1143	same-paths			find ~/Library -name '* *' -print0 | xargs -0 tar rf blah.tar
+NB:11513	same-paths			find ~ -name "*.txt" — print
+NB:11522	same-paths			find /tmp /var/tmp ~ -type f -size +10M -mtime +60 -ctime -100 -exec file -N -i -- {} + | sed -n 's!: video/[^:]*$!!p'
+NB:11561	same-paths			find $HOME \( -name \*txt -o -name \*html \) -print0 | xargs -0 grep -li vpn
+NB:11574	same-paths			find ~ -name game
+NB:11612	same-paths			find $HOME -name \*txt -o -name \*html -print0
+NB:1166	same-paths			find ~ -type d -exec mkdir junk {} \; 2> /dev/null
+NB:1168	differs	err,rec,files	noisy	touch filename_`/bin/date +%Y%m%d%H%M%S`.txt	err: L=	err: W=sh: /bin/date: Permission denied\n	rec: L=touch|filename_20261117115804.txt	rec: W=touch|filename_.txt	files: L=.hidden 2 91ee5e9f42ba\na.txt 11 e49c81e2d2f8\nb.txt 8 2dbb4a503f15\nc.log 2 73cb3858a687\ndir/\ndir/sub/\ndir/sub/y.sh 7 6d1239d99196\ndir/x.txt 7 867087258aca\nempty 0 e3b0c44298fc\nfile.txt 12 a948904f2f0f\nfilename_20261117115804.txt 0 e3b0c44298fc\nhome/\nhome/.profile 0 e3b0c44298fc	files: W=.hidden 2 91ee5e9f42ba\na.txt 11 e49c81e2d2f8\nb.txt 8 2dbb4a503f15\nc.log 2 73cb3858a687\ndir/\ndir/sub/\ndir/sub/y.sh 7 6d1239d99196\ndir/x.txt 7 867087258aca\nempty 0 e3b0c44298fc\nfile.txt 12 a948904f2f0f\nfilename_.txt 0 e3b0c44298fc\nhome/\nhome/.profile 0 e3b0c44298fc
+NB:11694	same-paths			find $HOME -name core -exec rm -f {} \;
+NB:11709	same-paths			ln -sfv /usr/local/opt/mongodb/*.plist ~/Library/LaunchAgents
+NB:1181	same-paths			mkdir -p ~/foo/bar/baz ~/foo/bar/bif ~/foo/boo/bang
+NB:11856	same-paths			find . -follow -iname '*.htm' -print0 | xargs -i -0 mv '{}' ~/webhome
+NB:11879	same-paths			echo $(pwd)/$filename
+NB:11892	same-paths			echo $(cd $(dirname "$1") && pwd -P)/$(basename "$1")
+NB:11893	same-paths			find `pwd` -maxdepth 1
+NB:11950	differs	status,err		/bin/find -name "core" — exec rm {} \;	status: L=1	status: W=126	err: L=/bin/find: paths must precede expression: `â'\n	err: W=sh: /bin/find: Permission denied\n
+NB:1197	same-paths			find bar1 -name '*foo*' -not -type d -not -name '*.cc' -exec ln -s $PWD/'{}' bar2/ \;
+NB:12011	differs	rec	noisy	su - joe -c "/path/to/my_daemon & echo \$! > /tmp/su.joe.$$"	rec: L=su|-|joe|-c|/path/to/my_daemon & echo $! > /tmp/su.joe.17522	rec: W=su|-|joe|-c|/path/to/my_daemon & echo $! > /tmp/su.joe.1884
+NB:1206	same-paths			mkdir ~/.npm-global
+NB:1207	same-paths			mkdir "${HOME}/.npm-packages"
+NB:12196	differs	files	noisy	find . -name "filename including space" -print0 | tee my_teed_file | xargs -0 ls -aldF > log.txt	files: L=.hidden 2 91ee5e9f42ba\na.txt 11 e49c81e2d2f8\nb.txt 8 2dbb4a503f15\nc.log 2 73cb3858a687\ndir/\ndir/sub/\ndir/sub/y.sh 7 6d1239d99196\ndir/x.txt 7 867087258aca\nempty 0 e3b0c44298fc\nfile.txt 12 a948904f2f0f\nhome/\nhome/.profile 0 e3b0c44298fc\nlog.txt 42 f6708ce2776b\nmy_teed_file 0 e3b0c44298fc	files: W=.hidden 2 91ee5e9f42ba\na.txt 11 e49c81e2d2f8\nb.txt 8 2dbb4a503f15\nc.log 2 73cb3858a687\ndir/\ndir/sub/\ndir/sub/y.sh 7 6d1239d99196\ndir/x.txt 7 867087258aca\nempty 0 e3b0c44298fc\nfile.txt 12 a948904f2f0f\nhome/\nhome/.profile 0 e3b0c44298fc\nlog.txt 42 55018b0ac66a\nmy_teed_file 0 e3b0c44298fc
+NB:12209	same-paths			find ~/tmp -type f -mtime 0 -exec du -ks {} \; | cut -f1 | awk '{total=total+$1}END{print total/1024}'
+NB:12249	differs	status,err,rec		find / -path /usr/share -prune -o \( -name rsync -o -name bash \) -print 2>/dev/nul	status: L=2	status: W=0	err: L=sh: cannot create /dev/nul: Permission denied\n	err: W=	rec: L=	rec: W=find|/|-path|/usr/share|-prune|-o|(|-name|rsync|-o|-name|bash|)|-print
+NB:1226	same-paths			TMPPS_PREFIX=$(mktemp "${TMPDIR:-/tmp/}${tempname}.XXXXXX")
+NB:1227	same-paths			tempFile="$(mktemp "${TMPDIR:-/tmp/}$(basename "$0")-XXXXX")"
+NB:1230	same-paths			tempfile=$(mktemp $(pwd)/templateXXXXXX)
+NB:12317	same-paths			find ~ -name myletter.doc -print
+NB:12318	same-paths			find ~ -name "name_to_find"
+NB:12376	same-paths			find $HOME/html/andrews-corner -exec grep -q 'slrn' '{}' \; -print
+NB:12403	same-paths			find "$HOME/" -name myfile.txt -print
+NB:1248	same-paths			mydir=$(mktemp -d "${TMPDIR:-/tmp/}$(basename $0).XXXXXXXXXXXX")
+NB:12489	same-paths			find ~/src -type f \( -iname '*.cpp' -or -iname '*.h' -or -iname '*.c' -or -iname '*.hpp' \) -exec echo {} \;
+NB:1298	same-paths			find ~/mydir -iname '*.htm' -exec rm {} \;
+NB:1352	same-paths			find ~ -atime +100 -delete
+NB:1356	same-paths			find ~/Books -type f -name Waldo -exec rm {} \;
+NB:1371	same-paths			find ~ -used +365 -ok rm '{}' ';'
+NB:1416	same-paths			find $HOME/Library/Safari/Icons -type f -atime +30 -name "*.cache" -print -delete
+NB:1420	differs	status,err		ipcs -a | nawk -v u=`whoami` '$5==u &&(($1=="m" && $9==0)||($1=="s")){print "ipcrm -"$1,$2,";"}' | /bin/sh	status: L=0	status: W=126	err: L=	err: W=sh: /bin/sh: Permission denied\n
+NB:1421	differs	status,err		ipcs | nawk -v u=`whoami` '/Shared/,/^$/{ if($6==0&&$3==u) print "ipcrm shm",$2,";"}/Semaphore/,/^$/{ if($3==u) print "i	status: L=0	status: W=126	err: L=	err: W=sh: /bin/sh: Permission denied\n
+NB:1470	same-paths			xargs -n 1 -I '{}' find "$(pwd)" -type f -inum '{}' -delete
+NB:1476	differs	rec		find /tmp/*/* -mtime +7 -type d -exec rmdir {} \;	rec: L=find|/tmp/*/*|-mtime|+7|-type|d|-exec|rmdir|{}|;	rec: W=find|/tmp/wine-uD9UFQ/server-fe00-f88697|-mtime|+7|-type|d|-exec|rmdir|{}|;
+NB:1523	differs	out		find /home/backups -printf "%T@ %p\n" | sort -n | head -1 | cut -d" " -f2- | xargs ls -al	out: L=total 36\ndrwxr-xr-x 4 rc2 rc2 4096 Jan  1  2020 .\ndrwxr-xr-x 3 rc2 rc2 4096 Jan  1  2020 ..\n-rw-r--r-- 1 rc2 rc2    2 Jan  1  2020 .hidden\n-rw-r--r-- 1 rc2 rc2   11 Jan  1  2020 a.txt\n-rw-r--r-- 1 rc2 rc2    8 Jan  1  2020 b.txt\n-rw-r--r-- 1 rc2 rc2    2 Jan  1  2020 c.log\ndrwxr-xr-x 3 rc2 rc2 4096 Jan  1  2020 dir\n-rw-r--r-- 1 rc2 rc2    0 Jan  1  2020 empty\n-rw-r--r-- 1 rc2 rc2   12 Jan  1  2020	out: W=total 36\ndrwxr-xr-x 4 rc2 rc2 4096 Jan  1  2020 .\ndrwxr-xr-x 4 rc2 rc2 4096 Nov 19 10:36 ..\n-rw-r--r-- 1 rc2 rc2    2 Jan  1  2020 .hidden\n-rw-r--r-- 1 rc2 rc2   11 Jan  1  2020 a.txt\n-rw-r--r-- 1 rc2 rc2    8 Jan  1  2020 b.txt\n-rw-r--r-- 1 rc2 rc2    2 Jan  1  2020 c.log\ndrwxr-xr-x 3 rc2 rc2 4096 Jan  1  2020 dir\n-rw-r--r-- 1 rc2 rc2    0 Jan  1  2020 empty\n-rw-r--r-- 1 rc2 rc2   12 Jan  1  2020
+NB:1617	same-paths			cat `which ~/f`
+NB:1811	differs	status,out,err		/usr/bin/find $*	status: L=0	status: W=126	out: L=.\n./.hidden\n./b.txt\n./dir\n./dir/x.txt\n./dir/sub\n./dir/sub/y.sh\n./file.txt\n./c.log\n./empty\n./home\n./home/.profile\n./a.txt\n	out: W=	err: L=	err: W=sh: /usr/bin/find: Permission denied\n
+NB:1812	differs	status,out,err		/usr/bin/find ./ $*	status: L=0	status: W=126	out: L=./\n./.hidden\n./b.txt\n./dir\n./dir/x.txt\n./dir/sub\n./dir/sub/y.sh\n./file.txt\n./c.log\n./empty\n./home\n./home/.profile\n./a.txt\n	out: W=	err: L=	err: W=sh: /usr/bin/find: Permission denied\n
+NB:1829	differs	status,out,err		exec /usr/bin/find "$@"	status: L=0	status: W=126	out: L=.\n./.hidden\n./b.txt\n./dir\n./dir/x.txt\n./dir/sub\n./dir/sub/y.sh\n./file.txt\n./c.log\n./empty\n./home\n./home/.profile\n./a.txt\n	out: W=	err: L=	err: W=sh: /usr/bin/find: Permission denied\n
+NB:1831	msg	err		LD_PRELOAD=./linebufferedstdout.so python test.py | tee -a test.out	err: L=ERROR: ld.so: object './linebufferedstdout.so' from LD_PRELOAD cannot be preloaded (cannot open shared object file): ignored.\n	err: W=
+NB:1897	differs	out	noisy	cut -d: -f1 /etc/group | sort	out: L=adm\naudio\nbackup\nbin\ncdrom\nclaude\ndaemon\ndialout\ndip\ndisk\ndocker\nfax\nfloppy\ngames\nirc\nkmem\nlist\nlp\nmail\nman\nmessagebus\nnews\nnixbld\nnogroup\noperator\nplugdev\npolkitd\npostgres\nproxy\nrc0\nrc1\nrc2\nrc3\nredis\nroot\nsasl\nshadow\nsrc\nssl-cert\nstaff\nsudo\nsys\nsystemd-journal\nsystemd-network\ntape\ntty\nubuntu\nusers\nutmp\nuucp\nvideo\nvoice\nwww-data\n	out: W=adm\naudio\nbackup\nbin\ncdrom\nclaude\ndaemon\ndialout\ndip\ndisk\ndocker\nfax\nfloppy\ngames\nirc\nkmem\nlist\nlp\nmail\nman\nmessagebus\nnews\nnixbld\nnogroup\noperator\nplugdev\npolkitd\npostgres\nproxy\nrc0\nrc1\nrc2\nrc3\nrdma\nredis\nroot\nrw0\nrw1\nsasl\nshadow\nsrc\nssl-cert\nstaff\nsudo\nsys\nsystemd-journal\nsystemd-network\ntape\ntty\nubuntu\nusers\nutmp\nuucp\nvideo\nvoice\nwww-data\n
+NB:1953	same-paths			find $HOME -name '*.c' -print | xargs    grep -l sprintf
+NB:1967	same-paths			find ~/Images/Screenshots -size +500k -iname '*.jpg'
+NB:209	same-paths			find "$(pwd -P)" -type d \( -path '/path/to/dir1' -or -path '/path/to/dir2' \) -prune  -or -not \( -path '/path/to/file1
+NB:2152	same-paths			find $HOME -iname '*.ogg' -type f -size -100M
+NB:2154	same-paths			find $HOME -iname '*.ogg'
+NB:2155	same-paths			find $HOME -iname '*.ogg' -size +100M
+NB:2156	same-paths			find $HOME -iname '*.ogg' -size +20M
+NB:2157	same-paths			find $HOME -iname '*.ogg' ! -size +20M
+NB:2158	same-paths			find $HOME -iname '*.ogg' -o -iname '*.mp3'
+NB:2165	same-paths			find . -iname *.page -exec ~/t.sh {} \; | sort
+NB:2263	same-paths			find ~ -name "*.txt" -print
+NB:2264	same-paths			find ~/ -name '*.txt'
+NB:2298	differs	rec		mv $(find . -name "*shp*" -printf "%h\n" | uniq)/* ../shp_all/	rec: L=find|.|-name|*shp*|-printf|%h\\n\nmv|/bin|/bin.usr-is-merged|/boot|/container_info.json|/dev|/etc|/home|/lib|/lib.usr-is-merged|/lib64|/lost+found|/media|/mnt|/nix|/old_root|/opt|/proc|/root|/run|/runcompare|/sbin|/srv|/sys|/tmp|/usr|/var|../shp_all/\nuniq	rec: W=find|.|-name|*shp*|-printf|%h\\n\nmv|/bin|/bin.usr-is-merged|/boot|/container_info.json|/etc|/home|/lib|/lib.usr-is-merged|/lib64|/media|/mnt|/nix|/old_root|/opt|/run|/runcompare|/runwin|/runwintest|/sbin|/srv|/tmp|/usr|/var|/work|../shp_all/\nuniq
+NB:2346	same-paths			find . -name "*.sh" -print0 | xargs -0 -I file mv file ~/back.scripts
+NB:2347	same-paths			find . -name "*.sh" -print0 | xargs -0 -I {} mv {} ~/back.scripts
+NB:2356	same-paths			find $HOME/. -name *.txt -exec head -n 1 -v {} \; > report.txt
+NB:2422	same-paths			find ~ -type f -mtime 0 -iname '*.mp3'
+NB:2464	same-paths			find "$HOME" -name '*.txt' -type f -not -path "$HOME/newdir/*" -print0 | xargs -0 cp -t "$HOME/newdir"
+NB:2465	same-paths			find "$HOME" -name '*.txt' -type f -print0 | sort -zu | xargs -0 cp -t "$HOME/newdir"
+NB:2466	same-paths			find "$HOME" -name '*.txt' -type f -print0 | xargs -0 cp -ut "$HOME/newdir"
+NB:2490	same-paths			find $HOME -name "*.conf" -exec sed -i 's/vermin/pony/g' {} \;
+NB:2528	same-paths			find . -type d -name "0" -execdir tar -cvf ~/home/directoryForTransfer/filename.tar RS* \;
+NB:2535	same-paths			find $HOME -type d -name $1 -exec echo {} ';'  -exec rm -rf {} ';'
+NB:2648	same-paths			find $PWD -type d
+NB:2649	differs	err,rec	noisy	find . -mount -type d -print0 | xargs -0 -n1 /tmp/count_em_$$ | sort -n	err: L=/runcompare/real/xargs: /tmp/count_em_18979: No such file or directory\n	err: W=/runcompare/real/xargs: /tmp/count_em_288: No such file or directory\n	rec: L=find|.|-mount|-type|d|-print0\nsort|-n\nxargs|-0|-n1|/tmp/count_em_18979	rec: W=find|.|-mount|-type|d|-print0\nsort|-n\nxargs|-0|-n1|/tmp/count_em_288
+NB:2651	same-paths			find ~/code -type d | tr '\n' ':' | sed 's/:$//'
+NB:2652	same-paths			find ~/code -type d -name '[^\.]*' | tr '\n' ':' | sed 's/:$//'
+NB:2653	same-paths			find ~/code -type d | sed '/\/\\./d' | tr '\n' ':' | sed 's/:$//'
+NB:2654	same-paths			find ~/code -name '.*' -prune -o -type d -printf ':%p'
+NB:2672	same-paths			find ~ -empty
+NB:2708	same-paths			find `pwd` -name "file.ext" -exec echo $(dirname {}) \;
+NB:2761	same-paths			find ~ -mmin -90
+NB:2774	same-paths			find $(pwd) -type f -name "*.ext" | while read file; do sed -e 's/^M//g' -i "$file"; done;
+NB:2812	same-paths			find $(pwd) -name YourProgram -exec dirname {} \; | while read d; do cd "$d" && ./YourPrgram; done
+NB:2828	same-paths			find ~/ [опция_поиска] [значение] [опция_действия]
+NB:2831	same-paths			find ~ ! -user ${USER}
+NB:2832	same-paths			find ~ ! -user $USER -exec sudo chown ${USER}:"{}" \;
+NB:2833	same-paths			find ~ -perm 777
+NB:2835	same-paths			find ~ -size 100M
+NB:2836	same-paths			find ~ -size +100M
+NB:2837	same-paths			find ~ -size -100M
+NB:2838	same-paths			find ~/clang+llvm-3.3/bin/ -type f -exec echo basename {} \;
+NB:2858	same-paths			find $PWD -name "file.ext" -exec sh -c 'echo $(dirname {})' ';'
+NB:2861	same-paths			find `pwd` -name file.ext |xargs -l1 dirname
+NB:2862	same-paths			find `pwd` -name "file.ext" -printf "%f\n"
+NB:2863	same-paths			find `pwd` -name "file.ext" -exec dirname {} \;
+NB:2879	msg	err	noisy	find . -maxdepth 1 -cmin +60 -name file >/tmp.$$	err: L=sh: cannot create /tmp.21976: Permission denied\n	err: W=sh: cannot create /tmp.1248: Permission denied\n
+NB:2881	same-paths			find ~ -type f -name 'foo*' -ok ls -l '{}' ';'
+NB:3018	same-paths			find "`pwd`" -type f
+NB:3107	same-paths			find ~/code -name '.*' -prune -o -type f -a -perm /u+x -print | sed 's@/[^/]\+$@:@' | sort | uniq | tr -d '\n' | sed 's/
+NB:3147	same-paths			find ~ -type f -mtime -2
+NB:3152	same-paths			find ~ -name 'top*' -newer /etc/motd
+NB:3160	same-paths			(cd ~/bin/FilesDvorak/; find . -maxdepth 1 | sort > b)
+NB:3209	same-paths			find ~/Books -name Waldo
+NB:3214	same-paths			find ~/Library/ -iname "com.apple.syncedpreferences.plist"
+NB:3235	same-paths			find ~ -name myfile
+NB:3278	same-paths			find ~ -user dave -print
+NB:3295	same-paths			find ~ -iname "screen*"
+NB:3296	same-paths			find ~ -iname "screen*" | more
+NB:333	same-paths			find "$PWD" / -iname '*.jpg' -exec du -s {} + | sed "s/^/$(hostname): /"
+NB:3332	same-paths			find .. -exec cp -t ~/foo/bar -- {} +
+NB:3346	same-paths			~/bin/find /non-existent/directory -name '*.plist' -print
+NB:3425	same-paths			find .|grep "FooBar"|xargs -I{} cp "{}" ~/foo/bar
+NB:348	same-paths			find ~ -group vboxusers -exec chown kent:kent {} \;
+NB:3485	same-paths			find ~/Library -name '* *'
+NB:3509	same-paths			find $HOME -type f | samefile -r
+NB:3522	same-paths			find $HOME -name 'mysong.ogg'
+NB:3548	same-paths			find ~ -name readme.txt
+NB:3558	same-paths			find ~ -type f -mmin -90
+NB:3586	same-paths			find ~ -type f -mtime 0
+NB:3587	same-paths			find ~/mail -type f | xargs grep "Linux"
+NB:3590	same-paths			find ~/Books -type f -name Waldo
+NB:3594	same-paths			find ~/ -type f -name "postgis-2.0.0"
+NB:3595	differs	rec	noisy	find /tmefndr/oravl01 -type f -newer /tmp/$$	rec: L=find|/tmefndr/oravl01|-type|f|-newer|/tmp/22867	rec: W=find|/tmefndr/oravl01|-type|f|-newer|/tmp/512
+NB:3603	same-paths			find ~/container  -mindepth 3 -type f  -execdir mv "{}" $(dirname "{}")/.. \;
+NB:3604	same-paths			find ~/container  -mindepth 3 -type f | while read file; do mv "$file" "$(dirname "$file")/.."; done
+NB:3605	same-paths			find ~/container  -mindepth 3 -type f | xargs -i bash -c 'mv "{}" $(dirname "{}")/..'
+NB:3606	same-paths			find ~/container -mindepth 3 -type f -execdir mv "{}" ./.. \;
+NB:3607	same-paths			find ~/container  -mindepth 3 -type f -exec mv {} . \;
+NB:3608	same-paths			find ~/container  -mindepth 3 -type f -exec mv {} .. \;
+NB:3668	same-paths			find ~/$folder -name "*@*" -type f
+NB:3669	same-paths			find ~/$folder -name "*@*" -type f -print0
+NB:367	same-paths			cd "$(grep DOWNLOAD $HOME/.config/user-dirs.dirs | cut -f 2 -d "=" | tr "\"" "\n" | tr -d "\n")"
+NB:368	same-paths			cd "$(grep DOWNLOAD $HOME/.config/user-dirs.dirs | cut -f 2 -d "=" | tr "\"" "\n")"
+NB:369	same-paths			cd $( ~/marker.sh go "$@" )
+NB:3699	same-paths			find . -type l -exec sh -c 'echo $(readlink -f "{}") "<-- {}"' \; | grep -v "^$(readlink -f ${PWD})"
+NB:3712	same-paths			find . -type l -exec readlink -f '{}' \; | grep -v "^`readlink -f ${PWD}`"
+NB:3717	same-paths			find ~/Programming -path '*/src/*.c'
+NB:3805	differs	out,rec		for d in /home/*/; do find "$d" -type d -name bin | grep -q . || echo "$d"; done	out: L=/home/claude/\n/home/ubuntu/\n/home/user/\n	out: W=/home/claude/\n/home/user/\n	rec: L=find|/home/claude/|-type|d|-name|bin\nfind|/home/ubuntu/|-type|d|-name|bin\nfind|/home/user/|-type|d|-name|bin\ngrep|-q|.\ngrep|-q|.\ngrep|-q|.	rec: W=find|/home/claude/|-type|d|-name|bin\nfind|/home/user/|-type|d|-name|bin\ngrep|-q|.\ngrep|-q|.
+NB:3814	same-paths			find ~ -name 'xx*' -and -not -name 'xxx'
+NB:3823	same-paths			find ~/ -name 'core*' -exec rm {} \
+NB:3850	differs	rec	noisy	find /usr/* -size 0c -exec rm {} \;	rec: L=find|/usr/bin|/usr/games|/usr/include|/usr/lib|/usr/lib64|/usr/libexec|/usr/local|/usr/sbin|/usr/share|/usr/src|-size|0c|-exec|rm|{}|;	rec: W=find|/usr/bin|/usr/games|/usr/i686-w64-mingw32|/usr/include|/usr/lib|/usr/lib64|/usr/libexec|/usr/local|/usr/sbin|/usr/share|/usr/src|/usr/x86_64-w64-mingw32|/usr/x86_64-w64-mingw32ucrt|-size|0c|-exec|rm|{}|;
+NB:3952	same-paths			find ~ -size +20M
+NB:4032	same-paths			find ~/src -newer main.css
+NB:4130	same-paths			find ~ -size +10M
+NB:4153	differs	rec		find `ls -d /[ubso]*` -name sar	rec: L=find|/bin|/bin.usr-is-merged|/boot|/old_root|/opt|/sbin|/srv|/sys|/usr|-name|sar\nls|-d|/bin|/bin.usr-is-merged|/boot|/old_root|/opt|/sbin|/srv|/sys|/usr	rec: W=find|/bin|/bin.usr-is-merged|/boot|/old_root|/opt|/sbin|/srv|/usr|-name|sar\nls|-d|/bin|/bin.usr-is-merged|/boot|/old_root|/opt|/sbin|/srv|/usr
+NB:4172	differs	rec	noisy	find /usr -newer /tmp/stamp$$	rec: L=find|/usr|-newer|/tmp/stamp6284	rec: W=find|/usr|-newer|/tmp/stamp1848
+NB:419	same-paths			find ~/dir_data -type f -exec chmod a-x,u+w {} \;
+NB:4206	same-paths			find ~/Desktop -name “*.jpg” -o -name “*.gif” -o -name “*.png” -print0 | xargs -0 mv –target-directory ~/Pictures
+NB:4214	same-paths			find ~/Movies/ -size +1024M
+NB:4314	differs	rec	noisy	find test -type l -exec cp {} {}.tmp$$ \; -exec mv {}.tmp$$ {} \;	rec: L=find|test|-type|l|-exec|cp|{}|{}.tmp21061|;|-exec|mv|{}.tmp21061|{}|;	rec: W=find|test|-type|l|-exec|cp|{}|{}.tmp1912|;|-exec|mv|{}.tmp1912|{}|;
+NB:4342	differs	status,err		/usr/bin/find $DIR -maxdepth 1 -ipath $TMP_DIR -print -quit	status: L=0	status: W=126	err: L=	err: W=sh: /usr/bin/find: Permission denied\n
+NB:4365	same-paths			find ~/code -name '.*' -prune -o -type f -a -perm /u+x -printf ':%h\n' |sort |uniq |tr -d '\n' > ~/.codepath
+NB:4392	same-paths			find /tmp/ -ctime -1 -name "x*" -exec mv '{}' ~/play/
+NB:4393	same-paths			find /tmp/ -ctime -1 -name "x*" | xargs -I '{}' mv '{}' ~/play/
+NB:4395	same-paths			find /tmp/ -ctime -1 -name 'x*' -print0 | xargs -r0 mv -t ~/play/
+NB:4449	timeout-both		noisy	grep -Ril "text-to-find-here" /
+NB:4516	differs	rec		find /tmp/* -atime +10 -exec rm -f {} \;	rec: L=find|/tmp/*|-atime|+10|-exec|rm|-f|{}|;	rec: W=find|/tmp/wine-puMpXQ|-atime|+10|-exec|rm|-f|{}|;
+NB:4523	same-paths			rm -rf "$(pwd -P)"/*
+NB:4529	same-paths			ln --force --target-directory=~/staging ~/mirror/*
+NB:4602	same-paths			basename "$(pwd)"
+NB:4623	differs	rec	noisy	ps -p $$ | awk '$1 == PP {print $4}' PP=$$	rec: L=awk|$1 == PP {print $4}|PP=6762\nps|-p|6762	rec: W=awk|$1 == PP {print $4}|PP=1704\nps|-p|1704
+NB:4624	differs	rec	noisy	ps | grep `echo $$` | awk '{ print $4 }'	rec: L=awk|{ print $4 }\ngrep|31718\nps	rec: W=awk|{ print $4 }\ngrep|472\nps
+NB:4742	same-paths			cd $(echo $somedir | sed "s#^~#$HOME#")
+NB:4768	same-paths			( cd ~/mydir && mycommand )
+NB:4774	differs	rec	noisy	ps -o pid= --ppid $PPID | xargs kill -9	rec: L=ps|-o|pid=|--ppid|32613\nxargs|kill|-9	rec: W=ps|-o|pid=|--ppid|32\nxargs|kill|-9
+NB:4783	timeout-win			yes 0 | sed '1~2s/0/1/'
+NB:4785	timeout-win			yes 1 | nl | tee /tmp/to
+NB:4809	msg	err		kill -9 \`pgrep myprocess\`	err: L=kill: failed to parse argument: '`pgrep'\n	err: W=kill: illegal pid: `pgrep\nkill: illegal pid: myprocess`\n
+NB:4856	differs	status,err		find . -name *.txt -exec ls {} ;\	status: L=127	status: W=126	err: L=sh: \\: not found\n	err: W=sh: \\: Permission denied\n
+NB:4874	same-paths			find $HOME -name '*.ogg' -type f -exec du -h '{}' \;
+NB:4909	msg	err	noisy	find /home/jassi/ -name "aliencoders.[0-9]+" | xargs ls -lrt | awk print '$9'	err: L=awk: line 1: syntax error at or near print\n/runcompare/real/xargs: ls: terminated by signal 13\n	err: W=awk: line 1: syntax error at or near print\n
+NB:4911	differs	rec		echo $PATH | tr ':' '\n' | xargs -I {} find {} -maxdepth 1 -type f -perm '++x'	rec: L=find|/runcompare/bin|-maxdepth|1|-type|f|-perm|++x\nfind|/runcompare/quiet|-maxdepth|1|-type|f|-perm|++x\ntr|:|\\n\nxargs|-I|{}|find|{}|-maxdepth|1|-type|f|-perm|++x	rec: W=find|Z|-maxdepth|1|-type|f|-perm|++x\nfind|runcomparebin|-maxdepth|1|-type|f|-perm|++x\nfind|runcomparequiet;Z|-maxdepth|1|-type|f|-perm|++x\ntr|:|\\n\nxargs|-I|{}|find|{}|-maxdepth|1|-type|f|-perm|++x
+NB:4919	differs	rec	noisy	cat /etc/passwd | sed 's/^\([^:]*\):.*$/crontab -u \1 -l 2>\&1/' | grep -v "no crontab for" | sh	rec: L=cat|/etc/passwd\ngrep|-v|no crontab for\nsed|s/^\\([^:]*\\):.*$/crontab -u \\1 -l 2>\\&1/\nsh^1614 6aae924de5ad2dddcec73ecbfa9cc96d313a764359027b7e6fbd9d970f9e4714	rec: W=cat|/etc/passwd\ngrep|-v|no crontab for\nsed|s/^\\([^:]*\\):.*$/crontab -u \\1 -l 2>\\&1/\nsh^1660 1619318394d638538433417f52352c4a36015719dae7556e02240d54a0cc88f5
+NB:4941	differs	out		env | awk -F= '/[a-zA-Z_][a-zA-Z_0-9]*=/ { if (!system("[ -n \"${" $1 "+y}\" ]")) print $1 }' | sort | uniq	out: L=HOME\nLANG\nLC_ALL\nLOGNAME\nPATH\nPWD\nREALDIR\nREALNAMES\nRECLOG\nSHELL\nTERM\nTMPDIR\nUSER\n	out: W=HOME\nLANG\nLC_ALL\nLOGNAME\nPATH\nPWD\nProgramFiles\nProgramW6432\nREALDIR\nREALNAMES\nRECLOG\nSHELL\nTERM\nTMPDIR\nUSER\n
+NB:4945	differs	out		ls -alrt `pwd`/*	out: L=-rw-r--r-- 1 rc3 rc3   12 Jan  1  2020 /runcompare/w3/run/file.txt\n-rw-r--r-- 1 rc3 rc3    0 Jan  1  2020 /runcompare/w3/run/empty\n-rw-r--r-- 1 rc3 rc3    2 Jan  1  2020 /runcompare/w3/run/c.log\n-rw-r--r-- 1 rc3 rc3    8 Jan  1  2020 /runcompare/w3/run/b.txt\n-rw-r--r-- 1 rc3 rc3   11 Jan  1  2020 /runcompare/w3/run/a.txt\n\n/runcompare/w3/run/home:\ntotal 8\n-rw-r--r-- 1 rc3 rc3    0 Jan  1  2020 .pro	out: W=-rw-r--r-- 1 VM+rc3 4266656257 12 Jan  1  2020 /runcompare/w3/run/file.txt\n-rw-r--r-- 1 VM+rc3 4266656257  0 Jan  1  2020 /runcompare/w3/run/empty\n-rw-r--r-- 1 VM+rc3 4266656257  2 Jan  1  2020 /runcompare/w3/run/c.log\n-rw-r--r-- 1 VM+rc3 4266656257  8 Jan  1  2020 /runcompare/w3/run/b.txt\n-rw-r--r-- 1 VM+rc3 4266656257 11 Jan  1  2020 /runcompare/w3/run/a.txt\n\n/runcompare/w3/run/home:\ntotal 0\n-rw
+NB:4952	same-paths			ls `pwd`/*
+NB:5011	same-paths			find `pwd` -mtime -1 -type f -print
+NB:5012	same-paths			find $(pwd)/ -type f
+NB:5013	same-paths			find `pwd` -name .htaccess
+NB:503	same-paths			cd `cat $HOME/.lastdir`
+NB:5040	same-paths			find ~/Library -name '* *' -exec ls {} \;
+NB:5044	same-paths			find `pwd` -iname ".*" -type f > all-hidden-files.txt
+NB:5062	same-paths			find ~/junk   -name "*" -exec ls -l {} \;
+NB:5075	same-paths			find ~ -type f -mmin -90 | xargs ls -l
+NB:5076	same-paths			find ~ -type f -mtime +1825 |xargs -r ls -l
+NB:5077	same-paths			find ~ -type f -mtime +1825 |xargs ls -l
+NB:5103	same-paths			find ~
+NB:5128	differs	out		pwd | cut -b2- | tr '/' '\n'	out: L=runcompare\nw0\nrun\n	out: W=:\nruncompare\nw0\nrun\n
+NB:5137	differs	out		env | sed 's/;/\\;/g'	out: L=RECLOG=/runcompare/w2/log\nUSER=rc2\nHOME=/runcompare/w2/run/home\nTMPDIR=/runcompare/w2/run\nLOGNAME=rc2\nTERM=dumb\nPATH=/runcompare/quiet:/runcompare/bin\nLANG=C\nREALNAMES=[ awk base64 basename cat cmp comm cut diff dirname echo egrep env expr false fgrep fold grep head join kill ls md5sum mkdir nl od paste printenv printf pwd readlink realpath rev sed seq sha256sum sort stat tac tail tee test touch t	out: W=APPDATA=C:\\users\\rc2\\AppData\\Roaming\nCommonProgramFiles=C:\\Program Files\\Common Files\nCOMPUTERNAME=RUNWIN\nComSpec=C:\\windows\\system32\\cmd.exe\nHOME=/runcompare/w2/run/home\nLANG=C\nLC_ALL=C\nLOCALAPPDATA=C:\\users\\rc2\\AppData\\Local\nLOGNAME=rc2\nNUMBER_OF_PROCESSORS=4\nOS=Windows_NT\nPATHEXT=.COM\\;.EXE\\;.BAT\\;.CMD\nPROCESSOR_ARCHITECTURE=AMD64\nProgramFiles=C:\\Program Files\nProgramW6432=C:\\Program Files\nPWD=
+NB:5144	same-paths			find `pwd` -perm 111 -type f | sort -r | xargs -n1 -I{} sh -c "dirname {};basename {}" | awk '/^\// {dir=$0 ; if (dir !=
+NB:5145	same-paths			find `pwd` -group staff -exec find {} -type l -print ;
+NB:5152	differs	out	noisy	find . -print | xargs ls -gilds	out: L=4268193 4 drwxr-xr-x 4 rc3 4096 Jan  1  2020 .\n	out: W=4251713 4 drwxr-xr-x 4 rc3 4096 Jan  1  2020 .\n
+NB:5153	same-paths			find ~/junk  -name 'cart[1-6]' -exec ls -l {} \; 2> /dev/null
+NB:5173	same-paths			find `pwd` -name "accepted_hits.bam" | xargs -i echo somecommand {}
+NB:52	same-paths			find ~ -type d -exec chmod +x {} \;
+NB:5211	same-paths			ls "`pwd`/file.txt"
+NB:5212	differs	rec	noisy	ls /usr/bin | more	rec: L=ls|/usr/bin\nmore^12827 b65c557ee659c813576ad662a80414c71fb0a68c47abb52e708b7f558a791a50	rec: W=ls|/usr/bin\nmore^15118 883f7f37ab82e4842b6a9a8b5c81ebd998f98beef632d2766bf00306293386a4
+NB:5219	same-paths			echo $(ls $(pwd))
+NB:5277	differs	out		ls -l /lib*/ld-linux*.so.2	out: L=lrwxrwxrwx 1 root root 44 Sep  3 14:15 /lib64/ld-linux-x86-64.so.2 -> ../lib/x86_64-linux-gnu/ld-linux-x86-64.so.2\n	out: W=lrwxrwxrwx 1 root root 44 Nov  5 17:18 /lib64/ld-linux-x86-64.so.2 -> ../lib/x86_64-linux-gnu/ld-linux-x86-64.so.2\n
+NB:5289	same-paths			ls -d -1 $PWD/**/*
+NB:5293	differs	out	noisy	ls -l /proc/self/fd/	out: L=total 0\nlr-x------ 1 rc3 rc3 64 Nov 17 11:59 0 -> /dev/null\nl-wx------ 1 rc3 rc3 64 Nov 17 11:59 1 -> /runcompare/w3/out\nl-wx------ 1 rc3 rc3 64 Nov 17 11:59 2 -> /runcompare/w3/err\nlr-x------ 1 rc3 rc3 64 Nov 17 11:59 3 -> /proc/5760/fd\n	out: W=total 0\nlr-x------ 1 rc3 rc3 64 Nov 19 10:38 0 -> /dev/null\nl-wx------ 1 rc3 rc3 64 Nov 19 10:38 1 -> /runcompare/w3/br1736/out\nl-wx------ 1 rc3 rc3 64 Nov 19 10:38 2 -> /runcompare/w3/br1736/err\nlr-x------ 1 rc3 rc3 64 Nov 19 10:38 3 -> /proc/21284/fd\n
+NB:5310	same-paths			find $HOME -iname '*.ogg' -atime +30
+NB:5323	same-paths			find $HOME -atime +30
+NB:5377	same-paths			mkdir $(seq -f "$HOME/Labs/lab4a/folder%03g" 3)
+NB:5389	same-paths			cp -r dir1/ ~/Pictures/
+NB:539	same-paths			mount | grep -q ~/mnt/sdc1
+NB:5398	same-paths			find ~ -type f \( -iname '*.mp3' -o -iname '*.ogg' \) > mynewplaylist.m3u
+NB:5472	same-paths			mkdir ~/log
+NB:5473	same-paths			mkdir ~/practice
+NB:5474	same-paths			mkdir ~/public_html
+NB:5475	same-paths			mkdir ~/temp
+NB:5479	same-paths			mkdir -p ~/temp/bluecove/target/
+NB:552	differs	rec	noisy	pstree --show-parents -p $$ | head -n 1 | sed 's/\(.*\)+.*/\1/' | wc -l	rec: L=head|-n|1\npstree|--show-parents|-p|7862\nsed|s/\\(.*\\)+.*/\\1/\nwc|-l	rec: W=head|-n|1\npstree|--show-parents|-p|1500\nsed|s/\\(.*\\)+.*/\\1/\nwc|-l
+NB:5560	same-paths			sudo mount -t vboxsf myFileName ~/destination
+NB:557	msg	err		kill -0 1	err: L=kill: (1): Operation not permitted\n	err: W=kill: 1: No such process\n
+NB:5592	same-paths			find . -name '*~' -print 0 | xargs -0 -I % cp % ~/backups
+NB:5625	same-paths			mv ~/Linux/Old/^Tux.png ~/Linux/New/
+NB:5631	same-paths			find . -exec mv '{}' ~/play/ \;
+NB:5632	same-paths			find . | xargs -I'{}' mv '{}' ~/play/
+NB:5699	timeout-linux			yes | sed -n '200000000,${=;p};200000005q'
+NB:571	differs	rec	noisy	pstree --show-parents -p $$ | head -n 1 | sed 's/\(.*\)+.*/\1/' | grep screen | wc -l	rec: L=grep|screen\nhead|-n|1\npstree|--show-parents|-p|567\nsed|s/\\(.*\\)+.*/\\1/\nwc|-l	rec: W=grep|screen\nhead|-n|1\npstree|--show-parents|-p|1352\nsed|s/\\(.*\\)+.*/\\1/\nwc|-l
+NB:5739	msg	err		/bin/true "$(seq 1 100000)"	err: L=sh: /bin/true: Argument list too long\n	err: W=sh: /bin/true: Permission denied\n
+NB:5742	differs	status,err		/bin/true $(seq 1 100000)	status: L=0	status: W=126	err: L=	err: W=sh: /bin/true: Permission denied\n
+NB:5776	differs	err,files		{ echo foo; cat bar; } | tee bar > /dev/null	err: L=	err: W=/runcompare/real/cat: bar: No such file or directory\n	files: L=.hidden 2 91ee5e9f42ba\na.txt 11 e49c81e2d2f8\nb.txt 8 2dbb4a503f15\nbar 8 f13a55b71d31\nc.log 2 73cb3858a687\ndir/\ndir/sub/\ndir/sub/y.sh 7 6d1239d99196\ndir/x.txt 7 867087258aca\nempty 0 e3b0c44298fc\nfile.txt 12 a948904f2f0f\nhome/\nhome/.profile 0 e3b0c44298fc	files: W=.hidden 2 91ee5e9f42ba\na.txt 11 e49c81e2d2f8\nb.txt 8 2dbb4a503f15\nbar 4 b5bb9d8014a0\nc.log 2 73cb3858a687\ndir/\ndir/sub/\ndir/sub/y.sh 7 6d1239d99196\ndir/x.txt 7 867087258aca\nempty 0 e3b0c44298fc\nfile.txt 12 a948904f2f0f\nhome/\nhome/.profile 0 e3b0c44298fc
+NB:5877	same-paths			find $HOME -maxdepth 1 -type f -name '.*' -print0
+NB:5884	same-paths			find ~/code -name '.*' -prune -o -type f -a -perm /u+x -printf ':%h\n' | sort | uniq | tr -d '\n'
+NB:5939	differs	out	noisy	seq 2000 65000 | sort -R | head -n 1	out: L=57249\n	out: W=21757\n
+NB:5949	same-paths			find ~/Music/ -iname 'cover.*' -printf '%h\n' | sort -u
+NB:5959	same-paths			find ~/Music/ -maxdepth 2 -mindepth 2 -type d | sort
+NB:6020	same-paths			df -Ph $PWD | tail -1 | awk '{ print $3}'
+NB:6024	same-paths			df $PWD | awk '/[0-9]%/{print $(NF-2)}'
+NB:6064	differs	out	noisy	cat /etc/passwd /etc/group	out: L=root:x:0:0:root:/root:/bin/bash\ndaemon:x:1:1:daemon:/usr/sbin:/usr/sbin/nologin\nbin:x:2:2:bin:/bin:/usr/sbin/nologin\nsys:x:3:3:sys:/dev:/usr/sbin/nologin\nsync:x:4:65534:sync:/bin:/bin/sync\ngames:x:5:60:games:/usr/games:/usr/sbin/nologin\nman:x:6:12:man:/var/cache/man:/usr/sbin/nologin\nlp:x:7:7:lp:/var/spool/lpd:/usr/sbin/nologin\nmail:x:8:8:mail:/var/mail:/usr/sbin/nologin\nnews:x:9:9:news:/var/spool	out: W=root:x:0:0:root:/root:/bin/bash\ndaemon:x:1:1:daemon:/usr/sbin:/usr/sbin/nologin\nbin:x:2:2:bin:/bin:/usr/sbin/nologin\nsys:x:3:3:sys:/dev:/usr/sbin/nologin\nsync:x:4:65534:sync:/bin:/bin/sync\ngames:x:5:60:games:/usr/games:/usr/sbin/nologin\nman:x:6:12:man:/var/cache/man:/usr/sbin/nologin\nlp:x:7:7:lp:/var/spool/lpd:/usr/sbin/nologin\nmail:x:8:8:mail:/var/mail:/usr/sbin/nologin\nnews:x:9:9:news:/var/spool
+NB:6077	differs	rec	noisy	cat /etc/passwd | sed 's/^\([^:]*\):.*$/crontab -u \1 -l 2>\&1/' | sh | grep -v "no crontab for"	rec: L=cat|/etc/passwd\ngrep|-v|no crontab for\nsed|s/^\\([^:]*\\):.*$/crontab -u \\1 -l 2>\\&1/\nsh^1614 6aae924de5ad2dddcec73ecbfa9cc96d313a764359027b7e6fbd9d970f9e4714	rec: W=cat|/etc/passwd\ngrep|-v|no crontab for\nsed|s/^\\([^:]*\\):.*$/crontab -u \\1 -l 2>\\&1/\nsh^1660 1619318394d638538433417f52352c4a36015719dae7556e02240d54a0cc88f5
+NB:6081	differs	rec	noisy	ps  -ef | grep $$ | grep -v grep	rec: L=grep|-v|grep\ngrep|25992\nps|-ef	rec: W=grep|-v|grep\ngrep|968\nps|-ef
+NB:6082	differs	rec	noisy	ps -p $$	rec: L=ps|-p|28232	rec: W=ps|-p|1428
+NB:6132	differs	out		ls `which g++` -al	out: L=total 36\ndrwxr-xr-x 4 rc2 rc2 4096 Jan  1  2020 .\ndrwxr-xr-x 3 rc2 rc2 4096 Jan  1  2020 ..\n-rw-r--r-- 1 rc2 rc2    2 Jan  1  2020 .hidden\n-rw-r--r-- 1 rc2 rc2   11 Jan  1  2020 a.txt\n-rw-r--r-- 1 rc2 rc2    8 Jan  1  2020 b.txt\n-rw-r--r-- 1 rc2 rc2    2 Jan  1  2020 c.log\ndrwxr-xr-x 3 rc2 rc2 4096 Jan  1  2020 dir\n-rw-r--r-- 1 rc2 rc2    0 Jan  1  2020 empty\n-rw-r--r-- 1 rc2 rc2   12 Jan  1  2020	out: W=total 20\ndrwxr-xr-x 1 VM+rc2 4266656257  0 Jan  1  2020 .\ndrwxr-xr-x 1 VM+rc2 4266656257  0 Jan  1  2020 ..\n-rw-r--r-- 1 VM+rc2 4266656257  2 Jan  1  2020 .hidden\n-rw-r--r-- 1 VM+rc2 4266656257 11 Jan  1  2020 a.txt\n-rw-r--r-- 1 VM+rc2 4266656257  8 Jan  1  2020 b.txt\n-rw-r--r-- 1 VM+rc2 4266656257  2 Jan  1  2020 c.log\ndrwxr-xr-x 1 VM+rc2 4266656257  0 Jan  1  2020 dir\n-rw-r--r-- 1 VM+rc2 4266656
+NB:6133	differs	out		ls `which gcc` -al	out: L=total 36\ndrwxr-xr-x 4 rc3 rc3 4096 Jan  1  2020 .\ndrwxr-xr-x 3 rc3 rc3 4096 Jan  1  2020 ..\n-rw-r--r-- 1 rc3 rc3    2 Jan  1  2020 .hidden\n-rw-r--r-- 1 rc3 rc3   11 Jan  1  2020 a.txt\n-rw-r--r-- 1 rc3 rc3    8 Jan  1  2020 b.txt\n-rw-r--r-- 1 rc3 rc3    2 Jan  1  2020 c.log\ndrwxr-xr-x 3 rc3 rc3 4096 Jan  1  2020 dir\n-rw-r--r-- 1 rc3 rc3    0 Jan  1  2020 empty\n-rw-r--r-- 1 rc3 rc3   12 Jan  1  2020	out: W=total 20\ndrwxr-xr-x 1 VM+rc3 4266656257  0 Jan  1  2020 .\ndrwxr-xr-x 1 VM+rc3 4266656257  0 Jan  1  2020 ..\n-rw-r--r-- 1 VM+rc3 4266656257  2 Jan  1  2020 .hidden\n-rw-r--r-- 1 VM+rc3 4266656257 11 Jan  1  2020 a.txt\n-rw-r--r-- 1 VM+rc3 4266656257  8 Jan  1  2020 b.txt\n-rw-r--r-- 1 VM+rc3 4266656257  2 Jan  1  2020 c.log\ndrwxr-xr-x 1 VM+rc3 4266656257  0 Jan  1  2020 dir\n-rw-r--r-- 1 VM+rc3 4266656
+NB:6198	differs	rec	noisy	cat /etc/passwd -n | grep `whoami` | cut -f1	rec: L=cat|/etc/passwd|-n\ncut|-f1\ngrep\nwhoami^3960 8cd47fff0d7bd59fdf321205fd37c33bd12574d77abc145c5c7a3d84d2840417	rec: W=cat|/etc/passwd|-n\ncut|-f1\ngrep\nwhoami^4074 5d2e9c66a615b25272e924fc3aa99195a06487350537b7f034a5ee1f5fff4824
+NB:6247	differs	rec	noisy	ps -o user= -p $$ | awk '{print $1}'	rec: L=awk|{print $1}\nps|-o|user=|-p|18374	rec: W=awk|{print $1}\nps|-o|user=|-p|2056
+NB:6255	same-paths			ls -d -1 $PWD/**/*/* | cat -n
+NB:6274	same-paths			find $(pwd) -name YourProgram -exec dirname {} \; | while read d; do cd "$d" && pwd; done
+NB:6275	differs	out		echo "$PATH" | rev | cut -d"/" -f1 | rev	out: L=bin\n	out: W=/runcompare/quiet;/runcompare/bin\n
+NB:6283	differs	out	noisy	cut -d: -f1 /etc/group	out: L=root\ndaemon\nbin\nsys\nadm\ntty\ndisk\nlp\nmail\nnews\nuucp\nman\nproxy\nkmem\ndialout\nfax\nvoice\ncdrom\nfloppy\ntape\nsudo\naudio\ndip\nwww-data\nbackup\noperator\nlist\nirc\nsrc\nshadow\nutmp\nvideo\nsasl\nplugdev\nstaff\ngames\nusers\nnogroup\nubuntu\nsystemd-journal\nsystemd-network\nssl-cert\nmessagebus\nredis\npostgres\npolkitd\ndocker\nnixbld\nclaude\nrc0\nrc1\nrc2\nrc3\n	out: W=root\ndaemon\nbin\nsys\nadm\ntty\ndisk\nlp\nmail\nnews\nuucp\nman\nproxy\nkmem\ndialout\nfax\nvoice\ncdrom\nfloppy\ntape\nsudo\naudio\ndip\nwww-data\nbackup\noperator\nlist\nirc\nsrc\nshadow\nutmp\nvideo\nsasl\nplugdev\nstaff\ngames\nusers\nnogroup\nubuntu\nsystemd-journal\nsystemd-network\nssl-cert\nmessagebus\nredis\npostgres\npolkitd\ndocker\nnixbld\nclaude\nrdma\nrc0\nrc1\nrc2\nrc3\nrw0\nrw1\n
+NB:6297	same-paths			find ~ -name '*.txt' -print0 | xargs -0 cat
+NB:6298	same-paths			find ~/ -name '*.txt' -exec cat {} ;
+NB:6308	same-paths			~ $ . trap.sh | cat
+NB:6335	differs	status,err		zcat number.txt.gz | { zcat xxx.txt.gz | comm -12 /dev/fd/3 - ; } 3<&0	status: L=0	status: W=1	err: L=	err: W=/usr/bin/comm: /dev/fd/3: No such file or directory\n
+NB:6367	same-paths			find ~/bin/FilesDvorak/.* -maxdepth 0 | awk -F"/" '{ print $6 }'
+NB:6380	same-paths			ls -d -1 $PWD/**/*/* | nl
+NB:6386	same-paths			basename "`pwd`"
+NB:6387	same-paths			basename $(pwd)
+NB:6388	same-paths			basename `pwd`
+NB:6389	same-paths			echo "$(basename $(pwd))"
+NB:6390	same-paths			pwd | xargs basename
+NB:6419	same-paths			cat ~/.ssh/config
+NB:6436	differs	rec	noisy	ps -p $$ | tail -1 | awk '{print $NF}'	rec: L=awk|{print $NF}\nps|-p|16363\ntail|-1	rec: W=awk|{print $NF}\nps|-p|2060\ntail|-1
+NB:6438	differs	out		echo `whoami` `stat -c %i "/home"`	out: L=12\n	out: W=28\n
+NB:6442	same-paths			echo "$(pwd)/$(basename "$1")"
+NB:6443	same-paths			echo pwd: `pwd`
+NB:6444	same-paths			pwd -P
+NB:6445	same-paths			echo -n $(pwd)
+NB:6454	same-paths			dirname `pwd -P`
+NB:6495	same-paths			find $HOME/. -name *.txt -exec head -n 1 -v {} \;
+NB:6504	same-paths			xargs -n 1 -I '{}' find "$(pwd)" -type f -inum '{}' -print
+NB:6526	differs	rec	noisy	cat /proc/config.gz | gunzip	rec: L=cat|/proc/config.gz\ngunzip^23613 1919fdc66f260421febb9822d909891589619678e139bb5bdef3047f9dd0de02	rec: W=cat|/proc/config.gz\ngunzip^23613 de7c589040003e98806db82f7017cb689e1be3d46090770645b0174c8a36a98e
+NB:6578	same-paths			find ~ -name 'Foto*'
+NB:6601	same-paths			find $(pwd)/* -type f -exec stat -c "f%15s %n" {} +
+NB:6608	same-paths			find ~ -type f -exec file -i {} + | grep video
+NB:6611	same-paths			find ~/some/directory -name "*rb" -exec basename {} \;
+NB:662	same-paths			find ~/ -name '*.txt' -print0 | xargs -0 wc -w | awk 'END { print $1/(NR-1) }'
+NB:6627	same-paths			echo `pwd`/`dirname $0`
+NB:663	same-paths			find ~/Journalism  -name '*.txt' -print0 | xargs -0 wc -w | awk '$1 < 2000 {v += $1; c++} END {print v/c}'
+NB:6638	same-paths			echo "`pwd -P`"
+NB:6664	differs	out,err,rec	noisy	echo $(cat /proc/$$/cmdline)	out: L=/usr/bin/perl-I/runcompare/dist/blib/lib-I/runcompare/dist/blib/arch/runcompare/dist/t/try.plecho $(cat /proc/$$/cmdline)\n	out: W=\n	err: L=	err: W=/runcompare/real/cat: /proc/812/cmdline: No such file or directory\n	rec: L=cat|/proc/28625/cmdline	rec: W=cat|/proc/812/cmdline
+NB:6669	differs	out	noisy	seq -f 'some line %g' 500 | nl | sort -R | cut -f2- | head -3	out: L=some line 423\nsome line 243\nsome line 214\n	out: W=some line 69\nsome line 77\nsome line 109\n
+NB:6673	same-paths			readlink `pwd`
+NB:6714	differs	out		pwd | tr '/' '\n'	out: L=\nruncompare\nw1\nrun\n	out: W=Z:\nruncompare\nw1\nrun\n
+NB:6767	same-paths			ls $PWD/cat.wav
+NB:6768	same-paths			ls -1 | awk  -vpath=$PWD/ '{print path$1}'
+NB:6769	same-paths			ls -d $PWD/*
+NB:6770	same-paths			ls -d -1 $PWD/**
+NB:6771	same-paths			ls -d -1 $PWD/*.*
+NB:6790	differs	err,rec		ldd /bin/* /usr/bin/* | sed -e '/^[^\t]/ d; s/^\t\(.* => \)\?\([^ ]*\) (.*/\2/g' | sort | uniq -c	err: L=	err: W=sh: ldd: Argument list too long\n	rec: L=[...cut]\nldd|/bin/2to3-3.11|/bin/X0tigervnc|/bin/X11|/bin/Xvfb|/bin/[|/bin/aclocal|/bin/aclocal-1.16|/bin/activate-global-python-argcomplete|/bin/add-apt-repository|/bin/addpart|/bin/addr2line|/bin/age|/bin/age-keygen|/bin/amdgpu-arch-18|/bin/analyze-build-18|/bin/animate|/bin/animate-im6|/bin/animate-im6.q16|/bin/apt|/bin/apt-add-repository|/bin/apt-cache|/bin/apt-cdrom|/bin/apt-config|/bin/apt-g	rec: W=sed|-e|/^[^\\t]/ d; s/^\\t\\(.* => \\)\\?\\([^ ]*\\) (.*/\\2/g\nsort\nuniq|-c
+NB:6799	differs	out	noisy	ls -l -- "$dir/$file"	out: L=total 80\nlrwxrwxrwx   1 root root     7 Apr 22  2024 bin -> usr/bin\ndrwxr-xr-x   2 root root  4096 Apr  8  2024 bin.usr-is-merged\ndrwxr-xr-x   2 root root  4096 Apr 22  2024 boot\n-rw-r--r--   1 root root   512 Nov 17 06:30 container_info.json\ndrwxr-xr-x   6 root root  2280 Nov 17 06:30 dev\ndrwxr-xr-x  82 root root  4096 Nov 17 08:10 etc\ndrwxr-xr-x   5 root root  4096 Nov 17 06:32 home\nlrwxrwxrwx  	out: W=total 92\nlrwxrwxrwx   1 root root     7 Apr 22  2024 bin -> usr/bin\ndrwxr-xr-x   2 root root  4096 Apr  8  2024 bin.usr-is-merged\ndrwxr-xr-x   2 root root  4096 Apr 22  2024 boot\n-rw-r--r--   1 root root   512 Nov 19 09:04 container_info.json\ndrwxr-xr-x   6 root root  2280 Nov 19 09:04 dev\ndrwxr-xr-x  85 root root  4096 Nov 18 09:55 etc\ndrwxr-xr-x   5 root root  4096 Nov 18 09:34 home\nlrwxrwxrwx  
+NB:6810	differs	out	noisy	ls -ld /tmp /tnt | sed 's/^.*$/<-- & --->/'	out: L=<-- drwxrwxrwt 2 root root 40 Nov 17 11:59 /tmp --->\n	out: W=<-- drwxrwxrwt 3 root root 60 Nov 19 10:37 /tmp --->\n
+NB:6811	differs	out	noisy	ls -ld /tmp /tnt	out: L=drwxrwxrwt 2 root root 40 Nov 17 11:59 /tmp\n	out: W=drwxrwxrwt 3 root root 60 Nov 19 10:38 /tmp\n
+NB:6818	timeout-win		noisy	ls -lR / | tee -a output.file
+NB:6819	timeout-win		noisy	ls -lR / | tee output.file
+NB:6821	differs	out,err,rec	noisy	ls -l /proc/$$/exe | sed 's%.*/%%'	out: L=perl\n	out: W=	err: L=	err: W=/runcompare/real/ls: cannot access '/proc/1276/exe': No such file or directory\n	rec: L=ls|-l|/proc/16204/exe\nsed|s%.*/%%	rec: W=ls|-l|/proc/1276/exe\nsed|s%.*/%%
+NB:683	timeout-win			yes a=\"20131202\" | sed -e :a -e 's/...\([0-9]\{4\}\)\([0-9]\{2\}\)\([0-9]\{2\}\)./\1 \2 \3/'
+NB:6840	differs	rec	noisy	pstree -A -s $$	rec: L=pstree|-A|-s|5246	rec: W=pstree|-A|-s|1224
+NB:6843	differs	rec	noisy	pstree -sp $$	rec: L=pstree|-sp|21417	rec: W=pstree|-sp|528
+NB:6844	differs	rec	noisy	pstree --show-parents -p $$ | head -n 1 | sed 's/\(.*\)+.*/\1/' | less	rec: L=head|-n|1\nless^0 e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\npstree|--show-parents|-p|5572\nsed|s/\\(.*\\)+.*/\\1/	rec: W=head|-n|1\nless^0 e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\npstree|--show-parents|-p|1176\nsed|s/\\(.*\\)+.*/\\1/
+NB:6847	differs	rec	noisy	pstree -p $$	rec: L=pstree|-p|21687	rec: W=pstree|-p|416
+NB:6848	differs	rec	noisy	pstree -s $$	rec: L=pstree|-s|5821	rec: W=pstree|-s|1264
+NB:685	differs	out	noisy	yes 123456789 | grep --line-buffered . | { head -n 1; head -n 1; }	out: L=123456789\n123456789\n	out: W=123456789\n
+NB:6924	timeout-win			ldd /bin/* /usr/bin/* ... | sed -e '/^[^\t]/ d; s/^\t\(.* => \)\?\([^ ]*\) (.*/\2/g' | sort | uniq -c
+NB:7058	same-paths			sudo chown -R $(whoami) ~/.npm
+NB:7059	same-paths			sudo chown -R `whoami` ~/.npm
+NB:7071	same-paths			chown "dev_user"."dev_user" -R ~/.ssh/
+NB:7083	same-paths			sudo chown -R $USER ~/tmp
+NB:7117	same-paths			cp -r ../include/gtest ~/usr/gtest/include/
+NB:7123	same-paths			cp -r `ls -A | grep -v "c"` $HOME/
+NB:7187	same-paths			find ~/ -type f -exec grep -H 'text-to-find-here' {} \;
+NB:7192	same-paths			grep -rnw `pwd` -e "pattern"
+NB:7229	same-paths			find $(pwd) -name \*.txt -print
+NB:7235	same-paths			rm -r $TMPDIR
+NB:7283	same-paths			find ~/test -type d -exec basename {} \;
+NB:7332	same-paths			find `pwd` -name core -ctime +4 -execdir /bin/rm -f {} \;
+NB:7353	differs	rec		find $backup_path/* -name *.sql -mtime +30 -exec rm {} \;	rec: L=find|/bin|/bin.usr-is-merged|/boot|/container_info.json|/dev|/etc|/home|/lib|/lib.usr-is-merged|/lib64|/lost+found|/media|/mnt|/nix|/old_root|/opt|/proc|/root|/run|/runcompare|/sbin|/srv|/sys|/tmp|/usr|/var|-name|*.sql|-mtime|+30|-exec|rm|{}|;	rec: W=find|/bin|/bin.usr-is-merged|/boot|/container_info.json|/etc|/home|/lib|/lib.usr-is-merged|/lib64|/media|/mnt|/nix|/old_root|/opt|/run|/runcompare|/runwin|/runwintest|/sbin|/srv|/tmp|/usr|/var|/work|-name|*.sql|-mtime|+30|-exec|rm|{}|;
+NB:7359	same-paths			find $HOME/. -name *.txt -ok rm {} \;
+NB:7365	timeout-win			find dir -name \*~ | xargs echo rm | ksh -s
+NB:7396	same-paths			find ~/ -name 'core*' -exec rm {} \;
+NB:741	same-paths			find $(pwd) -type f | xargs -I xxx sed -i 's/\r//g' xxx
+NB:7413	same-paths			find $HOME \( -name a.out -o -name '*.o' \) -atime +7 -exec rm {} \;
+NB:7418	differs	status,err,files		yes | /bin/rm -i *	status: L=1	status: W=126	err: L=/bin/rm: remove regular file 'a.txt'? /bin/rm: remove regular file 'b.txt'? /bin/rm: remove regular file 'c.log'? /bin/rm: cannot remove 'dir': Is a directory\n/bin/rm: remove regular empty file 'empty'? /bin/rm: remove regular file 'file.txt'? /bin/rm: cannot remove 'home': Is a directory\n	err: W=sh: /bin/rm: Permission denied\n	files: L=.hidden 2 91ee5e9f42ba\ndir/\ndir/sub/\ndir/sub/y.sh 7 6d1239d99196\ndir/x.txt 7 867087258aca\nhome/\nhome/.profile 0 e3b0c44298fc	files: W=.hidden 2 91ee5e9f42ba\na.txt 11 e49c81e2d2f8\nb.txt 8 2dbb4a503f15\nc.log 2 73cb3858a687\ndir/\ndir/sub/\ndir/sub/y.sh 7 6d1239d99196\ndir/x.txt 7 867087258aca\nempty 0 e3b0c44298fc\nfile.txt 12 a948904f2f0f\nhome/\nhome/.profile 0 e3b0c44298fc
+NB:7420	differs	status,err		/usr/bin/find /home/user/Series/ -iname "*sample*" -exec rm {} \;	status: L=1	status: W=126	err: L=/usr/bin/find: '/home/user/Series/': No such file or directory\n	err: W=sh: /usr/bin/find: Permission denied\n
+NB:7431	differs	rec		find $backup_path/* -mtime +30 -exec rm {} \;	rec: L=find|/bin|/bin.usr-is-merged|/boot|/container_info.json|/dev|/etc|/home|/lib|/lib.usr-is-merged|/lib64|/lost+found|/media|/mnt|/nix|/old_root|/opt|/proc|/root|/run|/runcompare|/sbin|/srv|/sys|/tmp|/usr|/var|-mtime|+30|-exec|rm|{}|;	rec: W=find|/bin|/bin.usr-is-merged|/boot|/container_info.json|/etc|/home|/lib|/lib.usr-is-merged|/lib64|/media|/mnt|/nix|/old_root|/opt|/run|/runcompare|/runwin|/runwintest|/sbin|/srv|/tmp|/usr|/var|/work|-mtime|+30|-exec|rm|{}|;
+NB:7434	same-paths			find ~/backups/mydatabasename/* -mtime +30 -exec rm {} \;
+NB:747	same-paths			find . -name '*FoooBar*' | sed 's/.*/"&"/' | xargs cp ~/foo/bar
+NB:748	same-paths			find . -name '*FooBar*' -exec cp -t ~/foobar -- {} +
+NB:751	same-paths			cp lib*.so ~/usr/gtest/lib
+NB:752	same-paths			find -name '*FooBar*' -print0 | xargs -0 cp -t ~/foo/bar
+NB:7524	same-paths			find ~/junk  -name 'cart[4-6]' -exec rm {}  \;
+NB:7530	same-paths			find ~/clang+llvm-3.3/bin/ -type f -exec basename {} \; | xargs rm
+NB:754	same-paths			find . -iname "*foobar*" -exec cp "{}" ~/foo/bar \;
+NB:756	same-paths			find . | grep FooBar | xargs -I{} cp {} ~/foo/bar
+NB:7586	same-paths			find ~/ -atime +100 -exec rm -i {} ;
+NB:7664	same-paths			sudo rm -rf /usr/local/bin/npm /usr/local/share/man/man1/node* /usr/local/lib/dtrace/node.d ~/.npm ~/.node-gyp /opt/loca
+NB:7674	same-paths			rm -f ~/.android/adbkey ~/.android/adbkey.pub
+NB:7744	same-paths			find ~/junk  -name 'cart1' -exec mv {} ~/junk/A \;
+NB:7781	msg	err		sed s/STRING_TO_REPLACE/STRING_TO_REPLACE_IT/g index.html | tee index.html	err: L=	err: W=/runcompare/real/sed: can't read index.html: No such file or directory\n
+NB:7858	same-paths			df -i $PWD
+NB:7968	msg	err		/bin/sh -c "/bin/true $(seq 1 100000)"	err: L=sh: /bin/sh: Argument list too long\n	err: W=sh: /bin/sh: Permission denied\n
+NB:7969	msg	err		/bin/sh -c "/bin/true $(seq 1 99999)"	err: L=sh: /bin/sh: Argument list too long\n	err: W=sh: /bin/sh: Permission denied\n
+NB:7982	same-paths			env - `cat ~/cronenv` /bin/sh
+NB:7989	differs	status,err		/usr/bin/sudo -u `whoami` `which program`	status: L=1	status: W=126	err: L=/usr/bin/sudo: option requires an argument -- 'u'\nusage: sudo -h | -K | -k | -V\nusage: sudo -v [-ABkNnS] [-g group] [-h host] [-p prompt] [-u user]\nusage: sudo -l [-ABkNnS] [-g group] [-h host] [-p prompt] [-U user]\n            [-u user] [command [arg ...]]\nusage: sudo [-ABbEHkNnPS] [-r role] [-t type] [-C num] [-D directory]\n            [-g group] [-h host] [-p prompt] [-R directory] [-T timeout]	err: W=sh: /usr/bin/sudo: Permission denied\n
+NB:7996	differs	out		env -i perl -V	out: L=Summary of my perl5 (revision 5 version 38 subversion 2) configuration:\n   \n  Platform:\n    osname=linux\n    osvers=6.1.0\n    archname=x86_64-linux-gnu-thread-multi\n    uname='linux localhost 6.1.0 #1 smp debian 6.1.0 x86_64 gnulinux '\n    config_args='-Dmksymlinks -Dusethreads -Duselargefiles -Dcc=x86_64-linux-gnu-gcc -Dcpp=x86_64-linux-gnu-cpp -Dld=x86_64-linux-gnu-gcc -Dccflags=-DDEBIAN -Wdate-	out: W=Summary of my perl5 (revision 5 version 38 subversion 2) configuration:\n   \n  Platform:\n    osname=linux\n    osvers=6.1.0\n    archname=x86_64-linux-gnu-thread-multi\n    uname='linux localhost 6.1.0 #1 smp debian 6.1.0 x86_64 gnulinux '\n    config_args='-Dmksymlinks -Dusethreads -Duselargefiles -Dcc=x86_64-linux-gnu-gcc -Dcpp=x86_64-linux-gnu-cpp -Dld=x86_64-linux-gnu-gcc -Dccflags=-DDEBIAN -Wdate-
+NB:8001	same-paths			sed -i "s#\(export\ PATH=\"\)\(.*\)#\1/home/$(whoami)/bin:~/\.local/bin:\2#" ~/.zshrc
+NB:806	same-paths			find ~/ -name *.png -exec cp {} imagesdir \;
+NB:8061	differs	rec		FOLDERS=`ls -dm $MY_DIRECTORY/*/ | tr -d ' '`	rec: L=ls|-dm|/bin.usr-is-merged/|/bin/|/boot/|/dev/|/etc/|/home/|/lib.usr-is-merged/|/lib/|/lib64/|/lost+found/|/media/|/mnt/|/nix/|/old_root/|/opt/|/proc/|/root/|/run/|/runcompare/|/sbin/|/srv/|/sys/|/tmp/|/usr/|/var/\ntr|-d| 	rec: W=ls|-dm|/bin.usr-is-merged/|/bin/|/boot/|/etc/|/home/|/lib.usr-is-merged/|/lib/|/lib64/|/media/|/mnt/|/nix/|/old_root/|/opt/|/run/|/runcompare/|/runwin/|/runwintest/|/sbin/|/srv/|/tmp/|/usr/|/var/|/work/\ntr|-d| 
+NB:8079	same-paths			FOLDERS=$(find $PWD -type d | paste -d, -s)
+NB:8115	differs	rec	noisy	SELF=$(readlink /proc/$$/fd/255)	rec: L=readlink|/proc/5625/fd/255	rec: W=readlink|/proc/1928/fd/255
+NB:8116	differs	rec	noisy	SELF=`readlink /proc/$$/fd/255`	rec: L=readlink|/proc/30966/fd/255	rec: W=readlink|/proc/372/fd/255
+NB:8127	same-paths			cat ~/.bashrc | pbcopy
+NB:8141	differs	rec	noisy	dir=$(dirname $(readlink /proc/$$/fd/255))	rec: L=dirname\nreadlink|/proc/5837/fd/255	rec: W=dirname\nreadlink|/proc/888/fd/255
+NB:8153	same-paths			foo=`which ~/f`
+NB:8161	same-paths			find `pwd` -name "*.log" > sas_log_list.txt
+NB:8172	same-paths			find ~ -name 'Foto*' > results.txt
+NB:8283	same-paths			find ~/documents -type f -name '*.txt' -exec grep -s DOGS {} \; -print
+NB:8287	same-paths			find ~/.personal/tips -type f -iname "*.pdf"  -exec pdftotext '{}' - ';'  | grep hot
+NB:829	same-paths			find . | grep "FooBar" | tr \\n \\0 | xargs -0 -I{} cp "{}" ~/foo/bar
+NB:839	same-paths			find /path -type f -name '*~' -print0 | xargs -0 -I % cp -a % ~/backups
+NB:8406	same-paths			find ~/Documents -type f -print0 | xargs -0 grep -il birthday
+NB:8425	same-paths			find ~/html/ -name '*.html' -exec grep organic '{}' ';'
+NB:85	same-paths			find ~/dir_data -type d -exec chmod a+xr,u+w {} \;
+NB:8503	same-paths			find ~/ -atime +100 -exec rm -i {} \;
+NB:8504	same-paths			find $HOME  -mtime 0
+NB:86	differs	rec		v=5 env|less	rec: L=env\nless^500 fd020ff5d2895db53337994039bdbe8c6a9b2f6adf8d54d8068bd41dff662d2d	rec: W=env\nless^1290 e60712020112833abd9c9d5b08145733854bfe68a6b057c0412d91ba784963c5
+NB:8646	same-paths			find `pwd` -name "*.log" -exec grep "The SAS System" {} \;
+NB:8719	same-paths			find ~/ -maxdepth 3 -name teste.tex
+NB:8720	same-paths			find `pwd` -name "*rc.conf"  -execdir /bin/chmod o+r {} \;
+NB:8744	same-paths			find "$(pwd -P)" -mtime 0 -not \( -name '*.swp' -o -regex './es.*' -o -regex './en.*' \)
+NB:8772	differs	out		find . -type f -printf '%20s %p\n' | sort -n | cut -b22- | tr '\n' '\000' | xargs -0 ls -laSr	out: L=total 36\n-rw-r--r-- 1 rc0 rc0    0 Jan  1  2020 empty\n-rw-r--r-- 1 rc0 rc0    2 Jan  1  2020 c.log\n-rw-r--r-- 1 rc0 rc0    2 Jan  1  2020 .hidden\n-rw-r--r-- 1 rc0 rc0    8 Jan  1  2020 b.txt\n-rw-r--r-- 1 rc0 rc0   11 Jan  1  2020 a.txt\n-rw-r--r-- 1 rc0 rc0   12 Jan  1  2020 file.txt\ndrwxr-xr-x 2 rc0 rc0 4096 Jan  1  2020 home\ndrwxr-xr-x 3 rc0 rc0 4096 Jan  1  2020 dir\ndrwxr-xr-x 3 rc0 rc0 4096 Jan	out: W=total 36\n-rw-r--r-- 1 rc0 rc0    0 Jan  1  2020 empty\n-rw-r--r-- 1 rc0 rc0    2 Jan  1  2020 c.log\n-rw-r--r-- 1 rc0 rc0    2 Jan  1  2020 .hidden\n-rw-r--r-- 1 rc0 rc0    8 Jan  1  2020 b.txt\n-rw-r--r-- 1 rc0 rc0   11 Jan  1  2020 a.txt\n-rw-r--r-- 1 rc0 rc0   12 Jan  1  2020 file.txt\ndrwxr-xr-x 2 rc0 rc0 4096 Jan  1  2020 home\ndrwxr-xr-x 3 rc0 rc0 4096 Jan  1  2020 dir\ndrwxr-xr-x 4 rc0 rc0 4096 Nov
+NB:8801	same-paths			find "$PWD" -type d
+NB:8834	same-paths			find `pwd` -name "accepted_hits.bam"
+NB:8884	same-paths			find `pwd` -name "*log" -type f
+NB:8900	same-paths			find ~/ -name *.tar.gz -newer filename
+NB:8901	same-paths			find ~/ -mtime -2 -o -newer filename
+NB:8902	same-paths			find ~/ -newer alldata.tar  -exec tar uvf alldata.tar {} \;
+NB:8904	same-paths			find ~/dir_data -type f  -exec chmod a-x,u+w {} \;
+NB:8954	same-paths			find ~/ -atime +10
+NB:8955	same-paths			find ~ -name "test*" -print
+NB:8958	same-paths			find ~/ -mtime -2 -o newer filename
+NB:8959	same-paths			find $HOME -mtime +365
+NB:8960	same-paths			find ~ -name *.txt
+NB:8961	same-paths			find $HOME -mtime -7
+NB:8962	same-paths			find $HOME -mtime -1
+NB:8964	same-paths			find ~ -daystart -type f -mtime 1
+NB:8965	same-paths			find ~ -type f -name '*.mkv' -o -name '*.mp4' -o -name '*.wmv' -o -name '*.flv' -o -name '*.webm' -o -name '*.mov'
+NB:8966	same-paths			find ~ -type f -regex '.*\.\(mkv\|mp4\|wmv\|flv\|webm\|mov\)'
+NB:8998	same-paths			find ~ Music -name '*.mp3'
+NB:9016	same-paths			find ~/ -name '*.txt' -print0 | xargs -0 wc -w
+NB:9033	msg	err		kill -9 16085	err: L=kill: (16085): No such process\n	err: W=kill: 16085: No such process\n
+NB:9034	msg	err		kill -9 18581 18582 18583	err: L=kill: (18581): No such process\nkill: (18582): No such process\nkill: (18583): No such process\n	err: W=kill: 18581: No such process\nkill: 18582: No such process\nkill: 18583: No such process\n
+NB:9048	msg	err		kill %1	err: L=kill: failed to parse argument: '%1'\n	err: W=kill: illegal pid: %1\n
+NB:9051	differs	status,err		kill -s WINCH $$	status: L=0	status: W=1	err: L=	err: W=kill: 1732: No such process\n
+NB:9085	timeout-both			while true ; do nc -l -p 1500 -c 'echo -e "HTTP/1.1 200 OK\n\n $(date)"'; done
+NB:9184	same-paths			path=$(basename $(pwd) | awk '{print tolower($0)}')
+NB:9185	same-paths			path=$(basename $(pwd) | tr 'A-Z' 'a-z' )
+NB:9186	same-paths			path=$(basename $(pwd))
+NB:9420	same-paths			nohup vlc -I dummy --quiet ~/mp3_directory/* &
+NB:9493	same-paths			file ~/myfile
+NB:9521	msg	err		unset $(/usr/bin/env | /usr/bin/cut -d = -f 1 | /usr/bin/xargs)	err: L=	err: W=sh: /usr/bin/env: Permission denied\nsh: /usr/bin/cut: Permission denied\nsh: /usr/bin/xargs: Permission denied\n
+NB:9526	msg	err		unset $(echo "$a" | /usr/bin/cut -d = -f 1)	err: L=	err: W=sh: /usr/bin/cut: Permission denied\n
+NB:9581	same-paths			find ~/ -newer alldata.tar -exec tar uvf alldata.tar {} ;
+NB:9583	differs	err,rec	noisy	touch -t `date +%m%d0000` /tmp/$$	err: L=/runcompare/real/touch: invalid date format '/tmp/10906'\n	err: W=/runcompare/real/touch: invalid date format '/tmp/1284'\n	rec: L=date|+%m%d0000\ntouch|-t|/tmp/10906	rec: W=date|+%m%d0000\ntouch|-t|/tmp/1284
+NB:9672	msg	err		echo 'ee' | tee /dev/stderr | foo	err: L=	err: W=sh: foo: not found\nee\n
+NB:9680	msg	err	noisy	echo "fifo forever" | cat - fifo | tee fifo	err: L=	err: W=/runcompare/real/cat: fifo: No such file or directory\n
+NB:9681	same-paths			echo foo | readlink /proc/self/fd/1
+NB:9682	differs	out	noisy	echo foo | readlink /proc/self/fd/0	out: L=pipe:[36872237]\n	out: W=/runcompare/w2/br1608/in\n
+NB:9763	same-paths			find ~/tmp -mtime 0 -exec du -ks {} \; | cut -f1
+NB:9894	same-paths			find . -lname "`pwd`*" -exec sh -c 'ln -snvf `python -c "from os.path import *; print relpath(\"$(readlink {})\",dirname
+NB:994	same-paths			find `pwd` -type f -exec ls -l {} \; | wc -l
+NB:9947	same-paths			ln -s `cd \`dirname $2\`; pwd`/`basename $2` $1/link
+NB:9973	same-paths			tar cf - $PWD|tar tvf -
+NB:9974	same-paths			tar cf - $PWD|tar tvf -|awk '{print $6}'|grep -v "/$"
+PB:README.md:1699	same-paths			"$PWD" 
+PS:README.md:991	same-paths			"$PWD" 
+SC:Analytics.hs:prop_checkCdAndBack4	same-paths			cd $tmp; foo; cd -
+SC:Analytics.hs:prop_checkCommandWithTrailingSymbol9	differs	status,err		/usr/bin/python[23] file.py	status: L=2	status: W=126	err: L=/usr/bin/python3: can't open file '/runcompare/w3/run/file.py': [Errno 2] No such file or directory\n	err: W=sh: /usr/bin/python3: Permission denied\n
+SC:Analytics.hs:prop_checkSetESuppressed13	timeout-both			set -e; f(){ :; }; while f; do :; done
+SC:Analytics.hs:prop_checkSetESuppressed14	timeout-both			set -e; f(){ :; }; while set -e; f; do :; done
+SC:Analytics.hs:prop_checkSpacefulnessCfg14	differs	out		foo=$3 env	out: L=RECLOG=/runcompare/w1/log\nUSER=rc1\nHOME=/runcompare/w1/run/home\nfoo=\nTMPDIR=/runcompare/w1/run\nLOGNAME=rc1\nTERM=dumb\nPATH=/runcompare/quiet:/runcompare/bin\nLANG=C\nREALNAMES=[ awk base64 basename cat cmp comm cut diff dirname echo egrep env expr false fgrep fold grep head join kill ls md5sum mkdir nl od paste printenv printf pwd readlink realpath rev sed seq sha256sum sort stat tac tail tee test to	out: W=APPDATA=C:\\users\\rc1\\AppData\\Roaming\nCommonProgramFiles=C:\\Program Files\\Common Files\nCOMPUTERNAME=RUNWIN\nComSpec=C:\\windows\\system32\\cmd.exe\nfoo=\nHOME=/runcompare/w1/run/home\nLANG=C\nLC_ALL=C\nLOCALAPPDATA=C:\\users\\rc1\\AppData\\Local\nLOGNAME=rc1\nNUMBER_OF_PROCESSORS=4\nOS=Windows_NT\nPATHEXT=.COM;.EXE;.BAT;.CMD\nPROCESSOR_ARCHITECTURE=AMD64\nProgramFiles=C:\\Program Files\nProgramW6432=C:\\Program Files\nPW
+SC:Analytics.hs:prop_checkSpacefulnessCfg19	same-paths			echo $PWD
+SC:Analytics.hs:prop_checkTildeInQuotes4	same-paths			~/file
+SC:Analytics.hs:prop_checkUncheckedCd1	same-paths			cd ~/src; rm -r foo
+SC:Analytics.hs:prop_checkUncheckedCd2	same-paths			cd ~/src || exit; rm -r foo
+SC:Analytics.hs:prop_checkUncheckedCd3	same-paths			set -e; cd ~/src; rm -r foo
+SC:Analytics.hs:prop_checkUselessBang3	timeout-both			set -e; while true; do ! true; done
+SC:Analytics.hs:prop_checkWhileReadPitfalls3	timeout-both			while true; do ssh host uptime; done
+SC:Checks/Commands.hs:prop_checkCatastrophicRm4	differs	rec		rm -fr /home/$(whoami)/*	rec: L=rm|-fr|/home//claude|/home//ubuntu|/home//user\nwhoami	rec: W=rm|-fr|/home//claude|/home//user\nwhoami
+SC:Checks/Commands.hs:prop_checkCatastrophicRm6	differs	rec	noisy	rm --recursive /etc/*$config*	rec: L=rm|--recursive|/etc/ImageMagick-6|/etc/PackageKit|/etc/X11|/etc/adduser.conf|/etc/alternatives|/etc/apparmor.d|/etc/apt|/etc/bash.bashrc|/etc/bash_completion.d|/etc/bashrc|/etc/bazel.bazelrc|/etc/bindresvport.blacklist|/etc/binfmt.d|/etc/ca-certificates|/etc/ca-certificates.conf|/etc/chromium|/etc/cloud|/etc/containerd|/etc/credstore|/etc/credstore.encrypted|/etc/cron.d|/etc/cron.daily|/etc/dbus-1	rec: W=rm|--recursive|/etc/ImageMagick-6|/etc/PackageKit|/etc/X11|/etc/adduser.conf|/etc/alsa|/etc/alternatives|/etc/apparmor.d|/etc/apt|/etc/bash.bashrc|/etc/bash_completion.d|/etc/bashrc|/etc/bazel.bazelrc|/etc/bindresvport.blacklist|/etc/binfmt.d|/etc/ca-certificates|/etc/ca-certificates.conf|/etc/chromium|/etc/cloud|/etc/containerd|/etc/cron.d|/etc/cron.daily|/etc/dbus-1|/etc/dconf|/etc/debconf.conf|
+SC:Checks/Commands.hs:prop_checkCatastrophicRmB	differs	rec		rm -rf "$STEAMROOT/"*	rec: L=rm|-rf|/bin|/bin.usr-is-merged|/boot|/container_info.json|/dev|/etc|/home|/lib|/lib.usr-is-merged|/lib64|/lost+found|/media|/mnt|/nix|/old_root|/opt|/proc|/root|/run|/runcompare|/sbin|/srv|/sys|/tmp|/usr|/var	rec: W=rm|-rf|/bin|/bin.usr-is-merged|/boot|/container_info.json|/etc|/home|/lib|/lib.usr-is-merged|/lib64|/media|/mnt|/nix|/old_root|/opt|/run|/runcompare|/runwin|/runwintest|/sbin|/srv|/tmp|/usr|/var|/work
+SC:Checks/Commands.hs:prop_checkSourceArgs2	differs	status,err,rec		#!/bin/sh . script	status: L=0	status: W=2	err: L=	err: W=sh: .: cannot open script: No such file\n	rec: L=sh	rec: W=
+SC:Checks/ShellSupport.hs:prop_checkBashisms129	differs	status		#!/bin/sh [ -k /tmp ]	status: L=0	status: W=1
+SC:Checks/ShellSupport.hs:prop_checkBashisms130	differs	status		#!/bin/dash test -k /tmp	status: L=0	status: W=1
+SC:Checks/ShellSupport.hs:prop_checkBashisms19	differs	status,err,files		foo > file*.txt	status: L=127	status: W=2	err: L=sh: foo: not found\n	err: W=sh: cannot create file*.txt: Invalid argument\n	files: L=.hidden 2 91ee5e9f42ba\na.txt 11 e49c81e2d2f8\nb.txt 8 2dbb4a503f15\nc.log 2 73cb3858a687\ndir/\ndir/sub/\ndir/sub/y.sh 7 6d1239d99196\ndir/x.txt 7 867087258aca\nempty 0 e3b0c44298fc\nfile*.txt 0 e3b0c44298fc\nfile.txt 12 a948904f2f0f\nhome/\nhome/.profile 0 e3b0c44298fc	files: W=.hidden 2 91ee5e9f42ba\na.txt 11 e49c81e2d2f8\nb.txt 8 2dbb4a503f15\nc.log 2 73cb3858a687\ndir/\ndir/sub/\ndir/sub/y.sh 7 6d1239d99196\ndir/x.txt 7 867087258aca\nempty 0 e3b0c44298fc\nfile.txt 12 a948904f2f0f\nhome/\nhome/.profile 0 e3b0c44298fc
+SC:Checks/ShellSupport.hs:prop_checkBashisms69	differs	out		#!/bin/sh umask -S	out: L=u=rwx,g=rx,o=rx\n	out: W=u=rwx,g=rwx,o=rwx\n
+SC:Checks/ShellSupport.hs:prop_checkBashisms72	differs	out		#!/bin/sh type ls	out: L=ls is /runcompare/bin/ls\n	out: W=ls is /runcompare/bin/ls.EXE\n
+TL:common/antibody.md:8	same-paths			antibody <~/.zsh_plugins.txt bundle >~/.zsh_plugins.sh
+TL:common/awk.md:38	differs	out	noisy	awk 'BEGIN {FS=":";printf "%-20s %6s %25s\n", "Name", "UID", "Shell"} $4 >= 1000 {printf "%-20s %6d %25s\n", $1, $4, $7}	out: L=Name                    UID                     Shell\nsync                  65534                 /bin/sync\n_apt                  65534         /usr/sbin/nologin\nnobody                65534         /usr/sbin/nologin\nubuntu                 1000                 /bin/bash\nnixbld1               30000             /sbin/nologin\nnixbld2               30000             /sbin/nologin\nnixbld3               	out: W=Name                    UID                     Shell\nsync                  65534                 /bin/sync\n_apt                  65534         /usr/sbin/nologin\nnobody                65534         /usr/sbin/nologin\nubuntu                 1000                 /bin/bash\nnixbld1               30000             /sbin/nologin\nnixbld2               30000             /sbin/nologin\nnixbld3               
+TL:common/continue.md:8	timeout-both			while :; do continue; echo "This will never be reached"; done
+TL:common/curl.md:26	differs	err,rec		curl -k -x http://127.0.0.1:8080 -H 'Authorization: Bearer token' -X GET|PUT|POST|DELETE|PATCH|... https://example.com	err: L=sh: PUT: not found\nsh: POST: not found\nsh: DELETE: not found\nsh: PATCH: not found\nsh: ...: not found\n	err: W=sh: PUT: not found\nsh: POST: not found\nsh: DELETE: not found\nsh: ...: not found\n	rec: L=curl|-k|-x|http://127.0.0.1:8080|-H|Authorization: Bearer token|-X|GET	rec: W=curl|-k|-x|http://127.0.0.1:8080|-H|Authorization: Bearer token|-X|GET\npatch^0 e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+TL:common/echo.md:13	differs	out		echo "My path is $PATH"	out: L=My path is /runcompare/quiet:/runcompare/bin\n	out: W=My path is /runcompare/quiet;/runcompare/bin\n
+TL:common/env.md:8	differs	out		env	out: L=RECLOG=/runcompare/w1/log\nUSER=rc1\nHOME=/runcompare/w1/run/home\nTMPDIR=/runcompare/w1/run\nLOGNAME=rc1\nTERM=dumb\nPATH=/runcompare/quiet:/runcompare/bin\nLANG=C\nREALNAMES=[ awk base64 basename cat cmp comm cut diff dirname echo egrep env expr false fgrep fold grep head join kill ls md5sum mkdir nl od paste printenv printf pwd readlink realpath rev sed seq sha256sum sort stat tac tail tee test touch t	out: W=APPDATA=C:\\users\\rc1\\AppData\\Roaming\nCommonProgramFiles=C:\\Program Files\\Common Files\nCOMPUTERNAME=RUNWIN\nComSpec=C:\\windows\\system32\\cmd.exe\nHOME=/runcompare/w1/run/home\nLANG=C\nLC_ALL=C\nLOCALAPPDATA=C:\\users\\rc1\\AppData\\Local\nLOGNAME=rc1\nNUMBER_OF_PROCESSORS=4\nOS=Windows_NT\nPATHEXT=.COM;.EXE;.BAT;.CMD\nPROCESSOR_ARCHITECTURE=AMD64\nProgramFiles=C:\\Program Files\nProgramW6432=C:\\Program Files\nPWD=/ru
+TL:common/fisher.md:17	same-paths			editor ~/.config/fish/fishfile; fisher
+TL:common/http.md:17	differs	err,rec		http GET|POST|HEAD|PUT|PATCH|DELETE|... --proxy http|https:http://localhost:8080|socks5://localhost:9050|... https://exa	err: L=sh: http: not found\nsh: POST: not found\nsh: HEAD: not found\nsh: PUT: not found\nsh: PATCH: not found\nsh: DELETE: not found\nsh: ...: not found\nsh: https:http://localhost:8080: not found\nsh: socks5://localhost:9050: not found\nsh: ...: not found\n	err: W=sh: http: not found\nsh: POST: not found\nsh: PUT: not found\nsh: DELETE: not found\nsh: ...: not found\nsh: https:http://localhost:8080: not found\nsh: socks5://localhost:9050: not found\nsh: ...: not found\n	rec: L=	rec: W=head\npatch^0 e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+TL:common/kill.md:13	differs	out		kill -l	out: L=HUP INT QUIT ILL TRAP ABRT BUS FPE KILL USR1 SEGV USR2 PIPE ALRM TERM STKFLT\nCHLD CONT STOP TSTP TTIN TTOU URG XCPU XFSZ VTALRM PROF WINCH POLL PWR SYS\n	out: W=HUP INT QUIT ILL TRAP ABRT IOT EMT FPE KILL BUS SEGV SYS PIPE ALRM TERM \nURG STOP TSTP CONT CHLD CLD TTIN TTOU IO POLL XCPU XFSZ VTALRM PROF WINCH \nPWR LOST USR1 USR2 RT<N> RTMIN+<N> RTMAX-<N>\n
+TL:common/kill.md:17	msg	err		kill -1 process_id	err: L=kill: failed to parse argument: 'process_id'\n	err: W=kill: illegal pid: process_id\n
+TL:common/kill.md:21	msg	err		kill -2 process_id	err: L=kill: failed to parse argument: 'process_id'\n	err: W=kill: illegal pid: process_id\n
+TL:common/kill.md:25	msg	err		kill -9 process_id	err: L=kill: failed to parse argument: 'process_id'\n	err: W=kill: illegal pid: process_id\n
+TL:common/kill.md:29	msg	err		kill -STOP process_id	err: L=kill: failed to parse argument: 'process_id'\n	err: W=kill: illegal pid: process_id\n
+TL:common/kill.md:33	msg	err		kill -USR1 -group_id	err: L=kill: invalid argument g\n\nUsage:\n kill [options] <pid> [...]\n\nOptions:\n <pid> [...]            send signal to every <pid> listed\n -<signal>, -s, --signal <signal>\n                        specify the <signal> to be sent\n -q, --queue <value>    integer value to be sent with the signal\n -l, --list=[<signal>]  list all signal names, or convert one to a name\n -L, --table            list all signal name	err: W=kill: illegal pid: -USR1\nkill: illegal pid: -group_id\n
+TL:common/kill.md:9	msg	err		kill process_id	err: L=kill: failed to parse argument: 'process_id'\n	err: W=kill: illegal pid: process_id\n
+TL:common/kubectl-completion.md:28	same-paths			kubectl completion fish >~/.config/fish/completions/kubectl.fish
+TL:common/ls.md:20	differs	out		ls -la	out: L=total 36\ndrwxr-xr-x 4 rc3 rc3 4096 Jan  1  2020 .\ndrwxr-xr-x 3 rc3 rc3 4096 Jan  1  2020 ..\n-rw-r--r-- 1 rc3 rc3    2 Jan  1  2020 .hidden\n-rw-r--r-- 1 rc3 rc3   11 Jan  1  2020 a.txt\n-rw-r--r-- 1 rc3 rc3    8 Jan  1  2020 b.txt\n-rw-r--r-- 1 rc3 rc3    2 Jan  1  2020 c.log\ndrwxr-xr-x 3 rc3 rc3 4096 Jan  1  2020 dir\n-rw-r--r-- 1 rc3 rc3    0 Jan  1  2020 empty\n-rw-r--r-- 1 rc3 rc3   12 Jan  1  2020	out: W=total 20\ndrwxr-xr-x 1 VM+rc3 4266656257  0 Jan  1  2020 .\ndrwxr-xr-x 1 VM+rc3 4266656257  0 Jan  1  2020 ..\n-rw-r--r-- 1 VM+rc3 4266656257  2 Jan  1  2020 .hidden\n-rw-r--r-- 1 VM+rc3 4266656257 11 Jan  1  2020 a.txt\n-rw-r--r-- 1 VM+rc3 4266656257  8 Jan  1  2020 b.txt\n-rw-r--r-- 1 VM+rc3 4266656257  2 Jan  1  2020 c.log\ndrwxr-xr-x 1 VM+rc3 4266656257  0 Jan  1  2020 dir\n-rw-r--r-- 1 VM+rc3 4266656
+TL:common/melt.md:12	same-paths			cat ~/.ssh/id_ed25519 | melt
+TL:common/newsboat.md:12	same-paths			echo http://example.com/path/to/feed >>"${HOME}/.newsboat/urls"
+TL:common/nix.md:11	same-paths			mkdir -p ~/.config/nix; echo 'experimental-features = nix-command flakes' >~/.config/nix/nix.conf
+TL:common/odpscmd-inst.md:24	msg	err		kill instance_id;	err: L=kill: failed to parse argument: 'instance_id'\n	err: W=kill: illegal pid: instance_id\n
+TL:common/ppmtomitsu.md:16	differs	err,rec		ppmtomitsu -m A|A4|AS|A4S path/to/file.ppm >path/to/file.mitsu	err: L=sh: ppmtomitsu: not found\nsh: A4: not found\nsh: AS: not found\nsh: cannot create path/to/file.mitsu: Directory nonexistent\n	err: W=sh: ppmtomitsu: not found\nsh: A4: not found\nsh: cannot create path/to/file.mitsu: Directory nonexistent\n	rec: L=	rec: W=as^0 e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+TL:common/printenv.md:8	differs	out		printenv	out: L=RECLOG=/runcompare/w3/log\nUSER=rc3\nHOME=/runcompare/w3/run/home\nTMPDIR=/runcompare/w3/run\nLOGNAME=rc3\nTERM=dumb\nPATH=/runcompare/quiet:/runcompare/bin\nLANG=C\nREALNAMES=[ awk base64 basename cat cmp comm cut diff dirname echo egrep env expr false fgrep fold grep head join kill ls md5sum mkdir nl od paste printenv printf pwd readlink realpath rev sed seq sha256sum sort stat tac tail tee test touch t	out: W=APPDATA=C:\\users\\rc3\\AppData\\Roaming\nCommonProgramFiles=C:\\Program Files\\Common Files\nCOMPUTERNAME=RUNWIN\nComSpec=C:\\windows\\system32\\cmd.exe\nHOME=/runcompare/w3/run/home\nLANG=C\nLC_ALL=C\nLOCALAPPDATA=C:\\users\\rc3\\AppData\\Local\nLOGNAME=rc3\nNUMBER_OF_PROCESSORS=4\nOS=Windows_NT\nPATHEXT=.COM;.EXE;.BAT;.CMD\nPROCESSOR_ARCHITECTURE=AMD64\nProgramFiles=C:\\Program Files\nProgramW6432=C:\\Program Files\nPWD=/ru
+TL:common/pwd.md:12	same-paths			pwd -P
+TL:common/pwd.md:8	same-paths			pwd
+TL:common/runit.md:12	msg	err		kill -CONT runit_process_id	err: L=kill: failed to parse argument: 'runit_process_id'\n	err: W=kill: illegal pid: runit_process_id\n
+TL:common/sort.md:24	differs	out	noisy	sort -t : -k 3n /etc/passwd	out: L=root:x:0:0:root:/root:/bin/bash\ndaemon:x:1:1:daemon:/usr/sbin:/usr/sbin/nologin\nbin:x:2:2:bin:/bin:/usr/sbin/nologin\nsys:x:3:3:sys:/dev:/usr/sbin/nologin\nsync:x:4:65534:sync:/bin:/bin/sync\ngames:x:5:60:games:/usr/games:/usr/sbin/nologin\nman:x:6:12:man:/var/cache/man:/usr/sbin/nologin\nlp:x:7:7:lp:/var/spool/lpd:/usr/sbin/nologin\nmail:x:8:8:mail:/var/mail:/usr/sbin/nologin\nnews:x:9:9:news:/var/spool	out: W=root:x:0:0:root:/root:/bin/bash\ndaemon:x:1:1:daemon:/usr/sbin:/usr/sbin/nologin\nbin:x:2:2:bin:/bin:/usr/sbin/nologin\nsys:x:3:3:sys:/dev:/usr/sbin/nologin\nsync:x:4:65534:sync:/bin:/bin/sync\ngames:x:5:60:games:/usr/games:/usr/sbin/nologin\nman:x:6:12:man:/var/cache/man:/usr/sbin/nologin\nlp:x:7:7:lp:/var/spool/lpd:/usr/sbin/nologin\nmail:x:8:8:mail:/var/mail:/usr/sbin/nologin\nnews:x:9:9:news:/var/spool
+TL:common/sort.md:28	differs	out	noisy	sort -t : -k 3,3n -k 4,4g /etc/passwd	out: L=root:x:0:0:root:/root:/bin/bash\ndaemon:x:1:1:daemon:/usr/sbin:/usr/sbin/nologin\nbin:x:2:2:bin:/bin:/usr/sbin/nologin\nsys:x:3:3:sys:/dev:/usr/sbin/nologin\nsync:x:4:65534:sync:/bin:/bin/sync\ngames:x:5:60:games:/usr/games:/usr/sbin/nologin\nman:x:6:12:man:/var/cache/man:/usr/sbin/nologin\nlp:x:7:7:lp:/var/spool/lpd:/usr/sbin/nologin\nmail:x:8:8:mail:/var/mail:/usr/sbin/nologin\nnews:x:9:9:news:/var/spool	out: W=root:x:0:0:root:/root:/bin/bash\ndaemon:x:1:1:daemon:/usr/sbin:/usr/sbin/nologin\nbin:x:2:2:bin:/bin:/usr/sbin/nologin\nsys:x:3:3:sys:/dev:/usr/sbin/nologin\nsync:x:4:65534:sync:/bin:/bin/sync\ngames:x:5:60:games:/usr/games:/usr/sbin/nologin\nman:x:6:12:man:/var/cache/man:/usr/sbin/nologin\nlp:x:7:7:lp:/var/spool/lpd:/usr/sbin/nologin\nmail:x:8:8:mail:/var/mail:/usr/sbin/nologin\nnews:x:9:9:news:/var/spool
+TL:common/ssh-keyscan.md:20	same-paths			ssh-keyscan -H hostname >>~/.ssh/known_hosts
+TL:common/tail.md:33	timeout-both			tail -F path/to/file
+TL:common/timeout.md:12	differs	err,rec		timeout -s INT|HUP|KILL|... 5s sleep 10	err: L=sh: HUP: not found\nsh: KILL: not found\nsh: ...: not found\n	err: W=sh: HUP: not found\nsh: ...: not found\n\nUsage:\n kill [options] <pid> [...]\n\nOptions:\n <pid> [...]            send signal to every <pid> listed\n -<signal>, -s, --signal <signal>\n                        specify the <signal> to be sent\n -q, --queue <value>    integer value to be sent with the signal\n -l, --list=[<signal>]  list all signal names, or convert one to a name\n -L, --table            list al	rec: L=timeout|-s|INT	rec: W=kill\ntimeout|-s|INT
+TL:common/times.md:10	differs	out	noisy	times	out: L=0m0.030000s 0m0.000000s\n0m0.000000s 0m0.000000s\n	out: W=0m0.160000s 0m0.080000s\n0m0.000000s 0m0.000000s\n
+TL:common/ulimit.md:13	differs	status,out,err		ulimit -H -n	status: L=0	status: W=248	out: L=20000\n	out: W=	err: L=	err: W=Proc::ShellSubset::Large: 'ulimit -n' is not supported\n
+TL:common/ulimit.md:17	differs	status,out,err		ulimit -S -n	status: L=0	status: W=248	out: L=20000\n	out: W=	err: L=	err: W=Proc::ShellSubset::Large: 'ulimit -n' is not supported\n
+TL:common/ulimit.md:25	msg	err		ulimit -c|f|s|... unlimited	err: L=sh: f: not found\nsh: s: not found\nsh: ...: not found\n	err: W=Proc::ShellSubset::Large: 'ulimit -c' is not supported\nsh: f: not found\nsh: s: not found\nsh: ...: not found\n
+TL:common/umask.md:12	differs	out		umask -S	out: L=u=rwx,g=rx,o=rx\n	out: W=u=rwx,g=rwx,o=rwx\n
+TL:common/umask.md:8	differs	out		umask	out: L=0022\n	out: W=0000\n
+TL:common/until.md:12	timeout-both			until ssh username@host; do sleep 2; done
+TL:common/while.md:12	timeout-both			while :; do command; sleep 1; done
+TL:common/while.md:16	timeout-both			while command; do :; done
+TL:common/{.md:8	same-paths			echo ${HOME}work
+TL:common/~.md:8	same-paths			ls ~
+TL:linux/fuzzel.md:28	same-paths			rm -v $HOME/.cache/fuzzel
+TL:linux/gcrane-completion.md:33	same-paths			gcrane completion fish >~/.config/fish/completions/gcrane.fish
+TL:linux/kill.md:17	msg	err		kill %job_id	err: L=kill: failed to parse argument: '%job_id'\n	err: W=kill: illegal pid: %job_id\n
+TL:linux/kill.md:33	msg	err		kill -19 process_id	err: L=kill: failed to parse argument: 'process_id'\n	err: W=kill: illegal pid: process_id\n
+TL:linux/kill.md:37	msg	err		kill -10 -group_id	err: L=kill: invalid argument g\n\nUsage:\n kill [options] <pid> [...]\n\nOptions:\n <pid> [...]            send signal to every <pid> listed\n -<signal>, -s, --signal <signal>\n                        specify the <signal> to be sent\n -q, --queue <value>    integer value to be sent with the signal\n -l, --list=[<signal>]  list all signal names, or convert one to a name\n -L, --table            list all signal name	err: W=kill: -10: No such process\nkill: illegal pid: -group_id\n
+TL:linux/mopac.md:12	timeout-both			touch test.out; echo "PM7\n#comment\n\nH 0.95506 0.05781 -0.03133\nF 1.89426 0.05781 -0.03133" >test.mop; mopac test.mop
+TL:linux/pw-cli.md:9	differs	err,rec		pw-cli ls Node|Link|Port|Client|Device|Metadata|Factory|Module|Profiler|SecurityContext|Core	err: L=sh: pw-cli: not found\nsh: Link: not found\nsh: Port: not found\nsh: Client: not found\nsh: Device: not found\nsh: Metadata: not found\nsh: Factory: not found\nsh: Module: not found\nsh: Profiler: not found\nsh: SecurityContext: not found\nsh: Core: not found\n	err: W=sh: pw-cli: not found\nsh: Port: not found\nsh: Client: not found\nsh: Device: not found\nsh: Metadata: not found\nsh: Factory: not found\nsh: Module: not found\nsh: Profiler: not found\nsh: SecurityContext: not found\nsh: Core: not found\n	rec: L=	rec: W=link

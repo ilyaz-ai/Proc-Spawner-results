@@ -1,0 +1,232 @@
+id	row	rule	why
+BC:ch11/default_date	L	T-timeout-both	project: never ends
+BC:ch14/finding_tools	OS	H-ELF	
+BC:ch16/inputrc	OS	H-WINEFS	
+NB:10123	L	H-DOTDOT	Linux runs differ
+NB:10133	L	C-VARIES	Linux runs differ
+NB:11148	OS	W-DIRREDIR	
+NB:1168	L	H-ELF	Linux runs differ
+NB:11950	OS	H-ELF	
+NB:12011	L	C-VARIES	project: chance
+NB:12196	L	C-VARIES	Linux runs differ
+NB:12249	OS	W-NULDEV	
+NB:1420	OS	H-ELF	
+NB:1421	OS	H-ELF	
+NB:1476	OS	H-WINEFS	
+NB:1523	L	H-DOTDOT	Linux runs differ
+NB:1811	OS	H-ELF	
+NB:1812	OS	H-ELF	
+NB:1829	OS	H-ELF	
+NB:1831	OS	W-NOLDSO	
+NB:1897	M	C-MACHINE	
+NB:2298	OS	H-WINEFS	
+NB:2649	L	C-VARIES	project: chance
+NB:2879	L	C-VARIES	Linux runs differ
+NB:3595	L	C-VARIES	project: chance
+NB:3805	OS	H-WINEFS	
+NB:3850	M	C-MACHINE	
+NB:4153	OS	H-WINEFS	
+NB:4172	L	C-VARIES	project: chance
+NB:4314	L	C-VARIES	project: chance
+NB:4342	OS	H-ELF	
+NB:4449	L	T-timeout-both	Linux runs differ
+NB:4516	OS	H-WINEFS	
+NB:4623	L	C-VARIES	project: chance
+NB:4624	L	C-VARIES	project: chance
+NB:4774	L	C-VARIES	project: chance
+NB:4783	S1	H-NOFSIZE	
+NB:4785	S1	H-NOFSIZE	
+NB:4809	G	G-KILL	
+NB:4856	D	W-BACKSLASH	
+NB:4909	L	H-NOSIGPIPE	Linux runs differ
+NB:4911	OS	W-PATHSEP	
+NB:4919	M	C-MACHINE	
+NB:4941	S3	H-ENV	
+NB:4945	OS	W-LSMETA	
+NB:5128	D	W-PWD	
+NB:5137	L	H-ENV	project: chance
+NB:5152	L	C-VARIES	project: chance
+NB:5212	M	C-MACHINE	
+NB:5277	M	C-MACHINE	
+NB:5293	L	C-VARIES	project: chance
+NB:552	L	C-VARIES	project: chance
+NB:557	G	G-KILL	
+NB:5699	L	T-timeout-linux	project: never ends
+NB:571	L	C-VARIES	project: chance
+NB:5739	OS	H-ELF	
+NB:5742	OS	H-ELF	
+NB:5776	L	H-NOSTREAM	project: chance
+NB:5939	L	C-VARIES	project: chance
+NB:6064	M	C-MACHINE	
+NB:6077	M	C-MACHINE	
+NB:6081	L	C-VARIES	project: chance
+NB:6082	L	C-VARIES	project: chance
+NB:6132	OS	W-LSMETA	
+NB:6133	OS	W-LSMETA	
+NB:6198	M	C-MACHINE	
+NB:6247	L	C-VARIES	project: chance
+NB:6275	OS	W-PATHSEP	
+NB:6283	M	C-MACHINE	
+NB:6335	G	G-FD3	
+NB:6436	L	C-VARIES	project: chance
+NB:6438	M	C-MACHINE	
+NB:6526	M	C-MACHINE	
+NB:6664	L	C-VARIES	project: chance
+NB:6669	L	C-VARIES	project: chance
+NB:6714	D	W-PWD	
+NB:6790	OS	W-ARGMAX	
+NB:6799	L	C-VARIES	project: chance
+NB:6810	L	C-VARIES	Linux runs differ
+NB:6811	L	C-VARIES	Linux runs differ
+NB:6818	L	T-timeout-win	project: chance
+NB:6819	L	T-timeout-win	project: chance
+NB:6821	L	C-VARIES	project: chance
+NB:683	S1	H-NOFSIZE	
+NB:6840	L	C-VARIES	project: chance
+NB:6843	L	C-VARIES	project: chance
+NB:6844	L	C-VARIES	project: chance
+NB:6847	L	C-VARIES	project: chance
+NB:6848	L	C-VARIES	project: chance
+NB:685	L	H-NOSTREAM	project: chance
+NB:6924	OS	W-ARGMAX	
+NB:7353	OS	H-WINEFS	
+NB:7365	S4	H-NOFORK	
+NB:7418	OS	H-ELF	
+NB:7420	OS	H-ELF	
+NB:7431	OS	H-WINEFS	
+NB:7781	L	C-CHANCE	Linux runs differ
+NB:7968	OS	H-ELF	
+NB:7969	OS	H-ELF	
+NB:7989	OS	H-ELF	
+NB:7996	M	C-MACHINE	
+NB:8061	OS	H-WINEFS	
+NB:8115	L	C-VARIES	project: chance
+NB:8116	L	C-VARIES	project: chance
+NB:8141	L	C-VARIES	project: chance
+NB:86	L	H-ENV	project: chance
+NB:8772	L	H-DOTDOT	Linux runs differ
+NB:9033	G	G-KILL	
+NB:9034	G	G-KILL	
+NB:9048	G	G-KILL	
+NB:9051	X	B-X71	
+NB:9085	L	T-timeout-both	project: never ends
+NB:9521	OS	H-ELF	
+NB:9526	OS	H-ELF	
+NB:9583	L	C-VARIES	project: chance
+NB:9672	L	H-DEVFD	Linux runs differ
+NB:9680	L	C-CHANCE	Linux runs differ
+NB:9682	L	C-VARIES	project: chance
+SC:Analytics.hs:prop_checkCommandWithTrailingSymbol9	OS	H-ELF	
+SC:Analytics.hs:prop_checkSetESuppressed13	L	T-timeout-both	project: never ends
+SC:Analytics.hs:prop_checkSetESuppressed14	L	T-timeout-both	project: never ends
+SC:Analytics.hs:prop_checkSpacefulnessCfg14	L	H-ENV	project: chance
+SC:Analytics.hs:prop_checkUselessBang3	L	T-timeout-both	project: never ends
+SC:Analytics.hs:prop_checkWhileReadPitfalls3	L	T-timeout-both	project: never ends
+SC:Checks/Commands.hs:prop_checkCatastrophicRm4	OS	H-WINEFS	
+SC:Checks/Commands.hs:prop_checkCatastrophicRm6	OS	H-WINEFS	
+SC:Checks/Commands.hs:prop_checkCatastrophicRmB	OS	H-WINEFS	
+SC:Checks/Commands.hs:prop_checkSourceArgs2	S2	H-DOTSOURCE	
+SC:Checks/ShellSupport.hs:prop_checkBashisms129	OS	W-STICKY	
+SC:Checks/ShellSupport.hs:prop_checkBashisms130	OS	W-STICKY	
+SC:Checks/ShellSupport.hs:prop_checkBashisms19	OS	W-FILENAME	
+SC:Checks/ShellSupport.hs:prop_checkBashisms69	D	W-UMASK	
+SC:Checks/ShellSupport.hs:prop_checkBashisms72	D	W-WINPATH	
+TL:common/awk.md:38	M	C-MACHINE	
+TL:common/continue.md:8	L	T-timeout-both	project: never ends
+TL:common/curl.md:26	OS	W-CASE	
+TL:common/echo.md:13	OS	W-PATHSEP	
+TL:common/env.md:8	L	H-ENV	project: chance
+TL:common/http.md:17	OS	W-CASE	
+TL:common/kill.md:13	G	G-KILL	
+TL:common/kill.md:17	G	G-KILL	
+TL:common/kill.md:21	G	G-KILL	
+TL:common/kill.md:25	G	G-KILL	
+TL:common/kill.md:29	G	G-KILL	
+TL:common/kill.md:33	G	G-KILL	
+TL:common/kill.md:9	G	G-KILL	
+TL:common/ls.md:20	OS	W-LSMETA	
+TL:common/odpscmd-inst.md:24	G	G-KILL	
+TL:common/ppmtomitsu.md:16	OS	W-CASE	
+TL:common/printenv.md:8	L	H-ENV	project: chance
+TL:common/runit.md:12	G	G-KILL	
+TL:common/sort.md:24	M	C-MACHINE	
+TL:common/sort.md:28	M	C-MACHINE	
+TL:common/tail.md:33	L	T-timeout-both	project: never ends
+TL:common/timeout.md:12	OS	W-CASE	
+TL:common/times.md:10	L	C-VARIES	project: chance
+TL:common/ulimit.md:13	D	W-ULIMIT	
+TL:common/ulimit.md:17	D	W-ULIMIT	
+TL:common/ulimit.md:25	D	W-ULIMIT	
+TL:common/umask.md:12	D	W-UMASK	
+TL:common/umask.md:8	D	W-UMASK	
+TL:common/until.md:12	L	T-timeout-both	project: never ends
+TL:common/while.md:12	L	T-timeout-both	project: never ends
+TL:common/while.md:16	L	T-timeout-both	project: never ends
+TL:linux/kill.md:17	G	G-KILL	
+TL:linux/kill.md:33	G	G-KILL	
+TL:linux/kill.md:37	G	G-KILL	
+TL:linux/mopac.md:12	L	T-timeout-both	project: never ends
+TL:linux/pw-cli.md:9	OS	W-CASE	
+NB:10103	L	same	Linux runs differ
+NB:10104	L	same	Linux runs differ
+NB:10114	L	same	Linux runs differ
+NB:10125	L	same	Linux runs differ
+NB:10132	L	same	Linux runs differ
+NB:12327	L	same	Linux runs differ
+NB:1505	L	same	Linux runs differ
+NB:1920	L	same	Linux runs differ
+NB:1921	L	same	Linux runs differ
+NB:1922	L	same	Linux runs differ
+NB:2999	L	same	Linux runs differ
+NB:4253	L	same	Linux runs differ
+NB:4254	L	same	Linux runs differ
+NB:4259	L	same	Linux runs differ
+NB:4263	L	same	Linux runs differ
+NB:4313	L	same	Linux runs differ
+NB:4355	L	same	Linux runs differ
+NB:4722	L	same	Linux runs differ
+NB:4882	L	same	Linux runs differ
+NB:4890	L	same	Linux runs differ
+NB:4904	L	same	project: chance
+NB:4948	L	same	Linux runs differ
+NB:4976	L	same	Linux runs differ
+NB:4984	L	same	Linux runs differ
+NB:4994	L	same	Linux runs differ
+NB:5006	L	same	Linux runs differ
+NB:5071	L	same	Linux runs differ
+NB:5075	L	same-paths	Linux runs differ
+NB:5077	L	same-paths	Linux runs differ
+NB:5080	L	same	Linux runs differ
+NB:5081	L	same	Linux runs differ
+NB:5171	L	same	Linux runs differ
+NB:5182	L	same	Linux runs differ
+NB:5185	L	same	Linux runs differ
+NB:5188	L	same	Linux runs differ
+NB:5390	L	same	Linux runs differ
+NB:5391	L	same	Linux runs differ
+NB:5841	L	same	Linux runs differ
+NB:5874	L	same	Linux runs differ
+NB:5908	L	same	Linux runs differ
+NB:6074	L	same	Linux runs differ
+NB:6075	L	same	Linux runs differ
+NB:6128	L	same	Linux runs differ
+NB:6131	L	same	Linux runs differ
+NB:6161	L	same	Linux runs differ
+NB:6259	L	same	project: chance
+NB:6276	L	same	Linux runs differ
+NB:6286	L	same	Linux runs differ
+NB:6487	L	same	Linux runs differ
+NB:6488	L	same	Linux runs differ
+NB:6489	L	same	Linux runs differ
+NB:6643	L	same	Linux runs differ
+NB:6644	L	same	Linux runs differ
+NB:6731	L	same	Linux runs differ
+NB:6732	L	same	Linux runs differ
+NB:6795	L	same	project: chance
+NB:6866	L	same	Linux runs differ
+NB:7019	L	same	Linux runs differ
+NB:7214	L	same	Linux runs differ
+NB:739	L	same	Linux runs differ
+NB:9219	L	same	Linux runs differ
+NB:9728	L	same	project: chance
+TL:common/numfmt.md:24	L	same	Linux runs differ

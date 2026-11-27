@@ -1,0 +1,6 @@
+  113 W-ACP        a byte string is taken in the ANSI code page (1252): a program reading wide arguments gets UTF-8 bytes as CP1252 characters
+    3 W-WINPATH    a Windows path or name where Linux has its own, beyond the path alone (type ls: Z:\...\ls.EXE; $TMP, set on Windows)
+    1 H-ELF        an absolute path to a Linux program (/usr/bin/x, /bin/sh): ours cannot start an ELF, 126 (real Windows: not found)
+    1 H-NOSTREAM   a program that writes forever (yes, cat /dev/zero, ...): the bridge reads its input to the end first; no SIGPIPE
+    1 H-WINPATH    a Windows path (~, $HOME, $PWD, pwd: Z:\...) given to a Linux program behind a stand-in (mkdir, ls, cat, grep, readlink, ...), which cannot open it; a Windows program would
+    1 P-ARGV       Perl's own spawn (system1) does not quote an argument holding a double quote, an empty one or one ending in a backslash as Windows splits it back (doc/perl-win32-system-bugs.md, bug 1): the program gets other arguments

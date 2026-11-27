@@ -1,0 +1,80 @@
+row                           posix_spawn      system1
+same                                39854        39504
+a                              30 (msg 2)   29 (msg 2)
+b                               0 (msg 0)  368 (msg 0)
+c                            123 (msg 15) 119 (msg 14)
+d                              15 (msg 0)   13 (msg 0)
+e                              41 (msg 3)   39 (msg 2)
+f                              17 (msg 0)   16 (msg 0)
+diff                         226 (msg 20) 584 (msg 18)
+paths                                 330          322
+all                                 40410        40410
+check: same + diff + paths = all: ok ok
+
+per rule:
+C-CHANCE               4     1
+C-MACHINE             15    13
+C-VARIES              37    38
+H-DEVFD                3     2
+H-DOTDOT               6     6
+H-DOTSOURCE            1     1
+H-ELF                 19    17
+H-ENV                 15    14
+H-KILL2               19    19
+H-NOSIGPIPE            2     1
+H-NOSTREAM             6     7
+H-WCPAD                8     8
+H-WINEFS              12    12
+H-WINPATH             32    32
+P-ARGV                 0   363
+P-ENOENT               0     2
+P-SYS1FD               0     3
+T-timeout-both        13    14
+T-timeout-linux        1     2
+T-timeout-win          3     0
+W-ARGMAX               1     0
+W-BACKSLASH            1     1
+W-CASE                 5     5
+W-DIRREDIR             1     1
+W-FILENAME             1     1
+W-NOLDSO               1     1
+W-NULDEV               1     1
+W-PATHSEP              3     3
+W-PWD                  2     2
+W-STICKY               2     2
+W-ULIMIT               3     3
+W-UMASK                3     3
+W-USERNAME             4     4
+W-WINPATH              2     2
+
+in both ways (the same snippets):
+C-CHANCE               1
+C-MACHINE             13
+C-VARIES              37
+H-DEVFD                2
+H-DOTDOT               6
+H-DOTSOURCE            1
+H-ELF                 17
+H-ENV                 14
+H-KILL2               19
+H-NOSIGPIPE            1
+H-NOSTREAM             5
+H-WCPAD                8
+H-WINEFS              12
+H-WINPATH             32
+T-timeout-both        13
+T-timeout-linux        1
+W-BACKSLASH            1
+W-CASE                 5
+W-DIRREDIR             1
+W-FILENAME             1
+W-NOLDSO               1
+W-NULDEV               1
+W-PATHSEP              3
+W-PWD                  2
+W-STICKY               2
+W-ULIMIT               3
+W-UMASK                3
+W-USERNAME             4
+W-WINPATH              2
+(e) in both ways: 38; posix_spawn only: NB:5776 NB:9680 TL:common/7za.md:29; system1 only: NB:6259

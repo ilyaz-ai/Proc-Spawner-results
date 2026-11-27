@@ -1,0 +1,29 @@
+all.log                      36K  2026-11-22 10:56
+blocks.jsonl                5.9M  2026-11-22 10:13
+builtins.jsonl               36M  2026-11-22 10:15
+builtins.txt                8.0K  2026-11-22 10:15
+drops.tsv                   168K  2026-11-22 01:32
+endmodes/                   1.7M  2026-11-22 10:17  107 files
+env/                         67M  2026-11-22 10:17  110 files
+heartbeat.txt                16K  2026-11-22 10:56
+large-scan.jsonl            6.9M  2026-11-22 01:32
+levels.tsv                  3.3M  2026-11-22 10:13
+levels.txt                  8.0K  2026-11-22 10:13
+match/                      6.3M  2026-11-22 05:09  219 files
+match-raw.txt                12K  2026-11-22 10:19
+match.txt                    12K  2026-11-22 10:18
+parse.txt                   8.0K  2026-11-22 01:32
+q/                           33M  2026-11-22 02:42  7 files
+races/                      8.0K  2026-11-22 10:17  1 files
+reports-before-x82/         212K  2026-11-22 10:56  21 files
+rereport.sh                 8.0K  2026-11-22 10:56
+run/                         80M  2026-11-22 02:25  7 files
+run.sh                      4.0K  2026-11-22 10:56
+runreport-x.txt             4.0K  2026-11-22 10:15
+runreport.txt               4.0K  2026-11-22 10:14
+samples.jsonl               4.9M  2026-11-22 01:32
+samples.tsv                 1.6M  2026-11-22 01:32
+step2/                       37M  2026-11-22 04:15  256 files
+step3/                       38M  2026-11-22 10:17  254 files
+step3-affects-shell/         19M  2026-11-22 10:17  253 files
+threeway.txt                4.0K  2026-11-22 02:45

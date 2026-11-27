@@ -1,0 +1,592 @@
+id	row	rule	why
+BC:ch11/default_date	L	T-timeout-both	project: never ends
+BC:ch14/finding_tools	OS	H-ELF	
+BC:ch16/inputrc	OS	H-WINEFS	
+NB:1007	P	P-ARGV	
+NB:10123	L	H-DOTDOT	Linux runs differ
+NB:10133	L	C-VARIES	Linux runs differ
+NB:10141	P	P-ARGV	
+NB:10142	P	P-ARGV	
+NB:10193	P	P-SYS1FD	
+NB:1034	P	P-ARGV	
+NB:10358	P	P-ARGV	
+NB:1036	P	P-ARGV	
+NB:1051	P	P-ARGV	
+NB:10511	P	P-ARGV	
+NB:1053	P	P-ARGV	
+NB:10647	P	P-ARGV	
+NB:10655	P	P-ARGV	
+NB:10656	P	P-ARGV	
+NB:10718	P	P-ARGV	
+NB:1090	P	P-ARGV	
+NB:10921	P	P-ARGV	
+NB:10942	P	P-ARGV	
+NB:10971	P	P-ARGV	
+NB:11023	P	P-ARGV	
+NB:11027	P	P-ARGV	
+NB:11028	P	P-ARGV	
+NB:11034	P	P-ARGV	
+NB:11046	P	P-ARGV	
+NB:11077	P	P-ARGV	
+NB:11116	P	P-ARGV	
+NB:11148	OS	W-DIRREDIR	
+NB:11175	P	P-ARGV	
+NB:11176	P	P-ARGV	
+NB:11178	P	P-ARGV	
+NB:112	P	P-ARGV	
+NB:11348	P	P-ARGV	
+NB:11359	P	P-ARGV	
+NB:11365	P	P-ARGV	
+NB:11460	P	P-ARGV	
+NB:11492	P	P-ARGV	
+NB:11539	P	P-ARGV	
+NB:11568	P	P-ARGV	
+NB:11571	P	P-ARGV	
+NB:1161	P	P-ARGV	
+NB:11638	P	P-ARGV	
+NB:11639	P	P-ARGV	
+NB:1168	L	H-ELF	Linux runs differ
+NB:11727	P	P-ARGV	
+NB:11765	P	P-ARGV	
+NB:11766	P	P-ARGV	
+NB:11767	P	P-ARGV	
+NB:11768	P	P-ARGV	
+NB:11769	P	P-ARGV	
+NB:11770	P	P-ARGV	
+NB:11785	P	P-ARGV	
+NB:11803	P	P-ARGV	
+NB:11853	P	P-ARGV	
+NB:11875	P	P-ARGV	
+NB:1188	P	P-ARGV	
+NB:1189	P	P-ARGV	
+NB:11950	OS	H-ELF	
+NB:11973	P	P-ARGV	
+NB:11988	P	P-ARGV	
+NB:11997	P	P-ARGV	
+NB:11998	P	P-ARGV	
+NB:12	P	P-ARGV	
+NB:12006	P	P-ARGV	
+NB:12011	L	C-VARIES	project: chance
+NB:12012	P	P-SYS1FD	
+NB:12014	P	P-ARGV	
+NB:12015	P	P-ARGV	
+NB:12025	P	P-ARGV	
+NB:12027	P	P-ARGV	
+NB:12039	P	P-ARGV	
+NB:12086	P	P-ARGV	
+NB:12093	P	P-ARGV	
+NB:12172	P	P-ARGV	
+NB:12183	P	P-ARGV	
+NB:12196	L	C-VARIES	Linux runs differ
+NB:12245	P	P-ARGV	
+NB:12249	OS	W-NULDEV	
+NB:12307	P	P-ARGV	
+NB:12345	P	P-ARGV	
+NB:12387	P	P-ARGV	
+NB:12496	P	P-ARGV	
+NB:12566	P	P-ARGV	
+NB:12570	P	P-ARGV	
+NB:127	P	P-ARGV	
+NB:1420	P	P-ARGV	
+NB:1421	P	P-ARGV	
+NB:1427	P	P-ARGV	
+NB:1428	P	P-ARGV	
+NB:1445	P	P-ARGV	
+NB:1468	P	P-ARGV	
+NB:1476	OS	H-WINEFS	
+NB:1523	L	H-DOTDOT	Linux runs differ
+NB:1581	P	P-ARGV	
+NB:1582	P	P-ARGV	
+NB:1583	P	P-ARGV	
+NB:1661	P	P-ARGV	
+NB:1663	P	P-ARGV	
+NB:1688	P	P-ARGV	
+NB:1785	P	P-ARGV	
+NB:1803	P	P-ARGV	
+NB:1804	P	P-ARGV	
+NB:1805	P	P-ARGV	
+NB:1806	P	P-ARGV	
+NB:1811	OS	H-ELF	
+NB:1812	OS	H-ELF	
+NB:1829	OS	H-ELF	
+NB:1831	OS	W-NOLDSO	
+NB:1897	M	C-MACHINE	
+NB:1909	P	P-ARGV	
+NB:1970	P	P-ARGV	
+NB:1971	P	P-ARGV	
+NB:2015	P	P-ARGV	
+NB:2064	P	P-ARGV	
+NB:2091	P	P-ARGV	
+NB:2092	P	P-ARGV	
+NB:2093	P	P-ARGV	
+NB:2107	P	P-ARGV	
+NB:2121	P	P-ARGV	
+NB:2125	P	P-ARGV	
+NB:2202	P	P-ARGV	
+NB:2272	P	P-ARGV	
+NB:2278	P	P-ARGV	
+NB:2298	OS	H-WINEFS	
+NB:2363	P	P-ARGV	
+NB:2379	P	P-ARGV	
+NB:2428	P	P-ARGV	
+NB:2430	P	P-ARGV	
+NB:2437	P	P-ARGV	
+NB:2594	P	P-ARGV	
+NB:2616	P	P-ARGV	
+NB:2649	L	C-VARIES	project: chance
+NB:2778	P	P-ARGV	
+NB:2839	P	P-ARGV	
+NB:2840	P	P-ARGV	
+NB:2879	L	C-VARIES	Linux runs differ
+NB:2968	P	P-ARGV	
+NB:2973	P	P-ARGV	
+NB:3	P	P-ARGV	
+NB:3033	P	P-ARGV	
+NB:3299	P	P-ARGV	
+NB:3307	P	P-ARGV	
+NB:334	P	P-ARGV	
+NB:335	P	P-ARGV	
+NB:3532	P	P-ARGV	
+NB:3533	P	P-ARGV	
+NB:3537	P	P-ARGV	
+NB:3595	L	C-VARIES	project: chance
+NB:3605	P	P-ARGV	
+NB:3629	P	P-ARGV	
+NB:367	P	P-ARGV	
+NB:368	P	P-ARGV	
+NB:3699	P	P-ARGV	
+NB:3708	P	P-ARGV	
+NB:3805	OS	H-WINEFS	
+NB:3824	P	P-ARGV	
+NB:3829	P	P-ARGV	
+NB:4041	P	P-ARGV	
+NB:4042	P	P-ARGV	
+NB:4043	P	P-ARGV	
+NB:4044	P	P-ARGV	
+NB:4115	P	P-ARGV	
+NB:4153	OS	H-WINEFS	
+NB:4172	L	C-VARIES	project: chance
+NB:4259	L	P-ARGV	Linux runs differ
+NB:4261	P	P-ARGV	
+NB:4262	P	P-ARGV	
+NB:4303	P	P-ARGV	
+NB:431	P	P-ARGV	
+NB:4314	L	C-VARIES	project: chance
+NB:4320	P	P-ARGV	
+NB:4342	OS	H-ELF	
+NB:4343	P	P-ARGV	
+NB:4353	P	P-ARGV	
+NB:4372	P	P-ARGV	
+NB:4394	P	P-ARGV	
+NB:4449	L	T-timeout-both	Linux runs differ
+NB:445	P	P-ARGV	
+NB:4479	P	P-ARGV	
+NB:4483	P	P-ARGV	
+NB:4516	OS	H-WINEFS	
+NB:455	P	P-ARGV	
+NB:4550	P	P-ARGV	
+NB:4574	P	P-ARGV	
+NB:4576	P	P-ARGV	
+NB:458	P	P-ARGV	
+NB:4600	P	P-ARGV	
+NB:4623	L	C-VARIES	project: chance
+NB:4624	L	C-VARIES	project: chance
+NB:4626	P	P-ARGV	
+NB:4643	P	P-ARGV	
+NB:4647	P	P-ARGV	
+NB:4648	P	P-ARGV	
+NB:4654	P	P-ARGV	
+NB:4656	P	P-ARGV	
+NB:4657	P	P-ARGV	
+NB:4661	P	P-ARGV	
+NB:4662	P	P-ARGV	
+NB:4663	P	P-ARGV	
+NB:4676	P	P-ARGV	
+NB:4761	P	P-ARGV	
+NB:4762	P	P-ARGV	
+NB:4774	L	C-VARIES	project: chance
+NB:4783	S1	H-NOFSIZE	
+NB:4785	S1	H-NOFSIZE	
+NB:4790	P	P-ARGV	
+NB:48	P	P-ARGV	
+NB:4809	G	G-KILL	
+NB:4823	P	P-ARGV	
+NB:4856	D	W-BACKSLASH	
+NB:4865	P	P-ARGV	
+NB:4884	P	P-ARGV	
+NB:4911	OS	W-PATHSEP	
+NB:4916	P	P-ARGV	
+NB:4919	M	C-MACHINE	
+NB:4938	P	P-ARGV	
+NB:4941	P	P-ARGV	
+NB:4945	OS	W-LSMETA	
+NB:5035	P	P-ARGV	
+NB:5036	P	P-ARGV	
+NB:5048	P	P-ARGV	
+NB:5056	P	P-ARGV	
+NB:5128	D	W-PWD	
+NB:5137	L	H-ENV	project: chance
+NB:5152	L	C-VARIES	project: chance
+NB:5155	P	P-ARGV	
+NB:5193	P	P-ARGV	
+NB:5207	P	P-ARGV	
+NB:5212	M	C-MACHINE	
+NB:5225	P	P-ARGV	
+NB:5234	P	P-ARGV	
+NB:5272	P	P-ARGV	
+NB:5275	P	P-ARGV	
+NB:5277	M	C-MACHINE	
+NB:5293	L	C-VARIES	project: chance
+NB:552	L	C-VARIES	project: chance
+NB:557	G	G-KILL	
+NB:5573	P	P-ARGV	
+NB:5580	P	P-ARGV	
+NB:5589	P	P-ARGV	
+NB:5590	P	P-ARGV	
+NB:5599	P	P-ARGV	
+NB:5614	P	P-ARGV	
+NB:5615	P	P-ARGV	
+NB:5624	P	P-ARGV	
+NB:5635	P	P-ARGV	
+NB:5691	P	P-ARGV	
+NB:5699	L	T-timeout-linux	project: never ends
+NB:571	L	C-VARIES	project: chance
+NB:5739	OS	H-ELF	
+NB:5742	OS	H-ELF	
+NB:5764	P	P-ARGV	
+NB:5776	L	H-NOSTREAM	project: chance
+NB:5805	P	P-ARGV	
+NB:5815	P	P-ARGV	
+NB:5846	P	P-ARGV	
+NB:5857	P	P-ARGV	
+NB:5858	P	P-ARGV	
+NB:5938	P	P-ARGV	
+NB:5939	L	C-VARIES	project: chance
+NB:5942	P	P-ARGV	
+NB:5943	P	P-ARGV	
+NB:5944	P	P-ARGV	
+NB:5945	P	P-ARGV	
+NB:5946	P	P-ARGV	
+NB:5964	P	P-ARGV	
+NB:5965	P	P-ARGV	
+NB:599	P	P-ARGV	
+NB:60	P	P-ARGV	
+NB:6003	P	P-ARGV	
+NB:6008	P	P-ARGV	
+NB:6026	P	P-ARGV	
+NB:6064	M	C-MACHINE	
+NB:6077	M	C-MACHINE	
+NB:6081	L	C-VARIES	project: chance
+NB:6082	L	C-VARIES	project: chance
+NB:6089	P	P-ARGV	
+NB:6132	OS	W-LSMETA	
+NB:6133	OS	W-LSMETA	
+NB:6179	P	P-ARGV	
+NB:6180	P	P-ARGV	
+NB:6190	P	P-ARGV	
+NB:6198	M	C-MACHINE	
+NB:6228	P	P-ARGV	
+NB:6242	P	P-ARGV	
+NB:6244	P	P-ARGV	
+NB:6245	P	P-ARGV	
+NB:6247	L	C-VARIES	project: chance
+NB:6259	L	C-VARIES	project: chance
+NB:6260	P	P-ARGV	
+NB:6270	P	P-ARGV	
+NB:6271	P	P-ARGV	
+NB:6275	OS	W-PATHSEP	
+NB:6283	M	C-MACHINE	
+NB:6285	P	P-ARGV	
+NB:6296	P	P-ARGV	
+NB:6317	P	P-ARGV	
+NB:6318	P	P-ARGV	
+NB:6319	P	P-ARGV	
+NB:6335	P	P-SYS1FD	
+NB:6342	P	P-ARGV	
+NB:6349	P	P-ARGV	
+NB:6364	P	P-ARGV	
+NB:6393	P	P-ARGV	
+NB:6396	P	P-ARGV	
+NB:6436	L	C-VARIES	project: chance
+NB:6438	M	C-MACHINE	
+NB:6470	P	P-ARGV	
+NB:6492	P	P-ARGV	
+NB:6526	M	C-MACHINE	
+NB:6589	P	P-ARGV	
+NB:6591	P	P-ARGV	
+NB:6599	P	P-ARGV	
+NB:6600	P	P-ARGV	
+NB:6622	P	P-ARGV	
+NB:6626	P	P-ARGV	
+NB:6629	P	P-ARGV	
+NB:6659	P	P-ARGV	
+NB:6660	P	P-ARGV	
+NB:6662	P	P-ARGV	
+NB:6664	L	C-VARIES	project: chance
+NB:6669	L	C-VARIES	project: chance
+NB:6698	P	P-ARGV	
+NB:6714	D	W-PWD	
+NB:6753	P	P-ARGV	
+NB:6754	P	P-ARGV	
+NB:6755	P	P-ARGV	
+NB:6790	P	P-ENOENT	
+NB:6799	L	C-VARIES	project: chance
+NB:6810	L	C-VARIES	Linux runs differ
+NB:6811	L	C-VARIES	Linux runs differ
+NB:6818	L	T-timeout-both	project: chance
+NB:6819	L	T-timeout-linux	project: chance
+NB:6821	L	C-VARIES	project: chance
+NB:683	S1	H-NOFSIZE	
+NB:6840	L	C-VARIES	project: chance
+NB:6843	L	C-VARIES	project: chance
+NB:6844	L	C-VARIES	project: chance
+NB:6847	L	C-VARIES	project: chance
+NB:6848	L	C-VARIES	project: chance
+NB:685	L	H-NOSTREAM	project: chance
+NB:6859	P	P-ARGV	
+NB:686	P	P-ARGV	
+NB:6869	P	P-ARGV	
+NB:6875	P	P-ARGV	
+NB:6885	P	P-ARGV	
+NB:6924	P	P-ENOENT	
+NB:7	P	P-ARGV	
+NB:7021	P	P-ARGV	
+NB:703	P	P-ARGV	
+NB:707	P	P-ARGV	
+NB:708	P	P-ARGV	
+NB:7096	P	P-ARGV	
+NB:712	P	P-ARGV	
+NB:713	P	P-ARGV	
+NB:7184	P	P-ARGV	
+NB:7215	P	P-ARGV	
+NB:725	P	P-ARGV	
+NB:726	P	P-ARGV	
+NB:727	P	P-ARGV	
+NB:7282	P	P-ARGV	
+NB:7347	P	P-ARGV	
+NB:7353	OS	H-WINEFS	
+NB:7365	S4	H-NOFORK	
+NB:7366	P	P-ARGV	
+NB:7418	OS	H-ELF	
+NB:7420	OS	H-ELF	
+NB:7431	OS	H-WINEFS	
+NB:7436	P	P-ARGV	
+NB:747	P	P-ARGV	
+NB:749	P	P-ARGV	
+NB:7491	P	P-ARGV	
+NB:750	P	P-ARGV	
+NB:7554	P	P-ARGV	
+NB:7625	P	P-ARGV	
+NB:7626	P	P-ARGV	
+NB:7658	P	P-ARGV	
+NB:7704	P	P-ARGV	
+NB:7713	P	P-ARGV	
+NB:7714	P	P-ARGV	
+NB:7718	P	P-ARGV	
+NB:7719	P	P-ARGV	
+NB:7737	P	P-ARGV	
+NB:7745	P	P-ARGV	
+NB:7759	P	P-ARGV	
+NB:7781	L	C-CHANCE	Linux runs differ
+NB:7786	P	P-ARGV	
+NB:7820	P	P-ARGV	
+NB:7866	P	P-ARGV	
+NB:7876	P	P-ARGV	
+NB:7944	P	P-ARGV	
+NB:7955	P	P-ARGV	
+NB:7957	P	P-ARGV	
+NB:7968	OS	H-ELF	
+NB:7969	OS	H-ELF	
+NB:7983	P	P-ARGV	
+NB:7984	P	P-ARGV	
+NB:7985	P	P-ARGV	
+NB:7986	P	P-ARGV	
+NB:7989	OS	H-ELF	
+NB:7996	M	C-MACHINE	
+NB:800	P	P-ARGV	
+NB:8001	P	P-ARGV	
+NB:8013	P	P-ARGV	
+NB:8061	OS	H-WINEFS	
+NB:8115	L	C-VARIES	project: chance
+NB:8116	L	C-VARIES	project: chance
+NB:8119	P	P-ARGV	
+NB:8141	L	C-VARIES	project: chance
+NB:8158	P	P-ARGV	
+NB:8206	P	P-ARGV	
+NB:8225	P	P-ARGV	
+NB:836	P	P-ARGV	
+NB:8385	P	P-ARGV	
+NB:8387	P	P-ARGV	
+NB:8548	P	P-ARGV	
+NB:86	L	H-ENV	project: chance
+NB:862	P	P-ARGV	
+NB:8630	P	P-ARGV	
+NB:8631	P	P-ARGV	
+NB:8632	P	P-ARGV	
+NB:8772	L	H-DOTDOT	Linux runs differ
+NB:8874	P	P-ARGV	
+NB:894	P	P-ARGV	
+NB:9033	G	G-KILL	
+NB:9034	G	G-KILL	
+NB:9036	P	P-ARGV	
+NB:9044	P	P-ARGV	
+NB:9048	G	G-KILL	
+NB:9051	X	B-X71	
+NB:9085	L	T-timeout-both	project: never ends
+NB:9281	P	P-ARGV	
+NB:9296	P	P-ARGV	
+NB:9406	P	P-ARGV	
+NB:9426	P	P-ARGV	
+NB:9486	P	P-ARGV	
+NB:9488	P	P-ARGV	
+NB:9490	P	P-ARGV	
+NB:9519	P	P-ARGV	
+NB:9520	P	P-ARGV	
+NB:9521	OS	H-ELF	
+NB:9526	OS	H-ELF	
+NB:9541	P	P-ARGV	
+NB:9546	P	P-ARGV	
+NB:9549	P	P-ARGV	
+NB:9583	L	C-VARIES	project: chance
+NB:9609	P	P-ARGV	
+NB:9613	P	P-ARGV	
+NB:967	P	P-ARGV	
+NB:9672	L	H-DEVFD	Linux runs differ
+NB:968	P	P-ARGV	
+NB:9682	L	C-VARIES	project: chance
+NB:9801	P	P-ARGV	
+NB:9802	P	P-ARGV	
+NB:9806	P	P-ARGV	
+NB:9814	P	P-ARGV	
+NB:988	P	P-ARGV	
+NB:9894	P	P-ARGV	
+NB:9899	P	P-ARGV	
+SC:Analytics.hs:prop_checkCommandWithTrailingSymbol9	OS	H-ELF	
+SC:Analytics.hs:prop_checkSetESuppressed13	L	T-timeout-both	project: never ends
+SC:Analytics.hs:prop_checkSetESuppressed14	L	T-timeout-both	project: never ends
+SC:Analytics.hs:prop_checkSpacefulnessCfg14	L	H-ENV	project: chance
+SC:Analytics.hs:prop_checkUselessBang3	L	T-timeout-both	project: never ends
+SC:Analytics.hs:prop_checkWhileReadPitfalls3	L	T-timeout-both	project: never ends
+SC:Checks/Commands.hs:prop_checkCatastrophicRm4	OS	H-WINEFS	
+SC:Checks/Commands.hs:prop_checkCatastrophicRm6	OS	H-WINEFS	
+SC:Checks/Commands.hs:prop_checkCatastrophicRmB	OS	H-WINEFS	
+SC:Checks/Commands.hs:prop_checkInjectableFindSh2	P	P-ARGV	
+SC:Checks/Commands.hs:prop_checkInjectableFindSh3	P	P-ARGV	
+SC:Checks/Commands.hs:prop_checkSourceArgs2	S2	H-DOTSOURCE	
+SC:Checks/ShellSupport.hs:prop_checkBashisms129	OS	W-STICKY	
+SC:Checks/ShellSupport.hs:prop_checkBashisms130	OS	W-STICKY	
+SC:Checks/ShellSupport.hs:prop_checkBashisms19	OS	W-FILENAME	
+SC:Checks/ShellSupport.hs:prop_checkBashisms69	D	W-UMASK	
+SC:Checks/ShellSupport.hs:prop_checkBashisms72	D	W-WINPATH	
+TL:common/arthas-watch.md:13	P	P-ARGV	
+TL:common/awk.md:30	P	P-ARGV	
+TL:common/awk.md:38	P	P-ARGV	
+TL:common/bun-exec.md:17	P	P-ARGV	
+TL:common/continue.md:8	L	T-timeout-both	project: never ends
+TL:common/curl.md:26	OS	W-CASE	
+TL:common/curl.md:30	P	P-ARGV	
+TL:common/echo.md:13	OS	W-PATHSEP	
+TL:common/env.md:8	L	H-ENV	project: chance
+TL:common/git-guilt.md:25	P	P-ARGV	
+TL:common/http.md:17	OS	W-CASE	
+TL:common/jq.md:32	P	P-ARGV	
+TL:common/jq.md:36	P	P-ARGV	
+TL:common/kill.md:13	G	G-KILL	
+TL:common/kill.md:17	G	G-KILL	
+TL:common/kill.md:21	G	G-KILL	
+TL:common/kill.md:25	G	G-KILL	
+TL:common/kill.md:29	G	G-KILL	
+TL:common/kill.md:33	G	G-KILL	
+TL:common/kill.md:9	G	G-KILL	
+TL:common/ls.md:20	OS	W-LSMETA	
+TL:common/npm-query.md:28	P	P-ARGV	
+TL:common/odpscmd-inst.md:24	G	G-KILL	
+TL:common/ppmtomitsu.md:16	OS	W-CASE	
+TL:common/printenv.md:8	L	H-ENV	project: chance
+TL:common/runit.md:12	G	G-KILL	
+TL:common/sd.md:20	P	P-ARGV	
+TL:common/sort.md:24	M	C-MACHINE	
+TL:common/sort.md:28	M	C-MACHINE	
+TL:common/tail.md:33	L	T-timeout-both	project: never ends
+TL:common/timeout.md:12	OS	W-CASE	
+TL:common/times.md:10	L	C-VARIES	project: chance
+TL:common/ulimit.md:13	D	W-ULIMIT	
+TL:common/ulimit.md:17	D	W-ULIMIT	
+TL:common/ulimit.md:25	D	W-ULIMIT	
+TL:common/umask.md:12	D	W-UMASK	
+TL:common/umask.md:8	D	W-UMASK	
+TL:common/until.md:12	L	T-timeout-both	project: never ends
+TL:common/while.md:12	L	T-timeout-both	project: never ends
+TL:common/while.md:16	L	T-timeout-both	project: never ends
+TL:common/yq.md:24	P	P-ARGV	
+TL:common/yq.md:32	P	P-ARGV	
+TL:linux/fuzzel.md:36	P	P-ARGV	
+TL:linux/kill.md:17	G	G-KILL	
+TL:linux/kill.md:33	G	G-KILL	
+TL:linux/kill.md:37	G	G-KILL	
+TL:linux/mopac.md:12	L	T-timeout-both	project: never ends
+TL:linux/pw-cli.md:9	OS	W-CASE	
+TL:linux/sed.md:33	P	P-ARGV	
+NB:10103	L	same	Linux runs differ
+NB:10104	L	same	Linux runs differ
+NB:10114	L	same	Linux runs differ
+NB:10125	L	same	Linux runs differ
+NB:10132	L	same	Linux runs differ
+NB:12327	L	same	Linux runs differ
+NB:1505	L	same	Linux runs differ
+NB:1920	L	same	Linux runs differ
+NB:1921	L	same	Linux runs differ
+NB:1922	L	same	Linux runs differ
+NB:2999	L	same	Linux runs differ
+NB:4253	L	same	Linux runs differ
+NB:4254	L	same	Linux runs differ
+NB:4263	L	same	Linux runs differ
+NB:4313	L	same	Linux runs differ
+NB:4355	L	same	Linux runs differ
+NB:4722	L	same	Linux runs differ
+NB:4882	L	same	Linux runs differ
+NB:4890	L	same	Linux runs differ
+NB:4904	L	same	project: chance
+NB:4909	L	same	Linux runs differ
+NB:4948	L	same	Linux runs differ
+NB:4976	L	same	Linux runs differ
+NB:4984	L	same	Linux runs differ
+NB:4994	L	same	Linux runs differ
+NB:5006	L	same	Linux runs differ
+NB:5071	L	same	Linux runs differ
+NB:5075	L	same-paths	Linux runs differ
+NB:5077	L	same-paths	Linux runs differ
+NB:5080	L	same	Linux runs differ
+NB:5081	L	same	Linux runs differ
+NB:5171	L	same	Linux runs differ
+NB:5182	L	same	Linux runs differ
+NB:5185	L	same	Linux runs differ
+NB:5188	L	same	Linux runs differ
+NB:5390	L	same	Linux runs differ
+NB:5391	L	same	Linux runs differ
+NB:5841	L	same	Linux runs differ
+NB:5874	L	same	Linux runs differ
+NB:5908	L	same	Linux runs differ
+NB:6074	L	same	Linux runs differ
+NB:6075	L	same	Linux runs differ
+NB:6128	L	same	Linux runs differ
+NB:6131	L	same	Linux runs differ
+NB:6161	L	same	Linux runs differ
+NB:6276	L	same	Linux runs differ
+NB:6286	L	same	Linux runs differ
+NB:6487	L	same	Linux runs differ
+NB:6488	L	same	Linux runs differ
+NB:6489	L	same	Linux runs differ
+NB:6643	L	same	Linux runs differ
+NB:6644	L	same	Linux runs differ
+NB:6731	L	same	Linux runs differ
+NB:6732	L	same	Linux runs differ
+NB:6795	L	same	project: chance
+NB:6866	L	same	Linux runs differ
+NB:7019	L	same	Linux runs differ
+NB:7214	L	same	Linux runs differ
+NB:739	L	same	Linux runs differ
+NB:9219	L	same	Linux runs differ
+NB:9680	L	same	Linux runs differ
+NB:9728	L	same	project: chance
+TL:common/numfmt.md:24	L	same	Linux runs differ

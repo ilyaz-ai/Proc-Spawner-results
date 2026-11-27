@@ -1,0 +1,20 @@
+same               39504
+same-paths           322
+same-crlf              0
+same-paths+crlf        0
+msg                   18
+differs              550
+timeout-both          14
+timeout-win            0
+timeout-linux          2
+runner-error           0
+compared           40410
+
+By source:
+src	same	same-paths	same-crlf	same-paths+crlf	msg	differs	timeout-both	timeout-win	timeout-linux	runner-error
+BC	23	0	0	0	1	1	1	0	0	0
+NB	9229	304	0	0	15	486	3	0	2	0
+PB	48	1	0	0	0	0	0	0	0	0
+PS	42	1	0	0	0	0	0	0	0	0
+SC	994	6	0	0	0	17	4	0	0	0
+TL	29168	10	0	0	2	46	6	0	0	0

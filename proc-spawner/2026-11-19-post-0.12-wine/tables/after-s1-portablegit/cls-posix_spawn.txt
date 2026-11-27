@@ -1,0 +1,44 @@
+   37 C-VARIES     varies from run to run on a side, never agrees with the other, no rule explains it
+   19 H-ELF        an absolute path to a Linux program (/usr/bin/x, /bin/sh): ours cannot start an ELF, 126 (real Windows: not found)
+   17 G-KILL       Git for Windows' kill (-winreal) words its messages otherwise than Linux's procps kill (illegal pid: X, against failed to parse argument: 'X'; No such process), and kill -l lists the signals otherwise
+   15 C-MACHINE    the Linux run was made on another machine, whose system files differ (/etc/passwd, /usr/bin, ...): Linux repeated here gives one result, not the base run's, and some Windows run gives it too
+   13 T-timeout-both 
+   12 H-WINEFS     the whole file system listed: Wine's own files (/tmp/wine-*), /sys, /proc, the prefixes
+    6 H-ENV        the environment listed or searched: Windows has its own variables (ComSpec, ...), the bridge its PATH
+    5 W-CASE       program lookup ignores case (PATCH runs patch.exe)
+    4 W-LSMETA     ls -l of Windows' file system (Git's ls): owner VM+USER, a numeric group, link count 1, directory size 0
+    3 H-DOTDOT     ls -l of the run directory: its parent (the worker directory) has another date and link count
+    3 H-NOFSIZE    the Windows test runner sets no limit on the size of output files, which the Linux runner sets (Linux: status 153, SIGXFSZ; Windows: out of the 5 seconds)
+    3 W-PATHSEP    $PATH joined by ";" on Windows
+    3 W-ULIMIT     ulimit -n, -c not supported on Windows
+    3 W-UMASK      umask is 0000 on Windows
+    2 C-CHANCE     some run on one side gives the same result as some run on the other: no steady difference
+    2 H-NOSTREAM   a program that writes forever (yes, cat /dev/zero, ...): the bridge reads its input to the end first; no SIGPIPE
+    2 T-timeout-win 
+    2 W-ARGMAX     the command line limit (32767)
+    2 W-PWD        pwd gives a Windows path (Z:/...)
+    2 W-STICKY     no sticky bit on Windows: test -k is false
+    1 B-X71        known issue X71 (ours): on Windows kill ... $$ goes to the program kill
+    1 G-FD3        Git's programs do not see a descriptor above 2 passed the Windows way (win_spawn.h)
+    1 H-DEVFD      /dev/fd, /proc/self/fd, /dev/stderr behind the bridge
+    1 H-DOTSOURCE  . NAME found a recorder script on Linux
+    1 H-NOFORK     under Wine, MSYS2's fork does not work: Git's xargs hangs when it starts a command, find -exec fails (Bad address)
+    1 H-NOSIGPIPE  no SIGPIPE through the bridge
+    1 T-timeout-linux 
+    1 W-BACKSLASH  a command word "\" names the root directory: 126 (Linux: 127 not found)
+    1 W-DIRREDIR   a directory as input (< dir) fails on Windows
+    1 W-FILENAME   characters Windows file names cannot hold
+    1 W-NOLDSO     no ld.so (LD_PRELOAD)
+    1 W-NULDEV     a file name ending in nul is the NUL device
+    1 W-WINPATH    a Windows path or name where Linux has its own, beyond the path alone (type ls: Z:\...\ls.EXE; $TMP, set on Windows)
+
+Also matching (samples whose first category is another):
+    6 H-NOSTREAM
+    6 W-WINPATH
+    2 H-WINEFS
+    1 G-KILL
+    1 H-ENV
+    1 H-WINPATH
+    1 W-CASE
+    1 W-PATHSEP
+    1 W-PWD

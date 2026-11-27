@@ -1,0 +1,121 @@
+id	class	rule	parts	noisy	also	text
+NB:10058	differs	W-ACP	rec			find Música/* -type f -name ".*" -exec /usr/bin/rm -i {} \;
+NB:10062	differs	W-ACP	rec			find . — name "*.LOG" — mtime +5 -ok rm {} \;
+NB:10064	differs	W-ACP	rec			find /home/ -exec grep -l “mp3” {} \; | xargs rm
+NB:10127	differs	W-ACP	rec			find . — type f -exec ls -1 {} \;
+NB:10137	differs	W-ACP	err,rec			find . -size +1000k -name *.log -print0 | xargs -0 ls –lSh
+NB:10172	differs	W-ACP	rec			find . ! — type d -print
+NB:10199	differs	W-ACP	rec			find . -printf "%h/%f : dernier accès le %Ac\n"
+NB:10200	differs	W-ACP	rec			find . -printf "%h/%f : dernier accès le %AA %Ad %AB %AY à %AH:%AM:%AS\n"
+NB:10231	differs	W-ACP	rec			find / -name “*.mp3” -atime +01 -type f
+NB:10362	differs	W-ACP	rec			find . — name "*" — print -о -name ".*" — print -depth
+NB:10365	differs	W-ACP	rec			find . -maxdepth 1 -type f | xargs -I ‘{}’ sudo mv {} /directory1/directory2
+NB:10397	differs	W-ACP	rec			find . -newermt “Sep 1 2006” -and \! -newermt “Sep 10 2006”
+NB:10413	differs	W-ACP	rec			find / -name "*" — print
+NB:10544	differs	W-WINPATH	rec			find ~ -name "*.txt" — print -o -name ".*" — print
+NB:10551	differs	W-ACP	rec			find -name “*.txt”
+NB:10592	differs	W-ACP	rec			find Música/* -type f -name ".*" -exec ls -l {} \;
+NB:10627	differs	W-ACP	rec			find . -type d –print | wc -l
+NB:10645	differs	W-ACP	rec			find /dir/dir -type f -mtime +540 -mtime -720 -printf \”%p\”,\”%s\”,\”%AD\”,|”%TD\”\\n > /dir/dir/output.csv
+NB:10650	differs	W-ACP	rec			find . -type f -not -name ‘.*’ -mtime +500 -exec ls {} \;
+NB:10671	differs	W-ACP	rec			find /var/www/ -type f -name «access.log*» -exec du -k {} \;|awk '{s+=$1}END{print s}'
+NB:10674	differs	W-ACP	rec			find . -xdev -printf ‘%s %p\n’ |sort -nr|head -20
+NB:10770	differs	W-ACP	rec			find / -user seamstress -iname “*.pdf”
+NB:10856	differs	W-ACP	rec			find . — size +10 -print
+NB:10897	differs	W-ACP	rec			find . — name "[A‑Z]*" — print
+NB:10972	differs	W-ACP	rec			find . -name “*.pdf” -print
+NB:11048	differs	W-ACP	rec			find . -type f -name “FILE-TO-FIND” -delete;
+NB:11095	differs	W-ACP	rec			find /somePath -type d -name ‘someNamePrefix*’ -mtime +10 -print | xargs rm -rf ;
+NB:11096	differs	W-ACP	rec			find . -type d -name “DIRNAME” -exec rm -rf {} \;
+NB:11181	differs	W-ACP	rec			find . | xargs perl -p -i -e ‘s/something/else/g’
+NB:11195	differs	W-ACP	rec			find . — size +1000k -print
+NB:11228	differs	W-ACP	rec			find . — name "[a‑z][a‑z][0—9][0—9].txt" — print
+NB:11283	differs	W-ACP	rec			find /path/to/dir -newermt “Feb 07”
+NB:11286	differs	W-ACP	rec			find Música/* | egrep -Z \/\\. | xargs -0 echo
+NB:11379	differs	W-ACP	rec			find . -name “*.jar” -print -exec jar tvf {} \; |grep -E “jar$|.class”
+NB:11405	differs	W-ACP	rec			find . -name ‘*.mp4’ >> /tmp/$$
+NB:11440	differs	W-ACP	rec			find . -name “*.[php|PHP]” -print
+NB:11499	differs	W-ACP	rec			find . — name "*.txt" — print
+NB:11509	differs	W-ACP	rec			find /home/calvin/ -maxdepth 2  -name “*.txt”
+NB:11510	differs	W-ACP	rec			find /home/calvin/ -mindepth 2  -name “*.txt”
+NB:11513	differs	W-WINPATH	rec			find ~ -name "*.txt" — print
+NB:11515	differs	W-ACP	err,rec			find /tmp -type f -name ‘*.txt*’ | sed -e ‘s/.*/\”&\”/’ |xargs -n 1 grep -l hello|sed -e ‘s/.*/\”&\”/’
+NB:11568	differs	W-ACP	rec			find … -exec sh -c 'trap "echo \$?" EXIT; invalid_command "$0"' {} \;
+NB:11950	differs	H-ELF	status,err			/bin/find -name "core" — exec rm {} \;
+NB:11970	differs	W-ACP	rec			find . -type f -iname “*.mp3″ -exec rename “s/ /_/g” {} \;
+NB:11975	differs	W-ACP	rec			find -name ‘*exp_to_find_in_folders*’ -exec rename “s/exp_to_find_for_replacement/exp_to_replace/” {} \;
+NB:12076	differs	W-ACP	err,rec			find . -name “*.[php|PHP]” -print | xargs grep -HnT “specified string”
+NB:12106	differs	W-ACP	rec			find . -type f \( -iname “*.c” \) |grep -i -r “keyword”
+NB:12137	differs	W-ACP	rec			find / -name '*.tif ' –print
+NB:12213	differs	W-ACP	rec			find /mnt/hda1/zdjecia/test1/ -iname “*.jpg” -type f -exec cp {} -rv /mnt/hda1/test{} ‘;’
+NB:12214	differs	W-ACP	rec			find /mnt/hda1/zdjecia/test1/ -type f -iname ‘*.jpg’ -printf ‘%’h’\'”0″ | xargs -0 -I ‘{}’ mkdir -p /mnt/hda1/test/{} \;
+NB:12221	differs	W-ACP	rec			find /home/you -iname “*.mp3” -atime 01 -type -f
+NB:12233	differs	W-ACP	rec			find /var/www -type f -name «access.log*» -size +100M
+NB:12234	differs	W-ACP	rec			find / -iname “*.mp3″ -type f -print0 | xargs -0 -I ‘{}’ mkdir -p /mnt/mp3/`basename {}`
+NB:12244	differs	W-ACP	rec			find /home/calvin/ -name “*.txt” > /tmp/search.log
+NB:12257	differs	W-ACP	rec			find … -print0 | xargs -0 -n1 invalid_command
+NB:12290	differs	W-ACP	rec			find /home/hobbes/ /home/calvin/ -name “*.txt”
+NB:12291	differs	W-ACP	rec			find /home/hobbes/ /home/calvin/ -name “*.txt” 2>/dev/null
+NB:12330	differs	W-ACP	rec			find / -name ”*filename*”
+NB:12332	differs	W-ACP	rec			find /home/calvin/ -iname “picasso”
+NB:12347	differs	W-ACP	rec			find -name “*.xml” -exec grep -l “slc02oxm.us.oracle.com” {} \;
+NB:12359	differs	W-ACP	rec			find . -type f -iname ‘HSTD*’ -daystart -mtime 1 -exec cp {} /path/to new/dir/ \;
+NB:12372	differs	W-ACP	rec			find . -type f -exec grep -i “redeem reward” {} \; -print
+NB:12373	differs	W-ACP	rec			find . -type f -exec grep -i “redeem reward” {} \; -print 2>/dev/null
+NB:12383	differs	W-ACP	err,rec			find /tmp -type f -name ‘*.txt*’ | sed -e ‘s/.*/\”&\”/’ |xargs -n 1 grep -l hello|sed -e ‘s/.*/\”&\”/’|xargs -n 1 rm -f
+NB:12503	differs	W-ACP	rec			find . -name ‘*ITM*’
+NB:1373	differs	W-ACP	rec			find . -name “*.old” -exec rm {} \;
+NB:1374	differs	W-ACP	rec			find . -name “*.old” -print | xargs rm
+NB:1389	differs	W-ACP	rec			find . -name “*.old” -delete
+NB:1404	differs	W-ACP	rec			find ./ -type f -name \*.php -exec sed -i ’s/^.*iframe bla bla bla.*$//g’ {} \;
+NB:1521	differs	W-ACP	rec			find . -type f -newermt ‘Apr 18 23:59:59 EDT 2013’ ! -newermt ‘Apr 20 00:00:00 EDT 2013’ -exec ls -l ‘{}’ \;
+NB:1579	differs	H-NOSTREAM	rec			yes 'c=(╱ ╲);printf ${c[RANDOM%2]}'|bash
+NB:1658	differs	W-ACP	rec			find . -name “*.old” -print | wc -l
+NB:23	differs	W-ACP	rec			top –p $PID
+NB:2326	differs	W-ACP	rec			find . -name “*.jpg”
+NB:2406	differs	W-ACP	rec			find . -type f \( -iname “*.c” \) |grep -i “keyword”
+NB:2417	differs	W-ACP	rec			find . -name “*.jpg” | xargs gimp
+NB:2421	differs	W-ACP	err,rec			find . -name 'Lemon*.mp3' -print0 | xargs -­0 -i mplayer '{}'
+NB:252	differs	W-ACP	rec			find -name "*.php" –exec cp {} {}.bak \;
+NB:2556	differs	W-ACP	rec			find . -type d –iname stat*
+NB:2602	differs	W-ACP	rec			find folder_name -type d -exec chmod 775 ‘{}’ \;
+NB:2819	differs	W-ACP	rec			find . -path ‘*/1/lang/en.css’ -print
+NB:2827	differs	W-ACP	rec			find аргумент [опция_поиска] [значение] [значение]
+NB:2828	differs	W-WINPATH	rec			find ~/ [опция_поиска] [значение] [опция_действия]
+NB:2948	differs	W-ACP	rec			find / [опция_поиска] [значение]  [опция_действия]
+NB:3252	differs	W-ACP	rec			find / -name "имя_файла"
+NB:3419	differs	W-ACP	rec			find . -name ”*.old” -print
+NB:3472	differs	W-ACP	rec			find /apps/audit -perm -7 -print | xargs chmod o‑w
+NB:35	differs	W-ACP	rec			grep “HIGHMEM” /boot/config-`uname -r`
+NB:3580	differs	W-ACP	rec			find . –type f -mmin -10
+NB:3619	differs	W-ACP	rec			find . -type f –iname stat*
+NB:3666	differs	W-ACP	rec			find . -type f -exec sed -i ‘s/.*abc.*/#&/’ {} \;
+NB:3705	differs	W-ACP	rec			find –L –xtype l
+NB:3721	differs	W-ACP	rec			find . -name ‘*.c’ | xargs egrep stdlib.h
+NB:3745	differs	W-ACP	rec			find / -mtime +50 –mtime -100
+NB:4084	differs	W-ACP	rec			find . -type f -mtime +7 -mtime -14 | xargs tar -cvf `date ‘+%d%m%Y’_archive.tar`
+NB:4206	differs	H-WINPATH	rec			find ~/Desktop -name “*.jpg” -o -name “*.gif” -o -name “*.png” -print0 | xargs -0 mv –target-directory ~/Pictures
+NB:4316	differs	W-ACP	rec			find /base/path/of/proj/d‌​ata -name target.txt | xargs simpleGrepScript.sh > overallenergy.out
+NB:4317	differs	W-ACP	rec			find . –name "*.txt" –mtime 5
+NB:4326	differs	W-ACP	rec			find . -name “core” -exec rm -f {} \;
+NB:4590	differs	W-ACP	rec			find / -size +10M -printf “%12s %t %h/%fn”
+NB:5349	differs	W-ACP	rec			find / -name “*.jpg”
+NB:5745	differs	W-ACP	rec			find /var/www/vhosts/*/httpdocs -type f -iwholename “*/wp-includes/version.php” -exec grep -H “\$wp_version =” {} \;
+NB:5746	differs	W-ACP	rec			find /home/*/public_html/ -type f -iwholename “*/wp-includes/version.php” -exec grep -H “\$wp_version =” {} \;
+NB:6098	differs	W-ACP	rec			paste -d'¤' file1 file2 | sed 's,¤, ,g'
+NB:7213	differs	W-ACP	rec			tree -F coreutils-8.9 | sed -r 's|── (.*)/$|── DIR: \1|'
+NB:7371	differs	W-ACP	rec			find /home/luser -type f -name ‘*.mpg’ | parallel rm -f
+NB:7444	differs	W-ACP	rec			find . -type f -mtime +3 –exec rm –f {} \;
+NB:7766	differs	W-ACP	err,rec			find . | xargs sed -i ‘s/foo/bar/g’
+NB:7767	differs	W-ACP	err,rec			find . -type f -not -name “.*” -print | xargs sed -i ‘s/foo/bar/g’
+NB:7774	differs	W-ACP	rec			sudo find . -type f -exec sed -i 's/置換前/置換後/g' {} \;
+NB:8258	differs	W-ACP	rec			find . -name ‘*.x’ -print0 | xargs -0 grep fred
+NB:8310	differs	W-ACP	rec			find /var/log/ -type f -exec grep -H ‘19:26′ {} \;
+NB:8426	differs	W-ACP	rec			find . -name “*.cc” |xargs grep -n “pattern”
+NB:8434	differs	W-ACP	err,rec			find . -name “*.[txt|TXT]” -print | xargs grep “specific string”
+NB:8443	differs	W-ACP	rec			find / -name ‘*.*’ -exec grep -il “foobar” {} \;
+NB:8634	differs	W-ACP	rec			find ./bin -name “cp”
+NB:8923	differs	W-ACP	rec			find / – perm -0002
+NB:933	differs	W-ACP	err,rec			find . -type d -exec basename {} \; | wc –l
+NB:9569	differs	W-ACP	rec			gunzip -c openssl-fips-2.0.1.tar.gz | tar xf ­-
+NB:9804	differs	W-ACP	rec			find -name ‘*.lst’ -exec rename .lst a.lst {} \;

@@ -1,0 +1,169 @@
+id	class	rule	parts	noisy	also	text
+BC:ch11/default_date	timeout-both	T-timeout-both			H-NOSTREAM	#!/usr/bin/env bash # cookbook filename: default_date  # Use noon time to prevent a script running around midnight and a
+BC:ch14/finding_tools	msg	H-ELF	err			#!/usr/bin/env bash # cookbook filename: finding_tools  # Export may or may not also be needed, depending on what you ar
+BC:ch16/inputrc	differs	H-WINEFS	err,rec		W-PATHSEP,W-CASE	# cookbook filename: inputrc # settings/inputrc: # readline settings # To reread (and implement changes to this file) us
+NB:10123	differs	H-DOTDOT	out			find / -print0 -type d | xargs -0 ls -al
+NB:10133	differs	C-VARIES	files	noisy		find . -name "filename including space" -print0 | xargs -0 ls -aldF > log.txt
+NB:11148	differs	W-DIRREDIR	status,err,rec,files			find <dir> -mtime +7
+NB:1168	differs	H-ELF	err,rec,files	noisy		touch filename_`/bin/date +%Y%m%d%H%M%S`.txt
+NB:11950	differs	H-ELF	status,err			/bin/find -name "core" — exec rm {} \;
+NB:12011	differs	C-VARIES	rec	noisy		su - joe -c "/path/to/my_daemon & echo \$! > /tmp/su.joe.$$"
+NB:12196	differs	C-VARIES	files	noisy		find . -name "filename including space" -print0 | tee my_teed_file | xargs -0 ls -aldF > log.txt
+NB:12249	differs	W-NULDEV	status,err,rec			find / -path /usr/share -prune -o \( -name rsync -o -name bash \) -print 2>/dev/nul
+NB:1420	differs	H-ELF	status,err			ipcs -a | nawk -v u=`whoami` '$5==u &&(($1=="m" && $9==0)||($1=="s")){print "ipcrm -"$1,$2,";"}' | /bin/sh
+NB:1421	differs	H-ELF	status,err			ipcs | nawk -v u=`whoami` '/Shared/,/^$/{ if($6==0&&$3==u) print "ipcrm shm",$2,";"}/Semaphore/,/^$/{ if($3==u) print "i
+NB:1476	differs	H-WINEFS	rec			find /tmp/*/* -mtime +7 -type d -exec rmdir {} \;
+NB:1523	differs	H-DOTDOT	out			find /home/backups -printf "%T@ %p\n" | sort -n | head -1 | cut -d" " -f2- | xargs ls -al
+NB:1811	differs	H-ELF	status,out,err			/usr/bin/find $*
+NB:1812	differs	H-ELF	status,out,err			/usr/bin/find ./ $*
+NB:1829	differs	H-ELF	status,out,err			exec /usr/bin/find "$@"
+NB:1831	msg	W-NOLDSO	err			LD_PRELOAD=./linebufferedstdout.so python test.py | tee -a test.out
+NB:1897	differs	C-MACHINE	out	noisy		cut -d: -f1 /etc/group | sort
+NB:2298	differs	H-WINEFS	rec			mv $(find . -name "*shp*" -printf "%h\n" | uniq)/* ../shp_all/
+NB:2649	differs	C-VARIES	err,rec	noisy		find . -mount -type d -print0 | xargs -0 -n1 /tmp/count_em_$$ | sort -n
+NB:2879	msg	C-VARIES	err	noisy		find . -maxdepth 1 -cmin +60 -name file >/tmp.$$
+NB:3595	differs	C-VARIES	rec	noisy		find /tmefndr/oravl01 -type f -newer /tmp/$$
+NB:3805	differs	H-WINEFS	out,rec			for d in /home/*/; do find "$d" -type d -name bin | grep -q . || echo "$d"; done
+NB:3850	differs	C-MACHINE	rec	noisy		find /usr/* -size 0c -exec rm {} \;
+NB:4153	differs	H-WINEFS	rec			find `ls -d /[ubso]*` -name sar
+NB:4172	differs	C-VARIES	rec	noisy		find /usr -newer /tmp/stamp$$
+NB:4314	differs	C-VARIES	rec	noisy		find test -type l -exec cp {} {}.tmp$$ \; -exec mv {}.tmp$$ {} \;
+NB:4342	differs	H-ELF	status,err			/usr/bin/find $DIR -maxdepth 1 -ipath $TMP_DIR -print -quit
+NB:4449	timeout-both	T-timeout-both		noisy		grep -Ril "text-to-find-here" /
+NB:4516	differs	H-WINEFS	rec			find /tmp/* -atime +10 -exec rm -f {} \;
+NB:4623	differs	C-VARIES	rec	noisy		ps -p $$ | awk '$1 == PP {print $4}' PP=$$
+NB:4624	differs	C-VARIES	rec	noisy		ps | grep `echo $$` | awk '{ print $4 }'
+NB:4774	differs	C-VARIES	rec	noisy		ps -o pid= --ppid $PPID | xargs kill -9
+NB:4783	timeout-win	H-NOFSIZE			H-NOSTREAM	yes 0 | sed '1~2s/0/1/'
+NB:4785	timeout-win	H-NOFSIZE			H-NOSTREAM	yes 1 | nl | tee /tmp/to
+NB:4809	msg	G-KILL	err			kill -9 \`pgrep myprocess\`
+NB:4856	differs	W-BACKSLASH	status,err			find . -name *.txt -exec ls {} ;\
+NB:4909	msg	H-NOSIGPIPE	err	noisy		find /home/jassi/ -name "aliencoders.[0-9]+" | xargs ls -lrt | awk print '$9'
+NB:4911	differs	W-PATHSEP	rec			echo $PATH | tr ':' '\n' | xargs -I {} find {} -maxdepth 1 -type f -perm '++x'
+NB:4919	differs	C-MACHINE	rec	noisy		cat /etc/passwd | sed 's/^\([^:]*\):.*$/crontab -u \1 -l 2>\&1/' | grep -v "no crontab for" | sh
+NB:4941	differs	H-ENV	out			env | awk -F= '/[a-zA-Z_][a-zA-Z_0-9]*=/ { if (!system("[ -n \"${" $1 "+y}\" ]")) print $1 }' | sort | uniq
+NB:4945	differs	W-LSMETA	out		H-WINPATH,W-PWD	ls -alrt `pwd`/*
+NB:5128	differs	W-PWD	out			pwd | cut -b2- | tr '/' '\n'
+NB:5137	differs	H-ENV	out		W-WINPATH	env | sed 's/;/\\;/g'
+NB:5152	differs	C-VARIES	out	noisy		find . -print | xargs ls -gilds
+NB:5212	differs	C-MACHINE	rec	noisy		ls /usr/bin | more
+NB:5277	differs	C-MACHINE	out			ls -l /lib*/ld-linux*.so.2
+NB:5293	differs	C-VARIES	out	noisy		ls -l /proc/self/fd/
+NB:552	differs	C-VARIES	rec	noisy		pstree --show-parents -p $$ | head -n 1 | sed 's/\(.*\)+.*/\1/' | wc -l
+NB:557	msg	G-KILL	err			kill -0 1
+NB:5699	timeout-linux	T-timeout-linux			H-NOSTREAM	yes | sed -n '200000000,${=;p};200000005q'
+NB:571	differs	C-VARIES	rec	noisy		pstree --show-parents -p $$ | head -n 1 | sed 's/\(.*\)+.*/\1/' | grep screen | wc -l
+NB:5739	msg	H-ELF	err			/bin/true "$(seq 1 100000)"
+NB:5742	differs	H-ELF	status,err			/bin/true $(seq 1 100000)
+NB:5776	differs	H-NOSTREAM	err,files			{ echo foo; cat bar; } | tee bar > /dev/null
+NB:5939	differs	C-VARIES	out	noisy		seq 2000 65000 | sort -R | head -n 1
+NB:6064	differs	C-MACHINE	out	noisy		cat /etc/passwd /etc/group
+NB:6077	differs	C-MACHINE	rec	noisy		cat /etc/passwd | sed 's/^\([^:]*\):.*$/crontab -u \1 -l 2>\&1/' | sh | grep -v "no crontab for"
+NB:6081	differs	C-VARIES	rec	noisy		ps  -ef | grep $$ | grep -v grep
+NB:6082	differs	C-VARIES	rec	noisy		ps -p $$
+NB:6132	differs	W-LSMETA	out			ls `which g++` -al
+NB:6133	differs	W-LSMETA	out			ls `which gcc` -al
+NB:6198	differs	C-MACHINE	rec	noisy		cat /etc/passwd -n | grep `whoami` | cut -f1
+NB:6247	differs	C-VARIES	rec	noisy		ps -o user= -p $$ | awk '{print $1}'
+NB:6275	differs	W-PATHSEP	out		W-WINPATH	echo "$PATH" | rev | cut -d"/" -f1 | rev
+NB:6283	differs	C-MACHINE	out	noisy		cut -d: -f1 /etc/group
+NB:6335	differs	G-FD3	status,err			zcat number.txt.gz | { zcat xxx.txt.gz | comm -12 /dev/fd/3 - ; } 3<&0
+NB:6436	differs	C-VARIES	rec	noisy		ps -p $$ | tail -1 | awk '{print $NF}'
+NB:6438	differs	C-MACHINE	out			echo `whoami` `stat -c %i "/home"`
+NB:6526	differs	C-MACHINE	rec	noisy		cat /proc/config.gz | gunzip
+NB:6664	differs	C-VARIES	out,err,rec	noisy		echo $(cat /proc/$$/cmdline)
+NB:6669	differs	C-VARIES	out	noisy		seq -f 'some line %g' 500 | nl | sort -R | cut -f2- | head -3
+NB:6714	differs	W-PWD	out			pwd | tr '/' '\n'
+NB:6790	differs	W-ARGMAX	err,rec			ldd /bin/* /usr/bin/* | sed -e '/^[^\t]/ d; s/^\t\(.* => \)\?\([^ ]*\) (.*/\2/g' | sort | uniq -c
+NB:6799	differs	C-VARIES	out	noisy		ls -l -- "$dir/$file"
+NB:6810	differs	C-VARIES	out	noisy		ls -ld /tmp /tnt | sed 's/^.*$/<-- & --->/'
+NB:6811	differs	C-VARIES	out	noisy		ls -ld /tmp /tnt
+NB:6818	timeout-win	T-timeout-win		noisy	H-WINEFS	ls -lR / | tee -a output.file
+NB:6819	timeout-win	T-timeout-win		noisy	H-WINEFS	ls -lR / | tee output.file
+NB:6821	differs	C-VARIES	out,err,rec	noisy		ls -l /proc/$$/exe | sed 's%.*/%%'
+NB:683	timeout-win	H-NOFSIZE			H-NOSTREAM	yes a=\"20131202\" | sed -e :a -e 's/...\([0-9]\{4\}\)\([0-9]\{2\}\)\([0-9]\{2\}\)./\1 \2 \3/'
+NB:6840	differs	C-VARIES	rec	noisy		pstree -A -s $$
+NB:6843	differs	C-VARIES	rec	noisy		pstree -sp $$
+NB:6844	differs	C-VARIES	rec	noisy		pstree --show-parents -p $$ | head -n 1 | sed 's/\(.*\)+.*/\1/' | less
+NB:6847	differs	C-VARIES	rec	noisy		pstree -p $$
+NB:6848	differs	C-VARIES	rec	noisy		pstree -s $$
+NB:685	differs	H-NOSTREAM	out	noisy		yes 123456789 | grep --line-buffered . | { head -n 1; head -n 1; }
+NB:6924	timeout-win	W-ARGMAX				ldd /bin/* /usr/bin/* ... | sed -e '/^[^\t]/ d; s/^\t\(.* => \)\?\([^ ]*\) (.*/\2/g' | sort | uniq -c
+NB:7353	differs	H-WINEFS	rec			find $backup_path/* -name *.sql -mtime +30 -exec rm {} \;
+NB:7365	timeout-win	H-NOFORK				find dir -name \*~ | xargs echo rm | ksh -s
+NB:7418	differs	H-ELF	status,err,files		H-NOSTREAM	yes | /bin/rm -i *
+NB:7420	differs	H-ELF	status,err			/usr/bin/find /home/user/Series/ -iname "*sample*" -exec rm {} \;
+NB:7431	differs	H-WINEFS	rec			find $backup_path/* -mtime +30 -exec rm {} \;
+NB:7781	msg	C-CHANCE	err			sed s/STRING_TO_REPLACE/STRING_TO_REPLACE_IT/g index.html | tee index.html
+NB:7968	msg	H-ELF	err			/bin/sh -c "/bin/true $(seq 1 100000)"
+NB:7969	msg	H-ELF	err			/bin/sh -c "/bin/true $(seq 1 99999)"
+NB:7989	differs	H-ELF	status,err			/usr/bin/sudo -u `whoami` `which program`
+NB:7996	differs	C-MACHINE	out			env -i perl -V
+NB:8061	differs	H-WINEFS	rec			FOLDERS=`ls -dm $MY_DIRECTORY/*/ | tr -d ' '`
+NB:8115	differs	C-VARIES	rec	noisy		SELF=$(readlink /proc/$$/fd/255)
+NB:8116	differs	C-VARIES	rec	noisy		SELF=`readlink /proc/$$/fd/255`
+NB:8141	differs	C-VARIES	rec	noisy		dir=$(dirname $(readlink /proc/$$/fd/255))
+NB:86	differs	H-ENV	rec			v=5 env|less
+NB:8772	differs	H-DOTDOT	out			find . -type f -printf '%20s %p\n' | sort -n | cut -b22- | tr '\n' '\000' | xargs -0 ls -laSr
+NB:9033	msg	G-KILL	err			kill -9 16085
+NB:9034	msg	G-KILL	err			kill -9 18581 18582 18583
+NB:9048	msg	G-KILL	err			kill %1
+NB:9051	differs	B-X71	status,err		G-KILL	kill -s WINCH $$
+NB:9085	timeout-both	T-timeout-both				while true ; do nc -l -p 1500 -c 'echo -e "HTTP/1.1 200 OK\n\n $(date)"'; done
+NB:9521	msg	H-ELF	err		H-ENV	unset $(/usr/bin/env | /usr/bin/cut -d = -f 1 | /usr/bin/xargs)
+NB:9526	msg	H-ELF	err			unset $(echo "$a" | /usr/bin/cut -d = -f 1)
+NB:9583	differs	C-VARIES	err,rec	noisy		touch -t `date +%m%d0000` /tmp/$$
+NB:9672	msg	H-DEVFD	err			echo 'ee' | tee /dev/stderr | foo
+NB:9680	msg	C-CHANCE	err	noisy		echo "fifo forever" | cat - fifo | tee fifo
+NB:9682	differs	C-VARIES	out	noisy		echo foo | readlink /proc/self/fd/0
+SC:Analytics.hs:prop_checkCommandWithTrailingSymbol9	differs	H-ELF	status,err			/usr/bin/python[23] file.py
+SC:Analytics.hs:prop_checkSetESuppressed13	timeout-both	T-timeout-both				set -e; f(){ :; }; while f; do :; done
+SC:Analytics.hs:prop_checkSetESuppressed14	timeout-both	T-timeout-both				set -e; f(){ :; }; while set -e; f; do :; done
+SC:Analytics.hs:prop_checkSpacefulnessCfg14	differs	H-ENV	out		W-WINPATH	foo=$3 env
+SC:Analytics.hs:prop_checkUselessBang3	timeout-both	T-timeout-both				set -e; while true; do ! true; done
+SC:Analytics.hs:prop_checkWhileReadPitfalls3	timeout-both	T-timeout-both				while true; do ssh host uptime; done
+SC:Checks/Commands.hs:prop_checkCatastrophicRm4	differs	H-WINEFS	rec			rm -fr /home/$(whoami)/*
+SC:Checks/Commands.hs:prop_checkCatastrophicRm6	differs	H-WINEFS	rec	noisy		rm --recursive /etc/*$config*
+SC:Checks/Commands.hs:prop_checkCatastrophicRmB	differs	H-WINEFS	rec			rm -rf "$STEAMROOT/"*
+SC:Checks/Commands.hs:prop_checkSourceArgs2	differs	H-DOTSOURCE	status,err,rec			#!/bin/sh . script
+SC:Checks/ShellSupport.hs:prop_checkBashisms129	differs	W-STICKY	status			#!/bin/sh [ -k /tmp ]
+SC:Checks/ShellSupport.hs:prop_checkBashisms130	differs	W-STICKY	status			#!/bin/dash test -k /tmp
+SC:Checks/ShellSupport.hs:prop_checkBashisms19	differs	W-FILENAME	status,err,files			foo > file*.txt
+SC:Checks/ShellSupport.hs:prop_checkBashisms69	differs	W-UMASK	out			#!/bin/sh umask -S
+SC:Checks/ShellSupport.hs:prop_checkBashisms72	differs	W-WINPATH	out			#!/bin/sh type ls
+TL:common/awk.md:38	differs	C-MACHINE	out	noisy		awk 'BEGIN {FS=":";printf "%-20s %6s %25s\n", "Name", "UID", "Shell"} $4 >= 1000 {printf "%-20s %6d %25s\n", $1, $4, $7}
+TL:common/continue.md:8	timeout-both	T-timeout-both				while :; do continue; echo "This will never be reached"; done
+TL:common/curl.md:26	differs	W-CASE	err,rec			curl -k -x http://127.0.0.1:8080 -H 'Authorization: Bearer token' -X GET|PUT|POST|DELETE|PATCH|... https://example.com
+TL:common/echo.md:13	differs	W-PATHSEP	out		W-WINPATH	echo "My path is $PATH"
+TL:common/env.md:8	differs	H-ENV	out		W-WINPATH	env
+TL:common/http.md:17	differs	W-CASE	err,rec			http GET|POST|HEAD|PUT|PATCH|DELETE|... --proxy http|https:http://localhost:8080|socks5://localhost:9050|... https://exa
+TL:common/kill.md:13	differs	G-KILL	out			kill -l
+TL:common/kill.md:17	msg	G-KILL	err			kill -1 process_id
+TL:common/kill.md:21	msg	G-KILL	err			kill -2 process_id
+TL:common/kill.md:25	msg	G-KILL	err			kill -9 process_id
+TL:common/kill.md:29	msg	G-KILL	err			kill -STOP process_id
+TL:common/kill.md:33	msg	G-KILL	err			kill -USR1 -group_id
+TL:common/kill.md:9	msg	G-KILL	err			kill process_id
+TL:common/ls.md:20	differs	W-LSMETA	out			ls -la
+TL:common/odpscmd-inst.md:24	msg	G-KILL	err			kill instance_id;
+TL:common/ppmtomitsu.md:16	differs	W-CASE	err,rec			ppmtomitsu -m A|A4|AS|A4S path/to/file.ppm >path/to/file.mitsu
+TL:common/printenv.md:8	differs	H-ENV	out		W-WINPATH	printenv
+TL:common/runit.md:12	msg	G-KILL	err			kill -CONT runit_process_id
+TL:common/sort.md:24	differs	C-MACHINE	out	noisy		sort -t : -k 3n /etc/passwd
+TL:common/sort.md:28	differs	C-MACHINE	out	noisy		sort -t : -k 3,3n -k 4,4g /etc/passwd
+TL:common/tail.md:33	timeout-both	T-timeout-both				tail -F path/to/file
+TL:common/timeout.md:12	differs	W-CASE	err,rec			timeout -s INT|HUP|KILL|... 5s sleep 10
+TL:common/times.md:10	differs	C-VARIES	out	noisy		times
+TL:common/ulimit.md:13	differs	W-ULIMIT	status,out,err			ulimit -H -n
+TL:common/ulimit.md:17	differs	W-ULIMIT	status,out,err			ulimit -S -n
+TL:common/ulimit.md:25	msg	W-ULIMIT	err			ulimit -c|f|s|... unlimited
+TL:common/umask.md:12	differs	W-UMASK	out			umask -S
+TL:common/umask.md:8	differs	W-UMASK	out			umask
+TL:common/until.md:12	timeout-both	T-timeout-both				until ssh username@host; do sleep 2; done
+TL:common/while.md:12	timeout-both	T-timeout-both				while :; do command; sleep 1; done
+TL:common/while.md:16	timeout-both	T-timeout-both				while command; do :; done
+TL:linux/kill.md:17	msg	G-KILL	err			kill %job_id
+TL:linux/kill.md:33	msg	G-KILL	err			kill -19 process_id
+TL:linux/kill.md:37	msg	G-KILL	err			kill -10 -group_id
+TL:linux/mopac.md:12	timeout-both	T-timeout-both				touch test.out; echo "PM7\n#comment\n\nH 0.95506 0.05781 -0.03133\nF 1.89426 0.05781 -0.03133" >test.mop; mopac test.mop
+TL:linux/pw-cli.md:9	differs	W-CASE	err,rec			pw-cli ls Node|Link|Port|Client|Device|Metadata|Factory|Module|Profiler|SecurityContext|Core

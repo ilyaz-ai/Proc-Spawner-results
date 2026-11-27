@@ -1,0 +1,43 @@
+  365 P-ARGV       Perl's own spawn (system1) does not quote an argument holding a double quote, an empty one or one ending in a backslash as Windows splits it back (doc/perl-win32-system-bugs.md, bug 1): the program gets other arguments
+   38 C-VARIES     varies from run to run on a side, never agrees with the other, no rule explains it
+   31 H-WINPATH    a Windows path (~, $HOME, $PWD, pwd: Z:\...) given to a Linux program behind a stand-in (mkdir, ls, cat, grep, readlink, ...), which cannot open it; a Windows program would
+   19 H-KILL2      kill of a process ID ($$, `pgrep ...`): logged and bridged on Windows, where the Linux kill does not know the Windows process
+   17 H-ELF        an absolute path to a Linux program (/usr/bin/x, /bin/sh): ours cannot start an ELF, 126 (real Windows: not found)
+   14 T-timeout-both 
+   13 C-MACHINE    the Linux run was made on another machine, whose system files differ (/etc/passwd, /usr/bin, ...): Linux repeated here gives one result, not the base run's, and some Windows run gives it too
+   12 H-WINEFS     the whole file system listed: Wine's own files (/tmp/wine-*), /sys, /proc, the prefixes
+    8 H-WCPAD      wc (or similar) pads its counts otherwise when its input is a file (the bridge) than a pipe
+    6 H-DOTDOT     ls -l of the run directory: its parent (the worker directory) has another date and link count
+    6 H-NOSTREAM   a program that writes forever (yes, cat /dev/zero, ...): the bridge reads its input to the end first; no SIGPIPE
+    5 H-ENV        the environment listed or searched: Windows has its own variables (ComSpec, ...), the bridge its PATH
+    5 W-CASE       program lookup ignores case (PATCH runs patch.exe)
+    3 P-SYS1FD     Perl's own system on Windows (system1) passes a program only descriptors 0-2: a redirection of 3 and up is refused ("Invalid function.", 126)
+    3 W-PATHSEP    $PATH joined by ";" on Windows
+    3 W-ULIMIT     ulimit -n, -c not supported on Windows
+    3 W-UMASK      umask is 0000 on Windows
+    2 H-DEVFD      /dev/fd, /proc/self/fd, /dev/stderr behind the bridge
+    2 P-ENOENT     Perl's own system on Windows (system1) reports every failure to start a program as ENOENT: a command line over the limit (32767) gives "not found" (doc/perl-win32-system-bugs.md, report 6)
+    2 T-timeout-linux 
+    2 W-PWD        pwd gives a Windows path (Z:/...)
+    2 W-STICKY     no sticky bit on Windows: test -k is false
+    1 C-CHANCE     some run on one side gives the same result as some run on the other: no steady difference
+    1 H-DOTSOURCE  . NAME found a recorder script on Linux
+    1 H-NOSIGPIPE  no SIGPIPE through the bridge
+    1 W-BACKSLASH  a command word "\" names the root directory: 126 (Linux: 127 not found)
+    1 W-DIRREDIR   a directory as input (< dir) fails on Windows
+    1 W-FILENAME   characters Windows file names cannot hold
+    1 W-NOLDSO     no ld.so (LD_PRELOAD)
+    1 W-NULDEV     a file name ending in nul is the NUL device
+    1 W-WINPATH    a Windows path or name where Linux has its own, beyond the path alone (type ls: Z:\...\ls.EXE; $TMP, set on Windows)
+
+Also matching (samples whose first category is another):
+   18 H-KILL
+   11 H-NOSTREAM
+   10 W-WINPATH
+    5 H-ENV
+    5 H-WINEFS
+    5 H-WINPATH
+    3 H-DOTDOT
+    2 H-ELF
+    1 W-CASE
+    1 W-PATHSEP

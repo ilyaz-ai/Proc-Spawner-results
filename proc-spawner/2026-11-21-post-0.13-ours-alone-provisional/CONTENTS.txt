@@ -1,0 +1,32 @@
+ours-old/                       30M  7 files
+ours-new/                       30M  7 files
+ours-new2/                      30M  7 files
+re-old-a/                       92K  6 files
+re-old-b/                       92K  6 files
+re-new-a/                       92K  6 files
+re-new-b/                       92K  6 files
+re2-old-a/                      96K  6 files
+re2-old-b/                      96K  6 files
+re2-new-a/                     100K  6 files
+re2-new-b/                     100K  6 files
+checks/                        228K  24 files
+checks2/                       148K  16 files
+ours-new-vs-old.txt            8.0K
+ours-new2-vs-old.txt           8.0K
+cmp-re-new-a-vs-re-old-a.txt   4.0K
+cmp-re-new-b-vs-re-new-a.txt   4.0K
+cmp-re-new-b-vs-re-old-b.txt   4.0K
+cmp-re-old-b-vs-re-old-a.txt   4.0K
+cmp2-re2-new-a-vs-re2-old-a.txt   8.0K
+cmp2-re2-new-b-vs-re2-new-a.txt   4.0K
+cmp2-re2-new-b-vs-re2-old-b.txt   8.0K
+cmp2-re2-old-b-vs-re2-old-a.txt   4.0K
+summary2.txt                   4.0K
+changed62.ids                  4.0K
+changed2.ids                   4.0K
+real                           4.0K
+noise                          4.0K
+real2                          4.0K
+noise2                         4.0K
+never2                         4.0K
+oursrun.log                    4.0K

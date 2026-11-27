@@ -1,0 +1,23 @@
+  364 P-ARGV       Perl's own spawn (system1) does not quote an argument holding a double quote, an empty one or one ending in a backslash as Windows splits it back (doc/perl-win32-system-bugs.md, bug 1): the program gets other arguments
+   27 C-VARIES     varies from run to run on a side, never agrees with the other, no rule explains it
+   14 T-timeout-both 
+   12 C-CHANCE     some run on one side gives the same result as some run on the other: no steady difference
+    6 H-DOTDOT     ls -l of the run directory: its parent (the worker directory) has another date and link count
+    3 P-SYS1FD     Perl's own system on Windows (system1) passes a program only descriptors 0-2: a redirection of 3 and up is refused ("Invalid function.", 126)
+    2 T-timeout-linux 
+    1 H-DEVFD      /dev/fd, /proc/self/fd, /dev/stderr behind the bridge
+    1 H-ENV        the environment listed or searched: Windows has its own variables (ComSpec, ...), the bridge its PATH
+    1 H-NOSTREAM   a program that writes forever (yes, cat /dev/zero, ...): the bridge reads its input to the end first; no SIGPIPE
+    1 P-ENOENT     Perl's own system on Windows (system1) reports every failure to start a program as ENOENT: a command line over the limit (32767) gives "not found" (doc/perl-win32-system-bugs.md, report 6)
+
+Also matching (samples whose first category is another):
+    8 H-NOSTREAM
+    5 H-WINEFS
+    5 H-WINPATH
+    5 W-WINPATH
+    4 H-ENV
+    3 H-DOTDOT
+    2 H-ELF
+    1 H-DEVFD
+    1 H-KILL2
+    1 P-ENOENT

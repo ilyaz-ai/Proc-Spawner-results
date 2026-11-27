@@ -1,0 +1,64 @@
+row                                      posix_spawn     system1
+same                                           39854       39504
+paths                                            330         322
+M                                                 15          13
+L                                                 63          63
+S1                                                76          74
+S2                                                 8           7
+OS                                                52          49
+D                                                 10          10
+P                                                  0         368
+WV                                                 2           0
+all                                            40410       40410
+check posix_spawn: ok
+check system1: ok
+
+by row and rule (or why):
+D:W-BACKSLASH                                      1           1
+D:W-PWD                                            2           2
+D:W-ULIMIT                                         3           3
+D:W-UMASK                                          3           3
+D:W-WINPATH                                        1           1
+L why:Linux runs differ                            9           8
+L why:project: chance                             41          42
+L why:project: never ends                         13          13
+L:C-CHANCE                                         3           1
+L:C-VARIES                                        37          38
+L:H-ELF                                            1           1
+L:H-ENV                                            5           5
+L:H-NOSTREAM                                       1           2
+L:T-timeout-both                                  13          14
+L:T-timeout-linux                                  1           2
+L:T-timeout-win                                    2           0
+M:C-MACHINE                                       15          13
+OS:H-ELF                                          18          16
+OS:H-ENV                                           7           7
+OS:H-WINEFS                                       12          12
+OS:W-ARGMAX                                        1           0
+OS:W-CASE                                          5           5
+OS:W-DIRREDIR                                      1           1
+OS:W-FILENAME                                      1           1
+OS:W-NOLDSO                                        1           1
+OS:W-NULDEV                                        1           1
+OS:W-PATHSEP                                       3           3
+OS:W-STICKY                                        2           2
+P:P-ARGV                                           0         363
+P:P-ENOENT                                         0           2
+P:P-SYS1FD                                         0           3
+S1:H-DEVFD                                         3           2
+S1:H-DOTDOT                                        6           6
+S1:H-DOTSOURCE                                     1           1
+S1:H-KILL2                                        19          19
+S1:H-NOSIGPIPE                                     2           1
+S1:H-NOSTREAM                                      5           5
+S1:H-WCPAD                                         8           8
+S1:H-WINPATH                                      32          32
+S2:H-ENV                                           3           2
+S2:W-USERNAME                                      4           4
+S2:W-WINPATH                                       1           1
+WV:C-CHANCE                                        1           0
+WV:T-timeout-win                                   1           0
+
+where the snippets of a row in one way are in the other (rows of the other way; same: the same or paths there):
+posix_spawn -> system1: L -> same 1, M -> P 1, M -> same 1, OS -> P 3, S1 -> P 2, S1 -> same 1, S2 -> P 1, WV -> P 1, WV -> same 1
+system1 -> posix_spawn: L -> same 1, P -> M 1, P -> OS 3, P -> S1 2, P -> S2 1, P -> WV 1, P -> same 360, S1 -> same 1

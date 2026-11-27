@@ -1,0 +1,571 @@
+id	class	rule	parts	noisy	also	text
+BC:ch11/default_date	timeout-both	T-timeout-both			H-NOSTREAM	#!/usr/bin/env bash # cookbook filename: default_date  # Use noon time to prevent a script running around midnight and a
+BC:ch14/finding_tools	msg	H-ELF	err			#!/usr/bin/env bash # cookbook filename: finding_tools  # Export may or may not also be needed, depending on what you ar
+BC:ch16/inputrc	differs	H-WINEFS	err,rec		W-PATHSEP,W-CASE	# cookbook filename: inputrc # settings/inputrc: # readline settings # To reread (and implement changes to this file) us
+NB:1007	differs	P-ARGV	err,rec			find . -name '*.php' | awk '{gsub(" ","\\ ", $0);print $0}' |xargs wc -l
+NB:10123	differs	H-DOTDOT	out			find / -print0 -type d | xargs -0 ls -al
+NB:10133	differs	C-VARIES	files	noisy		find . -name "filename including space" -print0 | xargs -0 ls -aldF > log.txt
+NB:10141	differs	P-ARGV	status,err,rec			find . -type f -exec sh -c 'printf "%s %s \n" "$(ls -l $1)" "$(md5sum  $1)"' '' '{}' '{}' \; | awk '{$8=""; print $0}'
+NB:10142	differs	P-ARGV	rec			find . -type f -exec sh -c 'printf "%s %s \n" "$(ls -l $1)" "$(md5sum $1)"' '' '{}' '{}' \;
+NB:10193	differs	P-SYS1FD	out,rec			(find /boot | sed s'/^/STDOUT:/' ) 3>&1 1>&2 2>&3 | sed 's/^/STDERR:/'
+NB:1029	differs	H-WCPAD	out			grep -v '^\s*$' *.py | wc
+NB:1034	differs	P-ARGV	status,err,rec			cat ip_addresses | sort | uniq -c | sort -nr | awk '{print $2 " " $1}'
+NB:10358	differs	P-ARGV	status,err,rec			find . | awk '{ print "FILE:" $0 }'
+NB:1036	differs	P-ARGV	status,out,err,rec			find . -name "*.php" | xargs grep -v -c '^$' | awk 'BEGIN {FS=":"} { cnt = cnt + $2} END {print cnt}'
+NB:1051	differs	P-ARGV	status,out,err,rec			find . -name '*.js' -or -name '*.php' | xargs wc -l | grep 'total'  | awk '{ SUM += $1; print $1} END { print "Total tex
+NB:10511	differs	P-ARGV	rec			find ${FOLDER} -type f ! -name \".*\" -mtime -${RETENTION}
+NB:1053	differs	P-ARGV	rec			find . -type f -name '*.php' -exec bash -c 'wc -l "$0"' {} \; | awk '{s+=$1} END {print s}'
+NB:10647	differs	P-ARGV	rec			find . -type f \( -name "*.htm*" -o -name "*.js*" -o -name "*.txt" \) -exec sh -c 'echo "$0"' {} \;
+NB:10655	differs	P-ARGV	status,err,rec			find . -type f -size +50000k -exec ls -lh {} \; | awk '{ print $9 ": " $5 }'
+NB:10656	differs	P-ARGV	status,err,rec			find /var/log -type f -size +100000k -exec ls -lh {} \; | awk '{ print $9 ": " $5 }'
+NB:10718	differs	P-ARGV	status,err,rec			join -t, file1 file2 | awk -F, 'BEGIN{OFS=","} {if ($3==$8 && $6==$9 && $7==$10) print $1,$2,$3,$4,$6,$7}'
+NB:1090	differs	P-ARGV	err,rec			find /path/to/drive -type f -exec file -b '{}' \; -printf '%s\n' | awk -F , 'NR%2 {i=$1} NR%2==0 {a[i]+=$1} END {for (i 
+NB:10921	differs	P-ARGV	err,rec			find . -name '*song*abc2009*.jpg' | sed 's/\(^.*song.*\)abc2009\(.*.jpg\)$/mv "&" "\1def2010\2"/' | sh
+NB:10942	differs	P-ARGV	status,err,rec			find . -name "*.jar" -print -exec jar -tf {} \; | awk '{if($1~/jar$/)jar=$1;else if($1~/message_track/)arr[jar]=$1;}END{
+NB:10971	differs	P-ARGV	rec			find . \( -name '*.pdf' -or -name '*.PDF' \) -execdir sh -c 'mv -v "$1" "$(echo "$1" | tr " " "_" | tr -d "{()},\!'\''" 
+NB:11023	differs	P-ARGV	rec			find /user/directory/* -name "*txt" -mtime 0   -type f -exec awk '{s=$0};END{print FILENAME, ": ",s}' {} \;
+NB:11027	differs	P-ARGV	rec			find . -name '*.text' -exec sh -c 'for i do if [ ! -f "${i%.text}" ]; then echo == $i; fi;done' sh {} +
+NB:11028	differs	P-ARGV	rec			find . -name '*.text' -exec sh -c 'if [ ! -f "$(dirname "$1")/$(basename "$1" .text)" ]; then echo == $1; fi' sh {} \;
+NB:11034	differs	P-ARGV	rec			find -name "*.flac" -exec bash -c 'ffmpeg -i "{}" -y -acodec libmp3lame -ab 128k "${0/.flac}.mp3"' {} \;
+NB:11046	differs	P-ARGV	rec			find /PROD -type d -execdir sh -c 'for f in *.json; do /tmp/test.py "$f"; done' \;
+NB:11077	differs	P-ARGV	rec			find . -type d -exec sh -c 'cd -P -- "{}" && pwd -P' \;
+NB:11116	differs	P-ARGV	rec			find / -daystart -mtime +41 -mtime -408 \   -printf "%M %n %u %g %10s %TY-%Tm-%Td %Ta %TH:%TM:%TS %h/%f\n" | awk '($7=="
+NB:11148	differs	W-DIRREDIR	status,err,rec,files			find <dir> -mtime +7
+NB:11175	differs	P-ARGV	rec			find . -exec echo -n '"{}" ' \;
+NB:11176	differs	P-ARGV	rec		W-WINPATH	find $PWD -exec echo -n '"{}" ' \; | tr '\n' ' '
+NB:11178	differs	P-ARGV	err,rec		W-WINPATH	find $PWD | sed -e 's/^/"/g' -e 's/$/"/g' | tr '\n' ' '
+NB:112	differs	P-ARGV	err,rec			awk 'NR==1 {print $0, "foo", "bar"; next} {print $0, ($2=="x"?"-":"x"), ($4=="x"?"-":"x")}' file | column -t
+NB:11348	differs	P-ARGV	err,rec			find . -type f -mtime +356 -printf '%s\n'  | awk '{a+=$1;} END {printf "%.1f GB\n", a/2**30;}'
+NB:11359	differs	P-ARGV	status,err,rec			find . -name "foo.txt" | awk '{ print "mv "$0" ~/bar/" | "sh" }'
+NB:11360	differs	H-WCPAD	out			find usr/include -name '*.h' -mtime -399 | wc
+NB:11365	differs	P-ARGV	rec			find -type f -name '*.htm' -printf '%P\0%f\0' | xargs -0 -n2 sh -c 'fil="${2/\.htm/}"; sed -i -e "s;<title>.*</title>;<t
+NB:11460	differs	P-ARGV	rec			find $DIR -name "*.mod" -type f -exec bash -c 'remodup "$1"' - {} \;
+NB:11492	differs	P-ARGV	rec			find . -name "*.txt" | xargs -I{} sh -c 'base=$(basename $1) ; name=${base%.*} ; ext=${base##*.} ; mv "$1" "foo/${name}.
+NB:11539	differs	P-ARGV	rec			find . -iname .svn -exec bash -c 'ls -l "{}" | wc -l' \;
+NB:11568	differs	P-ARGV	rec			find … -exec sh -c 'trap "echo \$?" EXIT; invalid_command "$0"' {} \;
+NB:11571	differs	P-ARGV	err,rec			find . -name "S1A*1S*SAFE" | awk -F/ '{print $NF"/"$0}' | sort -t_ -k 5,5 | cut -d/ -f 2-
+NB:1161	differs	P-ARGV	err,rec			find . -mindepth 1 -maxdepth 1 -type d | awk 'BEGIN {FS="./"}; {print $2}' | xargs -d '\n' tar czf backup1.tar
+NB:11638	differs	P-ARGV	err,rec			find . -type f -wholename \*.mbox | sed 's/\(.*\)\.mbox/mv "\1.mbox" "\1"/' | sh
+NB:11639	differs	P-ARGV	status,err,rec			find . -wholename \*.mbox | awk '{new=$0; gsub("\.mbox$", "", new) ; system("mv \"" $0 "\" \"" new "\"") }'
+NB:1168	differs	H-ELF	err,rec,files	noisy		touch filename_`/bin/date +%Y%m%d%H%M%S`.txt
+NB:11727	differs	P-ARGV	rec			jobs -l | fgrep $! | perl -ne 'print "$1\n" if /\[(\d+)\]/'
+NB:11765	differs	P-ARGV	rec			find "$dir" -not -path "$dir/prune_me*" -exec bash -c 'echo "$0"' {} \;
+NB:11766	differs	P-ARGV	rec			find "$dir" -not \( -path "$dir/prune_me" -prune \) -exec bash -c 'echo "$0"' {} \;
+NB:11767	differs	P-ARGV	rec			find "$dir" -path "$dir/prune_me" -prune -o -exec bash -c 'echo "$0"'  {} \;
+NB:11768	differs	P-ARGV	rec			find ".performance_test" -not -path ".performance_test/prune_me*" -exec bash -c 'echo "$0"' {} \;
+NB:11769	differs	P-ARGV	rec			find ".performance_test" -not \( -path ".performance_test/prune_me" -prune \) -exec bash -c 'echo "$0"' {} \;
+NB:11770	differs	P-ARGV	rec			find ".performance_test" -path ".performance_test/prune_me" -prune -o -exec bash -c 'echo "$0"' {} \;
+NB:11785	differs	P-ARGV	status,err,rec			alias | awk '/^alias /{print substr($2,1,index($2,"=")-1)}'
+NB:11803	differs	P-ARGV	status,err,rec			find "somedir" -type l -print0 | xargs -r0 file | grep "broken symbolic" | sed -e 's/^\|: *broken symbolic.*$/"/g'
+NB:1181	differs	H-WINPATH	files			mkdir -p ~/foo/bar/baz ~/foo/bar/bif ~/foo/boo/bang
+NB:11853	differs	P-ARGV	rec			find . -name "*" -maxdepth 1 -exec sh -c 'mv "$@" "$0"' /home/foo2/bulk2 {} +
+NB:11875	differs	P-ARGV	rec			bind -p|grep -i '"[pE]"'
+NB:1188	differs	P-ARGV	status,err,rec			find . -type f | xargs stat -c "%a %n" | awk '{print "chmod "$1" "$2}' > ./filesPermissions.sh
+NB:1189	differs	P-ARGV	status,err,rec,files			find . -type f |xargs ls -la| awk '{print "chmod "$1" "$NF}'>./filesPermissions.sh
+NB:11950	differs	H-ELF	status,err			/bin/find -name "core" — exec rm {} \;
+NB:11973	differs	P-ARGV	rec			find . -name '*.andnav' -exec sh -c 'mv "$0" "${0%.andnav}.tile"' {} \;z
+NB:11988	differs	P-ARGV	err,rec			tac file | awk '/a/ && !seen {sub(/a/, "c"); seen=1} 1' | tac
+NB:11997	differs	P-ARGV	status,err,rec			tac filename | awk '{for (i=NF; i>1; i--) printf("%s ",$i); printf("%s\n",$1)}'
+NB:11998	differs	P-ARGV	rec			tac filename | perl -lane 'print join(" ", reverse(@F))'
+NB:12	differs	P-ARGV	status,err,rec			top -b -n1 | head -8 | tail -1 | awk '{ printf "User: %s\nPID: %s\nCPU Usage: %s\nMEM Usage: %s\n", $2,$1,$9,$10 }'
+NB:12006	differs	P-ARGV	rec			find /path -name 'pattern' -exec bash -c 'for file; do somebashstatement "$file"; done' -- {} +
+NB:12011	differs	C-VARIES	rec	noisy		su - joe -c "/path/to/my_daemon & echo \$! > /tmp/su.joe.$$"
+NB:12012	differs	P-SYS1FD	status,err,rec			su - joe -c "/path/to/my_daemon 3>&- & echo \$! 1>&3" 3>/tmp/su.joe.$$
+NB:12014	differs	P-ARGV	rec			su - postgres -c "/usr/bin/psql database -c \"SELECT 'DROP TABLE ' || .... "
+NB:12015	differs	P-ARGV	rec			sudo su - -c "R -e \"install.packages('shiny', repos='http://cran.rstudio.com/')\""
+NB:12025	differs	P-ARGV	rec			su user1 -c "ssh user1@192.168.1.2 \"awk '\\\$5==1{print \\\$3}' filename.log\"" | uniq -c
+NB:12027	differs	P-ARGV	rec			su -s /bin/bash -c 'bash --rcfile <(echo "source ~/.bashrc; source myfile")'
+NB:12039	differs	P-ARGV	rec			find /path -name 'pattern' -exec bash -c 'somebashstatement "$1"' -- {} \;
+NB:1206	differs	H-WINPATH	status,err,files			mkdir ~/.npm-global
+NB:1207	differs	H-WINPATH	status,err,files			mkdir "${HOME}/.npm-packages"
+NB:12086	differs	P-ARGV	rec			find /path/to/dir -type f | sed -r 'p;s:.*/(.*)/.*:\1:' | xargs -n 2 sh -c 'sed -i "s/^/$1 /" $0'
+NB:12093	differs	P-ARGV	rec			find . -name "*.py" -type f -exec sh -c 'grep "something" <"$0" >"$0.txt"' {} \;
+NB:12172	differs	P-ARGV	rec			find . -type d -execdir sh -c 'printf "%s/%s\n" "$PWD" "$0"' {} \;
+NB:12183	differs	P-ARGV	status,err,rec			find . | awk '{printf "%s ", $0}'
+NB:12196	differs	C-VARIES	files	noisy		find . -name "filename including space" -print0 | tee my_teed_file | xargs -0 ls -aldF > log.txt
+NB:12245	differs	P-ARGV	rec			find . -name "*.xml" -exec sh -c 'echo "cp $0 someWhereElse/$0"' {} \;
+NB:12249	differs	W-NULDEV	status,err,rec			find / -path /usr/share -prune -o \( -name rsync -o -name bash \) -print 2>/dev/nul
+NB:12307	differs	P-ARGV	rec			find kat -name dok.txt -exec bash -c 'echo -e "\nAutor: Jan Kowalski" >> {}' \;
+NB:12345	differs	P-ARGV	rec			find "Test Folder" -type d -name .dummy -exec rm -rf \"{}\" \;
+NB:12387	differs	P-ARGV	rec			find /PROD -type d -exec sh -c 'cd "{}" && for f in *.json; do /tmp/test.py "$f"; done' \;
+NB:12496	differs	P-ARGV	rec			find / -print0 | perl -ln0e 'print "found $_" if -p'
+NB:12566	differs	P-ARGV	err,rec			ssh $(vagrant ssh-config | awk 'NR>1 {print " -o "$1"="$2}') localhost
+NB:12570	differs	P-ARGV	err,rec			ssh $(vagrant ssh-config HOST | sed '/^[[:space:]]*$/d' |  awk 'NR>1 {print " -o "$1"="$2}') localhost
+NB:127	differs	P-ARGV	err,rec			find . -name text.txt | sed 's|.*/\(.*\)/.*|sed -i "s@^@\1 @" & |' | sh
+NB:1420	differs	P-ARGV	status,err,rec		H-ELF	ipcs -a | nawk -v u=`whoami` '$5==u &&(($1=="m" && $9==0)||($1=="s")){print "ipcrm -"$1,$2,";"}' | /bin/sh
+NB:1421	differs	P-ARGV	status,err,rec		H-ELF	ipcs | nawk -v u=`whoami` '/Shared/,/^$/{ if($6==0&&$3==u) print "ipcrm shm",$2,";"}/Semaphore/,/^$/{ if($3==u) print "i
+NB:1427	differs	P-ARGV	rec			find "$DIR_TO_CLEAN" -mtime +$DAYS_TO_SAVE -exec bash -c 'printf "Total: %d\n" $#; rm "$@"' _ {} +
+NB:1428	differs	P-ARGV	rec			find "$DIR_TO_CLEAN" -mtime +$DAYS_TO_SAVE -exec bash -c 'printf "count=0; for f; do rm "$f" && (( count++ )); done; pri
+NB:1445	differs	P-ARGV	rec			find . -name '*[+{;"\\=?~()<>&*|$ ]*' -maxdepth 0 -exec rm -f '{}' \;
+NB:1468	differs	P-ARGV	err,rec			finger | awk -F"\t" -v 'OFS=\t' '{ $4=""; print $0}' | sed 's/\t\{2,\}/\t/'
+NB:1476	differs	H-WINEFS	rec			find /tmp/*/* -mtime +7 -type d -exec rmdir {} \;
+NB:1523	differs	H-DOTDOT	out			find /home/backups -printf "%T@ %p\n" | sort -n | head -1 | cut -d" " -f2- | xargs ls -al
+NB:1581	differs	P-ARGV	err,rec			awk '{printf "%s ", $0} END {printf "\n"}' inputfile
+NB:1582	differs	P-ARGV	err,rec			awk '{printf "%s ", $0}' inputfile
+NB:1583	differs	P-ARGV	err,rec			awk '{printf "%s|", $0} END {printf "\n"}' inputfile
+NB:1661	differs	P-ARGV	err,rec			finger | sed 's/\t/ /' | sed 's/pts\/[0-9]* *[0-9]*//' | awk '{print $2"\t("$1")\t"$3" "$4" "$5}' | sort | uniq
+NB:1663	differs	P-ARGV	status,out,err,rec		H-DOTDOT	echo $var | awk '{gsub(/^ +| +$/,"")}1'
+NB:1688	differs	P-ARGV	rec			seq 1 10 | xargs -n1 -P2 bash -c 'i=$0; url="http://example.com/?page${i}.html"; curl -O -s $url'
+NB:1785	differs	P-ARGV	rec			find . -type f -exec bash -c 'myfile "{}"'  \;
+NB:1803	differs	P-ARGV	rec			watch -n 300 -t '/usr/bin/fbi -noverbose -a -t 4 -u `find -type f | egrep -i "(jpg|bmp|png|gif)$"`'
+NB:1804	differs	P-ARGV	rec			watch -n 1 --color 'bash -c "python -m unittest discover |& pyrg"'
+NB:1805	differs	P-ARGV	rec			watch 'echo -e "\033[31mHello World\033[0m"'
+NB:1806	differs	P-ARGV	rec			watch 'echo -e "\tHello World"'
+NB:1811	differs	H-ELF	status,out,err			/usr/bin/find $*
+NB:1812	differs	H-ELF	status,out,err			/usr/bin/find ./ $*
+NB:1829	differs	H-ELF	status,out,err			exec /usr/bin/find "$@"
+NB:1831	msg	W-NOLDSO	err			LD_PRELOAD=./linebufferedstdout.so python test.py | tee -a test.out
+NB:1897	differs	C-MACHINE	out	noisy		cut -d: -f1 /etc/group | sort
+NB:1909	differs	P-ARGV	err,rec			awk '{s+=$1} END {printf "%.0f", s}' mydatafile
+NB:1970	differs	P-ARGV	rec			find PDFs/ -name '*.pdf' -exec sh -c 'pdftotext "{}" - | grep -l -Z -i --label="{}" "perry sound" | xargs -0 -I{} grep -
+NB:1971	differs	P-ARGV	rec			find PDFs/ -name '*.pdf' -exec sh -c 'pdftotext "{}" - | grep -l -Z -i --with-filename --label="{}" --color "perry sound
+NB:2015	differs	P-ARGV	rec			find . -name modules -exec sh -c 'exit $(find {} -name modules|grep -n ""|tail -n1|cut -d: -f1)' \;
+NB:2054	differs	H-WCPAD	out			find / -name *.c | wc
+NB:2064	differs	P-ARGV	rec			find . -iname "*.cls" -exec echo '{if(length($0) > L) { LINE=$0; L = length($0)}} END {print LINE"L"L}' {} \;
+NB:2091	differs	P-ARGV	err,rec			eval "`find -type f -name "*.htm" |awk -F/ '{print "cp " $0 " " $2 "-" $3 "-" $4 "-" substr($5,5) ";" }'`"
+NB:2092	differs	P-ARGV	status,err,rec			find -type f -name "*.htm" | awk -F'[/]' 'BEGIN{OFS="-"}{ gsub(/^\.\//,"") ;print $1,$2, substr($4,3,2),substr($4,5,2),s
+NB:2093	differs	P-ARGV	status,err,rec			find -type f -name "*.htm" | sed 's@^./@@g;s@/@-@g' | awk -F'-' '{print $1 "-" $2 "-" $3 "-" substr($4, 5, 2) "-" $5}'
+NB:2107	differs	P-ARGV	rec			find temp/large/* -maxdepth 2 -iname "*.jpg" -print0 | xargs -0 mogrify -resize 800x800">" -quality 85 -compress JPEG -m
+NB:2121	differs	P-ARGV	rec			find path/ -name '*.log' -print0 | xargs -r0 -I {} bash -c 'grep -q "string that should not occur" "{}" || echo "{}"'
+NB:2125	differs	P-ARGV	rec			find /home/family/Music -name '*.m4a' -exec sh -c 'ffmpeg -i "$0" -acodec libvorbis -aq 6 -vn -ac 2 "${0%.m4a}.ogg"' '{}
+NB:2202	differs	P-ARGV	rec			find . -name *.so -print0 | xargs -0 -I % sh -c 'echo % ; myCommand "%" | grep ExpectedResult'
+NB:2272	differs	P-ARGV	rec			find . -name '*.zip' -exec sh -c 'unzip -d "`dirname \"{}\"`" "{}"' ';'
+NB:2278	differs	P-ARGV	rec			find . -name "*FooBar*" -exec sh -c 'cp -- "$@" ~/foo/bar' sh {} +
+NB:2298	differs	H-WINEFS	rec			mv $(find . -name "*shp*" -printf "%h\n" | uniq)/* ../shp_all/
+NB:2363	differs	P-ARGV	rec			find . -name "*.txt" | xargs bash -c '</dev/tty vim "$@"' ignoreme
+NB:2379	differs	P-ARGV	err,rec			find /home/folder1/*.txt -type f | awk -F '.txt' '{printf "ln -s %s %s_CUSTOM_TEXT.txt\n", $0, $1}' | sh
+NB:2428	differs	P-ARGV	rec			find ../../$name-module -name 'Name*' -type f -exec bash -c "mv \"\$1\" \"\${1/Name/$Name}\"" -- {} \;
+NB:2430	differs	P-ARGV	rec			find ../../$name-module -name 'Name*' -type f -exec bash -c 'mv "$1" "${1/Name/$Name}"' -- {} \;
+NB:2437	differs	P-ARGV	rec			find -name '*.php' -exec bash -c '[[ "$(wc -l < "$0")" -eq 1 ]] && echo "$0"' '{}' ';'
+NB:2594	differs	P-ARGV	rec			find /path/to/dir -mindepth 1 -maxdepth 1 -type d -execdir sh -c 'd=${1##*/}; sudo tar -zcpvf "$d".tar.gz "$d"' - {} \;
+NB:2616	differs	P-ARGV	rec			find . -type d -depth 1 -print0 | xargs -0 sh -c 'for dir; do pushd "$dir" && latexmk -c && popd; done' fnord
+NB:2649	differs	C-VARIES	err,rec	noisy		find . -mount -type d -print0 | xargs -0 -n1 /tmp/count_em_$$ | sort -n
+NB:2778	differs	P-ARGV	status,err,rec			find / -type f -size +20000k -exec ls -lh {} \; | awk '{ print $8 ": " $5 }'
+NB:2839	differs	P-ARGV	rec			find . -type d -print0 | xargs -0 -I {} sh -c ' echo "{}: \c" ; find {} -maxdepth 1 -type f | wc -l ; find {} -maxdepth 
+NB:2840	differs	P-ARGV	rec			find . -type d -print0 | xargs -0 -I {} sh -c ' echo "{}: \c" ; find {} -maxdepth 1 -type f | wc -l ; find {} -maxdepth 
+NB:2879	msg	C-VARIES	err	noisy		find . -maxdepth 1 -cmin +60 -name file >/tmp.$$
+NB:2968	differs	P-ARGV	rec			find `echo "${searchpath}"` -type f -print0 | xargs -0 grep -l -E '"${string1}".*"${string2}".*"${string3}"'
+NB:2973	differs	P-ARGV	status,err,rec			find ./lib/app -type f | sort | xargs awk 'ENDFILE {print ""} {print}' > myFile
+NB:3	differs	P-ARGV	status,out,err,rec		H-DOTDOT	top -b -d 5 -n 2 | awk '$1 == "PID" {block_num++; next} block_num == 2 {sum += $9;} END {print sum}'
+NB:3033	differs	P-ARGV	rec			find . -type f -exec bash -c 'f="{}"; echo "${f:2}"' \;
+NB:3299	differs	P-ARGV	rec			find . -mtime +2 | perl -pe 's{^}{\"};s{$}{\"}' > ~/output.file
+NB:3307	differs	P-ARGV	rec			find $TARGET_DIR -regextype posix-extended -regex \".*/$now.*\" -fprint $FILE_LIST
+NB:334	differs	P-ARGV	status,out,err,rec			find . -name "*jpg" -exec du -k {} \; | awk '{ total += $1 } END { print total/1024 " Mb total" }'
+NB:335	differs	P-ARGV	err,rec			find . -type f -iname "*.jpg" -ls | awk 'BEGIN {print "0"}; {print $7, "+"}; END {print "p"}' | dc
+NB:3532	differs	P-ARGV	rec			find /path -name '*.pdf' -exec sh -c 'pdftotext "{}" - | grep --with-filename --label="{}" --color "your pattern"' \;
+NB:3533	differs	P-ARGV	rec			find . -name '*.pdf' -exec sh -c 'pdftotext "{}" - | grep --with-filename --label="{}" --color "$1"' -- "$1" \;
+NB:3537	differs	P-ARGV	out,rec			find ./ -name "*.php" -type f | xargs sed -i 's#<?php /\*\*/ eval(base64_decode("aWY.*?>##g'  2>&1
+NB:3595	differs	C-VARIES	rec	noisy		find /tmefndr/oravl01 -type f -newer /tmp/$$
+NB:3605	differs	P-ARGV	rec		W-WINPATH	find ~/container  -mindepth 3 -type f | xargs -i bash -c 'mv "{}" $(dirname "{}")/..'
+NB:3629	differs	P-ARGV	rec			find ${FOLDER} -type f ! -name \".*\" -mtime -${RETENTION} | egrep -vf ${SKIP_FILE}
+NB:367	differs	P-ARGV	err,rec		H-WINPATH	cd "$(grep DOWNLOAD $HOME/.config/user-dirs.dirs | cut -f 2 -d "=" | tr "\"" "\n" | tr -d "\n")"
+NB:368	differs	P-ARGV	err,rec		H-WINPATH	cd "$(grep DOWNLOAD $HOME/.config/user-dirs.dirs | cut -f 2 -d "=" | tr "\"" "\n")"
+NB:3699	differs	P-ARGV	rec		H-WINPATH	find . -type l -exec sh -c 'echo $(readlink -f "{}") "<-- {}"' \; | grep -v "^$(readlink -f ${PWD})"
+NB:3708	differs	P-ARGV	rec			find /path/to/dir -type l -exec sh -c 'cp --remove-destination "$(readlink "{}")" "{}"' \;
+NB:3712	differs	H-WINPATH	rec			find . -type l -exec readlink -f '{}' \; | grep -v "^`readlink -f ${PWD}`"
+NB:3805	differs	H-WINEFS	out,rec			for d in /home/*/; do find "$d" -type d -name bin | grep -q . || echo "$d"; done
+NB:3824	differs	P-ARGV	err,rec			rm `du * | awk '$1 == "0" {print $2}'`
+NB:3829	differs	P-ARGV	err,rec			find $(/usr/ucb/ps auwwx | grep weblogic | tr ' ' '\n' | grep security.policy | grep domain | awk -F'=' '{print $2}' | s
+NB:4041	differs	P-ARGV	status,err,rec			find / -type f -size +20M -exec ls -lh {} \; 2> /dev/null | awk '{ print $NF ": " $5 }'
+NB:4042	differs	P-ARGV	status,err,rec			find / -type f -size +20M -exec ls -lh {} \; | awk '{ print $NF ": " $5 }'
+NB:4043	differs	P-ARGV	err,rec			find / -type f -size +20000k -exec ls -lh {} \; 2> /dev/null | awk '{ print $NF ": " $5 }' | sort -nrk 2,2
+NB:4044	differs	P-ARGV	err,rec			find / -type f -size +20M -exec ls -lh {} \; 2> /dev/null | awk '{ print $NF ": " $5 }' | sort -nk 2,2
+NB:4115	differs	P-ARGV	status,out,err,rec			find /tmp -type f -perm -002 | awk -- '1{print "Found world write permissions:";print};END{if(NR==0)print "No world writ
+NB:4153	differs	H-WINEFS	rec			find `ls -d /[ubso]*` -name sar
+NB:4172	differs	C-VARIES	rec	noisy		find /usr -newer /tmp/stamp$$
+NB:4259	differs	P-ARGV	rec			find . -type f -printf '%T@ %p\n' | sort -n | tail -1 | cut -f2- -d" " | sed 's/.*/"&"/' | xargs ls -l
+NB:4261	differs	P-ARGV	err,rec			find . -type f | sed 's/.*/"&"/' | xargs ls -E | awk '{ print $6," ",$7 }' | sort | tail -1
+NB:4262	differs	P-ARGV	err,rec			find . -type f | sed 's/.*/"&"/' | xargs ls -E | awk '{ print $6," ",$7," ",$9 }' | sort | tail -1
+NB:4303	differs	P-ARGV	rec			find . -name 'sqlite.db' -exec sqlite3 "{}" 'SELECT * FROM table WHERE column1="value"' \;
+NB:431	differs	P-ARGV	err,rec			find . -type f -print | sed -e 's/^/"/' -e 's/$/"/' | xargs chmod 644
+NB:4314	differs	C-VARIES	rec	noisy		find test -type l -exec cp {} {}.tmp$$ \; -exec mv {}.tmp$$ {} \;
+NB:4320	differs	P-ARGV	err,rec			awk -F, 'NR==1 {gsub(/"/,"",$3);print $3}' "$(dirname $(readlink -f $(which erl)))/../releases/RELEASES"
+NB:4342	differs	H-ELF	status,err			/usr/bin/find $DIR -maxdepth 1 -ipath $TMP_DIR -print -quit
+NB:4343	differs	P-ARGV	rec			find . ... -exec sh -c 'printf "%s\n" "$1"; kill "$PPID"' sh {} \;
+NB:4353	differs	P-ARGV	rec			find /path/to/dir -type f | perl -ne 'chomp(@files = <>); my $p = 9; foreach my $f (sort { (stat($a))[$p] <=> (stat($b))
+NB:4372	differs	P-ARGV	rec			find . -iname "*.jpg" -ls |perl -lane '$t += $F[6]; print $t/1024/1024/1024 . " GB"'
+NB:4394	differs	P-ARGV	rec			find /tmp/ -ctime -1 -name 'x*' -exec sh -c '   exec mv "$@" ~/play/' sh {} +
+NB:4449	timeout-both	T-timeout-both		noisy		grep -Ril "text-to-find-here" /
+NB:445	differs	P-ARGV	err,rec			find . -type d -print | sed -e 's/^/"/' -e 's/$/"/' | xargs chmod 755
+NB:4479	differs	P-ARGV	rec			getent passwd | cut -d: -f1 | perl -e'while(<>){chomp;$l = `crontab -u $_ -l 2>/dev/null`;print "$_\n$l\n" if $l}'
+NB:4483	differs	P-ARGV	status,err,rec			rev file | awk '{print "result =",$0}'
+NB:4516	differs	H-WINEFS	rec			find /tmp/* -atime +10 -exec rm -f {} \;
+NB:455	differs	P-ARGV	rec			find . -type f  -name '*.java' -exec sh -c 'iconv -f cp1252 -t utf-8 "$1" > converted && mv converted "$1"' -- {} \;
+NB:4550	differs	P-ARGV	err,rec			...| awk '{print $5"\t\t" $3"\t"$4}'|column -t
+NB:4574	differs	P-ARGV	status,err,rec			find -printf "%P\0" -exec uuid -v 4 \; | sort | awk -F'\0' '{ print $2 " " $1}'
+NB:4576	differs	P-ARGV	err,rec			find . -exec printf '%s\t' {} \; -exec uuidgen \; | awk -F '\t' '{ sub(/.+\//,"", $1); print $2, $1 }' | sort -k2
+NB:458	differs	P-ARGV	err,rec			find . -type d | sed -e 's/\.\///g' -e 's/\./avoid/g' | grep -v avoid | awk '{print $1"\t"$1}' | xargs chgrp
+NB:4600	differs	P-ARGV	rec			find . -iname '*.page' -exec awk '{if(length($0) > L) { LINE=NR;L = length($0)}} END {print L"|"FILENAME":"LINE}' {} \; 
+NB:4623	differs	C-VARIES	rec	noisy		ps -p $$ | awk '$1 == PP {print $4}' PP=$$
+NB:4624	differs	C-VARIES	rec	noisy		ps | grep `echo $$` | awk '{ print $4 }'
+NB:4626	differs	P-ARGV	status,out,err,rec			find /home/d -type f -name "*.txt" -printf "%s\n" | awk '{s+=$0}END{print "total: "s" bytes"}'
+NB:4643	differs	P-ARGV	status,out,err,rec			find dir1 ! -type d -printf "%s\n" | awk '{sum += $1} END{printf "%f\n", sum}'
+NB:4647	differs	P-ARGV	rec			find . -type f -printf '%p %s\n' | perl -ane '$sum+=$F[1];END{print "$sum\n"}'
+NB:4648	differs	P-ARGV	rec			find . -type f -printf '%p %s\n' | perl -n -a -e '$sum+=$F[1]; print "$sum\n"' | tail -n 1
+NB:4654	differs	P-ARGV	status,err,rec			ifconfig en0 | awk '$1 == "inet" {print $2}'
+NB:4656	differs	P-ARGV	status,err,rec			ip addr show en0 | awk '$1 == "inet" {gsub(/\/.*$/, "", $2); print $2}'
+NB:4657	differs	P-ARGV	status,err,rec			ifconfig en0 | awk '/inet addr/ {gsub("addr:", "", $2); print $2}'
+NB:4661	differs	P-ARGV	status,err,rec			ifconfig eth0 | awk '/inet /{sub(/[^0-9]*/,""); print $1}'
+NB:4662	differs	P-ARGV	status,err,rec			ifconfig eth0 | awk '/inet addr/{sub("addr:",""); print $2}'
+NB:4663	differs	P-ARGV	status,err,rec			ifconfig eth0 | awk '/inet addr/{sub(/[^0-9]*/,""); print $1}'
+NB:4676	differs	P-ARGV	status,err,rec			ifconfig | awk -F':' '/inet addr/&&!/127.0.0.1/{split($2,_," ");print _[1]}'
+NB:4761	differs	P-ARGV	rec			find /home/*/public_html/ -type f -iwholename "*/modules/system/system.info" -exec grep -H "version = \"" {} \;
+NB:4762	differs	P-ARGV	rec			find /var/www/vhosts/*/httpdocs/ -type f -iwholename "*/modules/system/system.info" -exec grep -H "version = \"" {} \;
+NB:4774	differs	C-VARIES	rec	noisy		ps -o pid= --ppid $PPID | xargs kill -9
+NB:4783	differs	H-NOSTREAM	status			yes 0 | sed '1~2s/0/1/'
+NB:4785	differs	H-NOSTREAM	status			yes 1 | nl | tee /tmp/to
+NB:4790	differs	P-ARGV	err,rec			tac file | awk '/ScriptAlias/ && ! seen {print "new line"; seen=1} {print}' | tac
+NB:48	differs	P-ARGV	rec			perl -pi -e 'BEGIN { print "A new line" }' $(find . -name '*.py')
+NB:4809	differs	H-KILL2	err,rec		H-KILL	kill -9 \`pgrep myprocess\`
+NB:4823	differs	P-ARGV	err,rec			awk 'NR==FNR{m[$1]=$2" "$3; next} {print $0, m[$1]}' file2 file1 | column -t
+NB:4856	differs	W-BACKSLASH	status,err			find . -name *.txt -exec ls {} ;\
+NB:4865	differs	P-ARGV	rec			md5sum *.txt | sort | perl -ne '($y,$f)=split; print "$f\n" unless $y eq $x; $x=$y'
+NB:4884	differs	P-ARGV	rec			find . -name "*.txt" -exec $SHELL -c 'echo "$0"' {} \;
+NB:4911	differs	W-PATHSEP	rec			echo $PATH | tr ':' '\n' | xargs -I {} find {} -maxdepth 1 -type f -perm '++x'
+NB:4916	differs	P-ARGV	status,err,rec			crontab -l | awk '$1 == "*" || $1 ~ /^[0-9]+$/ && $1 < 15 {print}'
+NB:4919	differs	C-MACHINE	rec	noisy		cat /etc/passwd | sed 's/^\([^:]*\):.*$/crontab -u \1 -l 2>\&1/' | grep -v "no crontab for" | sh
+NB:4938	differs	P-ARGV	status,err,rec		H-ENV	env | grep ipo | awk 'BEGIN {FS="="} ; { print $1 } '
+NB:4941	differs	P-ARGV	out,err,rec		H-ENV	env | awk -F= '/[a-zA-Z_][a-zA-Z_0-9]*=/ { if (!system("[ -n \"${" $1 "+y}\" ]")) print $1 }' | sort | uniq
+NB:4945	differs	H-WINPATH	status,out,err			ls -alrt `pwd`/*
+NB:4952	differs	H-WINPATH	status,out,err			ls `pwd`/*
+NB:503	msg	H-WINPATH	err			cd `cat $HOME/.lastdir`
+NB:5035	differs	P-ARGV	status,err,rec			find . -ls | awk '{printf( "%s,%s,%s,%s,%s,%s,%s,%s %s %s,%s\n", $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11 )}'
+NB:5036	differs	P-ARGV	status,err,rec			find . -ls|awk 'BEGIN{OFS=","}$1=$1'
+NB:5048	differs	P-ARGV	rec			find . -type d -execdir sh -c 'test -z "$(find "{}" -mindepth 1 -type d)" && echo $PWD/{}' \;
+NB:5056	differs	P-ARGV	status,out,err,rec		H-DOTDOT	find . -type d | sort | awk '$0 !~ last "/" {print last} {last=$0} END {print last}'
+NB:5128	differs	W-PWD	out			pwd | cut -b2- | tr '/' '\n'
+NB:5137	differs	H-ENV	out		W-WINPATH	env | sed 's/;/\\;/g'
+NB:5152	differs	C-VARIES	out	noisy		find . -print | xargs ls -gilds
+NB:5155	differs	P-ARGV	status,err,rec			find /path/to/directory -type f -size +1024k -exec ls -lh {} \; | awk '{ print $8 ": " $5 }'
+NB:5193	differs	P-ARGV	status,err,rec			sync --list-only --include "*2012*.xml" -exclude "*.xml" serveripaddress::pt/dir/files/ --port=111 | awk '{ $1=$2=$3=$4=
+NB:5207	differs	P-ARGV	rec			find . -name '*.py' -exec bash -c 'test -f $(dirname "$1")/Makefile' -- {} \; -print
+NB:5211	differs	H-WINPATH	status,out,err			ls "`pwd`/file.txt"
+NB:5212	differs	C-MACHINE	rec	noisy		ls /usr/bin | more
+NB:5219	differs	H-WINPATH	out,err			echo $(ls $(pwd))
+NB:5225	differs	P-ARGV	status,err,rec			mount | grep '^/dev/' | sed -E 's/([^ ]*) on ([^ ]*) .*/"\2" is located on "\1"/'
+NB:5234	differs	P-ARGV	rec			find | xargs -I {} bash -c '(([[ -f "{}" ]] && grep -l "my key phrase" "{}") || ([[ "{}" =~ "my key phrase" ]] && echo {
+NB:5272	differs	P-ARGV	rec			ls | perl -F'\n' -0777 -anE 'say join ",", @F'
+NB:5275	differs	P-ARGV	status,out,err,rec			ls -1 | awk 'ORS=" "'
+NB:5277	differs	C-MACHINE	out			ls -l /lib*/ld-linux*.so.2
+NB:5289	differs	H-WINPATH	status,out,err			ls -d -1 $PWD/**/*
+NB:5293	differs	C-VARIES	out	noisy		ls -l /proc/self/fd/
+NB:5377	msg	H-WINPATH	err			mkdir $(seq -f "$HOME/Labs/lab4a/folder%03g" 3)
+NB:5472	differs	H-WINPATH	status,err,files			mkdir ~/log
+NB:5473	differs	H-WINPATH	status,err,files			mkdir ~/practice
+NB:5474	differs	H-WINPATH	status,err,files			mkdir ~/public_html
+NB:5475	differs	H-WINPATH	status,err,files			mkdir ~/temp
+NB:5479	differs	H-WINPATH	files			mkdir -p ~/temp/bluecove/target/
+NB:552	differs	C-VARIES	rec	noisy		pstree --show-parents -p $$ | head -n 1 | sed 's/\(.*\)+.*/\1/' | wc -l
+NB:557	differs	H-KILL2	err,rec		H-KILL	kill -0 1
+NB:5573	differs	P-ARGV	rec			find . -name "*$lower1*" -exec bash -c 'mv "$1" "${1/$2/$3}"' -- {} $lower1 $lower2 \;
+NB:5580	differs	P-ARGV	rec			find "${INPUT_LOCATION}" -name '*.pdf.marker' | xargs -i bash -cx 'pdf=`dirname {}`/`basename {} .marker`;[ -e "$pdf" ]&
+NB:5589	differs	P-ARGV	rec		H-WINEFS	find . -type d -iname '*foo*' -depth -exec bash -c '     echo mv "$1" "${1//[Ff][Oo][Oo]/BAr}" ' -- {} \;
+NB:5590	differs	P-ARGV	rec			find . -type d -iname '*foo*' -exec bash -O nocasematch -c '[[ $1 =~ (foo) ]] && mv "$1" "${1//${BASH_REMATCH[1]}/Bar}"'
+NB:5599	differs	P-ARGV	rec			find . -type d -exec bash -c 'mv "$1" "${1//foo/Bar}"' -- {} \;
+NB:5614	differs	P-ARGV	rec			find . ! -name . -prune -exec sh -c 'mv "$@" targetdirectory/' sh  {} +
+NB:5615	differs	P-ARGV	rec			find . ! -name . -prune -exec sh -c 'shift $1; mv "$@" targetdirectory/' 2 1 {} +
+NB:5624	differs	P-ARGV	rec			find . ! -name . -prune -name '*.old' -exec sh -c 'mv "$@" ../old/' sh {} +
+NB:5635	differs	P-ARGV	err,rec			nl -n rz ca | awk -vOFS="\t" '/Ca/{$1="#"$2} {$1=$1}1' | sort -k1,1 | cut -f2-
+NB:5691	differs	P-ARGV	rec			sed 's/^,/ ,/' test2.csv | tr -d \" | column -s, -t
+NB:5699	timeout-linux	T-timeout-linux			H-NOSTREAM	yes | sed -n '200000000,${=;p};200000005q'
+NB:571	differs	C-VARIES	rec	noisy		pstree --show-parents -p $$ | head -n 1 | sed 's/\(.*\)+.*/\1/' | grep screen | wc -l
+NB:5739	msg	H-ELF	err			/bin/true "$(seq 1 100000)"
+NB:5742	differs	H-ELF	status,err			/bin/true $(seq 1 100000)
+NB:5764	differs	P-ARGV	err,rec,files		H-NOSTREAM	yes | awk 'FNR<4 {print >>"file"; close("file")}  1' | more
+NB:5776	differs	H-NOSTREAM	err,files			{ echo foo; cat bar; } | tee bar > /dev/null
+NB:5805	differs	P-ARGV	rec			cat blah | perl -en '/\xCA\xFE\xBA\xBE/ && print "found"'
+NB:5815	differs	P-ARGV	status,err,rec			comm -2 file1.txt file2.txt | awk -F'\t' '{print (NF==2?"y":"")}'
+NB:5846	differs	P-ARGV	status,out,err,rec		H-NOSTREAM	yes x | head -10 | awk 'BEGIN { RS = "%%%%%%%" } { split($0,a,"\n"); for (i=1; i<length(a); i+=4) print a[i], a[i+1], a[
+NB:5857	differs	P-ARGV	err,rec			ps aux | awk '{print $4"\t"$11}' | sort | uniq -c | awk '{print $2" "$1" "$3}' | sort -nr
+NB:5858	differs	P-ARGV	err,rec			ps aux | awk '{print $4"\t"$11}' | sort | uniq -c | awk '{print $2" "$1" "$3}' | sort -nr |grep mysql
+NB:5906	differs	H-NOSTREAM	out			head -c 100 < /dev/zero | tr '\0' '='
+NB:5938	differs	P-ARGV	status,err,rec			ping google.com | awk '{ sent=NR-1; received+=/^.*(time=.+ ms).*$/; loss=0; } { if (sent>0) loss=100-((received/sent)*10
+NB:5939	differs	C-VARIES	out	noisy		seq 2000 65000 | sort -R | head -n 1
+NB:5942	differs	P-ARGV	status,out,err,rec		H-NOSTREAM	yes | head -n 10 | awk '{printf( "%03d ", NR )}'
+NB:5943	differs	P-ARGV	status,out,err,rec		H-NOSTREAM	yes | head -n 10 | awk '{printf( "%03d ", NR )}'    ##for 01..10
+NB:5944	differs	P-ARGV	out,err,rec		H-NOSTREAM	yes | grep y | sed 100q | awk '{printf( "%03d ", NR )}'; echo
+NB:5945	differs	P-ARGV	status,out,err,rec		H-NOSTREAM	yes | head -n 100 | awk '{printf( "%03d ", NR )}'
+NB:5946	differs	P-ARGV	status,out,err,rec		H-NOSTREAM	yes | head -n 100 | awk '{printf( "%03d ", NR )}'   ##for 001...100
+NB:5964	differs	P-ARGV	status,err,rec			sed -e 's/\t/_|/g' table.txt |  column -t -s '_' | awk '1;!(NR%1){print "-----------------------------------------------
+NB:5965	differs	P-ARGV	status,err,rec			ping host | awk '{if($0 ~ /bytes from/){print strftime()"|"$0}else print}'
+NB:599	differs	P-ARGV	err,rec			awk 'NR==1 { print; next } { print $0, ($1 == a && $2 == b) ? "equal" : "not_equal"; a = $1; b = $3 }' file | column -t
+NB:60	differs	P-ARGV	rec			ping host | perl -nle 'print scalar(localtime), " ", $_'
+NB:6003	differs	P-ARGV	rec			seq 1 10 | perl -e '@x=("")x3;while(<>){print shift @x;push @x,$_}'
+NB:6008	differs	P-ARGV	status,err,rec			who | awk '{print "The user " $1 " is on " $2}'
+NB:6026	differs	P-ARGV	rec			od -a -An -v file | perl -0777ne 's/\n//g,print "$_\n " for /(?:esc| fs| gs| us)?(?:(?!esc| fs| gs| us).)*/gs'
+NB:6064	differs	C-MACHINE	out	noisy		cat /etc/passwd /etc/group
+NB:6077	differs	C-MACHINE	rec	noisy		cat /etc/passwd | sed 's/^\([^:]*\):.*$/crontab -u \1 -l 2>\&1/' | sh | grep -v "no crontab for"
+NB:6081	differs	C-VARIES	rec	noisy		ps  -ef | grep $$ | grep -v grep
+NB:6082	differs	C-VARIES	rec	noisy		ps -p $$
+NB:6089	differs	P-ARGV	status,err,rec			mount | awk '$3 == "/pa/th" {print $1}'
+NB:6132	differs	H-DOTDOT	out			ls `which g++` -al
+NB:6133	differs	H-DOTDOT	out			ls `which gcc` -al
+NB:6179	differs	P-ARGV	status,err,rec			history | awk '{sub($1, ""); sub(/^[ \t]+/, ""); print}'
+NB:6180	differs	P-ARGV	status,err,rec			history | awk '{sub($1, "", $0); sub(/^[ \t]+/, "", $0); print}'
+NB:6190	differs	P-ARGV	status,err,rec			tree -afispugD --inodes | awk '{FS="./"; ORS=""; printf("%-60s%s\n",$NF,$0)}'
+NB:6198	differs	C-MACHINE	rec	noisy		cat /etc/passwd -n | grep `whoami` | cut -f1
+NB:6228	differs	P-ARGV	err,rec			mount | grep -i "/dev/sd.*" | awk '{ print NR "\t" $1 "\t" $3 }' > mount_output &
+NB:6242	differs	P-ARGV	status,err,rec			df -P "/tmp" | awk 'BEGIN {FS="[ ]*[0-9]+%?[ ]+"}; NR==2 {print $NF}'
+NB:6244	differs	P-ARGV	rec			find ./ -type f -exec bash -c 'echo "mv \"$1\" \"$(echo "$1" | sed -re '\''s/^([^-]*)-\s*([^\.]*)/\L\1\E-\2/'\'' -e '\''
+NB:6245	differs	P-ARGV	status,err,rec			df -P "$path" | awk 'BEGIN {FS="[ ]*[0-9]+%?[ ]+"}; NR==2 {print $1}'
+NB:6247	differs	C-VARIES	rec	noisy		ps -o user= -p $$ | awk '{print $1}'
+NB:6255	differs	H-WINPATH	out,err			ls -d -1 $PWD/**/*/* | cat -n
+NB:6259	differs	C-VARIES	out	noisy		seq 10 | xargs -P4 -I'{}' echo '{}'
+NB:6260	differs	P-ARGV	status,out,err,rec			seq 10 | awk 'NR%2{printf("%s ", $0); next}1'
+NB:6270	differs	P-ARGV	status,out,err,rec			seq 5 | awk '{printf "%s", $0} END {print ""}'
+NB:6271	differs	P-ARGV	status,out,err,rec			seq 5 | awk '{printf "%s", $0}'
+NB:6275	differs	W-PATHSEP	out		W-WINPATH	echo "$PATH" | rev | cut -d"/" -f1 | rev
+NB:6283	differs	C-MACHINE	out	noisy		cut -d: -f1 /etc/group
+NB:6285	differs	P-ARGV	status,err,rec			finger -s | awk '{printf("%s %s\n", $1, $2);}'
+NB:6296	differs	P-ARGV	status,err,rec			find /home/folder1/*.txt -type f | awk -F '.txt' '{printf "ln -s %s %s_CUSTOM_TEXT.txt\n", $0, $1}'
+NB:6317	differs	P-ARGV	rec			cal 09 2009 | awk 'BEGIN{day="9"}; NR==4 {col=index($0,day); print col }'
+NB:6318	differs	P-ARGV	status,err,rec			cal 09 2009 | awk 'NR==4{day="9"; col=index($0,day); print col }'
+NB:6319	differs	P-ARGV	status,err,rec			cal 09 2009 | awk '{day="9"; if (NR==4) {col=index($0,day); print col } }'
+NB:6335	differs	P-SYS1FD	status,err,rec			zcat number.txt.gz | { zcat xxx.txt.gz | comm -12 /dev/fd/3 - ; } 3<&0
+NB:6342	differs	P-ARGV	status,out,err,rec			who | awk '{ print $1; }' | sort -u | awk '{print $1; u++} END{ print "users: " u}'
+NB:6349	differs	P-ARGV	rec			seq 5 | perl -ne 'chomp; print "$_ "; END{print "\n"}'
+NB:6364	differs	P-ARGV	err,rec			history | awk '{print $2}' | awk 'BEGIN {FS="|"}{print $1}' | sort | uniq -c | sort -n | tail | sort -nr
+NB:6380	differs	H-WINPATH	out,err			ls -d -1 $PWD/**/*/* | nl
+NB:6393	differs	P-ARGV	err,rec			who -b | awk '{$1=""; $2=""; print $0}' | date -f -
+NB:6396	differs	P-ARGV	status,out,err,rec			seq 65 90 | awk '{printf("%c",$1)}'
+NB:6419	msg	H-WINPATH	err			cat ~/.ssh/config
+NB:6436	differs	C-VARIES	rec	noisy		ps -p $$ | tail -1 | awk '{print $NF}'
+NB:6438	differs	C-MACHINE	out			echo `whoami` `stat -c %i "/home"`
+NB:6470	differs	P-ARGV	rec			find . -type f -printf '%p %s\n' | perl -n -a -e '$sum+=$S[1]; print "$sum\n"'
+NB:6492	differs	P-ARGV	err,rec			awk -F, '{ if (NR == 1)print}{if($3 == "f")print}' input | column -t -s,
+NB:6526	differs	C-MACHINE	rec	noisy		cat /proc/config.gz | gunzip
+NB:6589	differs	P-ARGV	err,rec			who | awk '{print $3 " " $4 " "$1}' | sort | head -1
+NB:6591	differs	P-ARGV	status,err,rec			ping google.com -n 10 | awk '/Minimum =/ { sub(",","",$3); print $3 }'
+NB:6599	differs	P-ARGV	status,err,rec			find tmp -type f -printf "%s %p\n" | awk '{sub(/^[^ ]+/,sprintf("f %10d",$1))}1'
+NB:6600	differs	P-ARGV	status,err,rec			find tmp -type f -printf "f %s %p\n" | awk '{sub(/^[^ ]+ +[^ ]/,sprintf("%s %10d",$1,$2))}1'
+NB:6622	differs	P-ARGV	status,err,rec			ping google.com | awk '{ sent=NR-1; received+=/^.*(time=.+ ms).*$/; loss=0; } { if (sent>0) loss=100-((received/sent)*10
+NB:6626	differs	P-ARGV	status,err,rec			history|awk '{$1="";print substr($0,2)}'
+NB:6629	differs	P-ARGV	rec			find -printf '"%h/%f" '
+NB:6659	differs	P-ARGV	status,err,rec			ping 8.8.8.8 | awk -F"[= ]" '{if($10>50) {cmd="date"; cmd | getline dt; close(cmd) ; print $10, dt}}'
+NB:6660	differs	P-ARGV	status,err,rec			ping 8.8.8.8 | awk '{split($7,a,"[=.]");if (a[2]>58) print a[2], strftime()}'
+NB:6662	differs	P-ARGV	err,rec			history | awk '{print $2}' | awk 'BEGIN {FS="|"}{print $1}' | sort | uniq -c | sort -nr | head
+NB:6664	differs	C-VARIES	out,err,rec	noisy		echo $(cat /proc/$$/cmdline)
+NB:6669	differs	C-VARIES	out	noisy		seq -f 'some line %g' 500 | nl | sort -R | cut -f2- | head -3
+NB:6698	differs	P-ARGV	rec			echo "$opt" | tr -d '"'
+NB:6714	differs	W-PWD	out			pwd | tr '/' '\n'
+NB:6753	differs	P-ARGV	status,err,rec			cal | awk 'NR==2 {for (i=1;i<=NF;i++) {sub(/ /,"",$i);a[$i]=i}} NR>2 {if ($a["Tu"]~/[0-9]/) {printf "%02d\n",$a["Tu"];ex
+NB:6754	differs	P-ARGV	status,err,rec			cal | awk 'NR>2 && NF>4 {printf "%02d\n",$(NF-4);exit}'
+NB:6755	differs	P-ARGV	status,err,rec			cal | awk 'NR>2{Sfields=7-NF; if (Sfields == 0 ) {printf "%02d\n",$3;exit}}'
+NB:6769	differs	H-WINPATH	status,out,err			ls -d $PWD/*
+NB:6770	differs	H-WINPATH	status,out,err			ls -d -1 $PWD/**
+NB:6771	differs	H-WINPATH	status,out,err			ls -d -1 $PWD/*.*
+NB:6790	differs	P-ENOENT	err,rec			ldd /bin/* /usr/bin/* | sed -e '/^[^\t]/ d; s/^\t\(.* => \)\?\([^ ]*\) (.*/\2/g' | sort | uniq -c
+NB:6799	differs	C-VARIES	out	noisy		ls -l -- "$dir/$file"
+NB:6810	differs	C-VARIES	out	noisy		ls -ld /tmp /tnt | sed 's/^.*$/<-- & --->/'
+NB:6811	differs	C-VARIES	out	noisy		ls -ld /tmp /tnt
+NB:6818	timeout-both	T-timeout-both		noisy	H-WINEFS	ls -lR / | tee -a output.file
+NB:6819	timeout-linux	T-timeout-linux		noisy	H-WINEFS	ls -lR / | tee output.file
+NB:6821	differs	C-VARIES	out,err,rec	noisy		ls -l /proc/$$/exe | sed 's%.*/%%'
+NB:683	differs	P-ARGV	status,out,rec		H-NOSTREAM	yes a=\"20131202\" | sed -e :a -e 's/...\([0-9]\{4\}\)\([0-9]\{2\}\)\([0-9]\{2\}\)./\1 \2 \3/'
+NB:6840	differs	C-VARIES	rec	noisy		pstree -A -s $$
+NB:6843	differs	C-VARIES	rec	noisy		pstree -sp $$
+NB:6844	differs	C-VARIES	rec	noisy		pstree --show-parents -p $$ | head -n 1 | sed 's/\(.*\)+.*/\1/' | less
+NB:6847	differs	C-VARIES	rec	noisy		pstree -p $$
+NB:6848	differs	C-VARIES	rec	noisy		pstree -s $$
+NB:685	differs	H-NOSTREAM	out	noisy		yes 123456789 | grep --line-buffered . | { head -n 1; head -n 1; }
+NB:6859	differs	P-ARGV	status,err,rec			dig +noall +answer soa yahoo.com | awk '{sub(/.$/,"",$5);print $5}'
+NB:686	differs	P-ARGV	status,err,rec			ping google.com | awk -F'[ =]' 'NR>1{print system("echo -n $(date +%s)"), $11}'
+NB:6869	differs	P-ARGV	rec			watch -n1 'ps x -o "%p %r %c" | grep "test" '
+NB:6875	differs	P-ARGV	rec			perl -ne 'print length()."  line $.  $_"' myfile | sort -nr | head -n 1
+NB:6885	differs	P-ARGV	status,out,err,rec			find . -name '*.c' -print0 |xargs -0 wc -l|grep -v total|awk '{ sum += $1; } END { print "SUM: " sum; }'
+NB:6924	differs	P-ENOENT	err,rec			ldd /bin/* /usr/bin/* ... | sed -e '/^[^\t]/ d; s/^\t\(.* => \)\?\([^ ]*\) (.*/\2/g' | sort | uniq -c
+NB:7	differs	P-ARGV	status,err,rec			top -bn1 | grep zombie | awk '{print $4" "$6" "$8" "$10}'
+NB:7021	differs	P-ARGV	status,err,rec			bzip2 -dc input1.vcf.bz2 input2.vcf.bz2 | awk 'FNR==NR { array[$1,$2]=$8; next } ($1,$2) in array { print $0 ";" array[$
+NB:703	differs	P-ARGV	rec			echo 595a | awk -niord '$0=chr("0x"RT)' RS=.. ORS= | od -tx1c
+NB:707	differs	P-ARGV	err,rec			find -type f -name '*.au' | awk '{printf "%s %s\n",$0,$0".wav" }' | xargs sox
+NB:708	differs	P-ARGV	err,rec			find -type f -name '*.au' | awk '{printf "sox %s %s\n",$0,$0".wav" }' | bash
+NB:7096	differs	P-ARGV	err,rec			find . -type d | sed -e 's/^\.\///g' -e 's/^\./avoid/g' | grep -v avoid | awk '{print $1"\t"$1}' | xargs chgrp
+NB:712	differs	P-ARGV	rec			cal 02 2012|perl -F'(.{1,3})' -anE'BEGIN{$,="\t&";$\="\t\\\\\n"}$.==1||eof||do{$i//=@F;print@F[map{$_*2-1}(1..$i/2)]}'
+NB:713	differs	P-ARGV	rec			cal 02 2012|perl -lnE'$.==1||eof||do{$,="\t&";$\="\t\\\\\n";$l=$_;print map{substr($l,$_*3,3)}(1..5)}'
+NB:7184	differs	P-ARGV	err,rec			grep -r OPEN * | awk '{split($1, path, ":"); print path[1]}' | xargs -I{} dirname {}
+NB:7192	differs	H-WINPATH	status,err			grep -rnw `pwd` -e "pattern"
+NB:7215	differs	P-ARGV	status,err,rec			diff -rq /dir1 /dir2 | grep -E "^Only in /dir1.*" | sed -n 's/://p' | awk '{print $3"/"$4}'
+NB:725	differs	P-ARGV	rec			find . -type f -name '*.m4a' -exec bash -c 'avconv -i "$0" "${0/%m4a/mp3}"' '{}' \;
+NB:726	differs	P-ARGV	rec			find / -name "*.md" -type f -exec sh -c 'markdown "$0" > "$0.html"' {} \;
+NB:727	differs	P-ARGV	rec			find / -name "*.md" -type f -exec sh -c 'markdown "${0}" > "${0%.md}.html"' {} \;
+NB:7282	differs	P-ARGV	status,err,rec			grep -Ri "pattern" * | awk '{if($1 != "Binary") print $0}'
+NB:7347	differs	P-ARGV	rec			find . -type f -name '*.m4a' -exec bash -c 'rm "$0"' '{}' \;
+NB:7353	differs	H-WINEFS	rec			find $backup_path/* -name *.sql -mtime +30 -exec rm {} \;
+NB:7365	msg	H-NOSIGPIPE	err			find dir -name \*~ | xargs echo rm | ksh -s
+NB:7366	differs	P-ARGV	rec			find . -name '*.gz' -type f -printf '"%p"\n' | xargs rm -f
+NB:7418	differs	H-ELF	status,err,files		H-NOSTREAM	yes | /bin/rm -i *
+NB:7420	differs	H-ELF	status,err			/usr/bin/find /home/user/Series/ -iname "*sample*" -exec rm {} \;
+NB:7431	differs	H-WINEFS	rec			find $backup_path/* -mtime +30 -exec rm {} \;
+NB:7436	differs	P-ARGV	rec			find . -name '*[+{;"\\=?~()<>&*|$ ]*' -exec rm -f '{}' \;
+NB:747	differs	P-ARGV	rec		H-WINPATH	find . -name '*FoooBar*' | sed 's/.*/"&"/' | xargs cp ~/foo/bar
+NB:749	differs	P-ARGV	err,rec			find . -name "*foo*" | sed -e "s/'/\\\'/g" -e 's/"/\\"/g' -e 's/ /\\ /g' | xargs cp /your/dest
+NB:7491	differs	P-ARGV	err,rec			diff -rq /dir1 /dir2 | grep -E "^Only in /dir1.*" | sed -n 's/://p' | awk '{print $3"/"$4}' xargs -I {} rm -r {}
+NB:750	differs	P-ARGV	rec			find . -type f -name '*.txt' | sed 's/'"'"'/\'"'"'/g' | sed 's/.*/"&"/'  | xargs -I{} cp -v {} ./tmp/
+NB:7554	differs	P-ARGV	err,rec			awk '{gsub(/^[ \t]+|[ \t]+$/,""); print;}' in.txt | hexdump -C | less
+NB:7625	differs	P-ARGV	rec			find . -type f -name "*.txt" -exec sh -c 'for i;do sed 's/[[:space:]]*$//' "$i">/tmp/.$$ && cat /tmp/.$$ > "$i";done' ar
+NB:7626	differs	P-ARGV	rec			find . -type f -name "*.txt" -exec sh -c 'for i;do sed 's/[[:space:]]*$//' "$i">/tmp/.$$ && mv /tmp/.$$ "$i";done' arg0 
+NB:7658	differs	P-ARGV	err,rec			find . -maxdepth 1 -type f -printf '%T@ %p\0' | sort -r -z -n | awk 'BEGIN { RS="\0"; ORS="\0"; FS="" } NR > 5 { sub("^[
+NB:7704	differs	P-ARGV	rec			find . -maxdepth 2 -mindepth 2 -name '*.jpg' -exec sh -c 'echo mv -- "$0" "${0%%.jpg}.jpeg"' {} \;
+NB:7713	differs	P-ARGV	rec			find . -name '*.jpg' -exec sh -c 'mv "$0" "${0%.JPG}$.jpg"' {} \;
+NB:7714	differs	P-ARGV	rec			find . -name '*.jpg' -exec sh -c 'mv "$0" "$(basename $(dirname $0))-${0%.JPG}$.jpg"' {} \;
+NB:7718	differs	P-ARGV	rec			find . -name '*.jpg' -exec bash -c 'd="${1%/*}"; mv "$1" "$d/$d-${1##*/}"' - '{}' \;
+NB:7719	differs	P-ARGV	rec			find . -name '*.jpg' -execdir bash -c 'd="${PWD##*/}"; [[ "$1" != "$d-"* ]] && mv "$1" "./$d-$1"' - '{}' \;
+NB:7737	differs	P-ARGV	rec			find ./ -type f -exec bash -c 'mv "$1" "$(echo "$1" | sed -re '\''s/^([^-]*)-\s*([^\.]*)/\L\1\E-\2/'\'' -e '\''s/ /_/g'\
+NB:7745	differs	P-ARGV	rec		H-WINEFS	find . -type f -exec bash -c 'for f do d=${f%/*} b=${f##*/} nb=${b//[^A-Za-z0-9._-]/_}; [[ $b = "$nb" ]] || echo mv "$f"
+NB:7759	differs	P-ARGV	rec			awk '{gsub(/-/,"0",$4);gsub(/-/,"0",$5)}1' test.in | column -t
+NB:7781	msg	C-CHANCE	err			sed s/STRING_TO_REPLACE/STRING_TO_REPLACE_IT/g index.html | tee index.html
+NB:7786	differs	P-ARGV	err,rec			awk -F, 'BEGIN {OFS = ","} {gsub("-([0-9.]+)", "(" substr($3, 2) ")", $3); print}' inputfile
+NB:7820	differs	P-ARGV	rec			find $DIR -type f -name '*.html' -exec sed -i 's/.*<script type="text\/javascript" charset="utf-8" src="file.js"><\/scri
+NB:7866	differs	P-ARGV	rec			df -Ph | perl -ne 'chomp; printf "\n%-40s %8s %8s %8s %8s %-20s", split / +/, $_, 6 ; '
+NB:7876	differs	P-ARGV	status,out,err,rec			df -m | awk '{ SUM += $2} END { print SUM/1024/1024"TB" }'
+NB:7940	differs	H-WINPATH	err,rec			cat ${TMP}/${SCRIPT_NAME}.kb|sort -rh;
+NB:7941	differs	H-WINPATH	err,rec			cat ${TMP}/${SCRIPT_NAME}.name|sort -r;
+NB:7942	differs	H-WINPATH	err,rec			cat ${TMP}/${SCRIPT_NAME}.pid|sort -rh;
+NB:7944	differs	P-ARGV	rec			uniq temp.txt | perl -e 'undef $/; $_ = <>; open(OUT,">temp.txt"); print OUT;'
+NB:7955	differs	P-ARGV	rec			find . -type d -name .git -exec sh -c "cd \"{}\"/../ && pwd && git pull && git status" \;
+NB:7957	differs	P-ARGV	rec			find . -type d -name .git -exec sh -c "cd \"{}\"/../ && pwd && git pull" \;
+NB:7968	msg	H-ELF	err			/bin/sh -c "/bin/true $(seq 1 100000)"
+NB:7969	msg	H-ELF	err			/bin/sh -c "/bin/true $(seq 1 99999)"
+NB:7982	msg	H-WINPATH	err			env - `cat ~/cronenv` /bin/sh
+NB:7983	differs	P-ARGV	rec			find . -name "*.txt" -print -exec awk '$9 != "" && n < 10 {print; n++}' {} \;
+NB:7984	differs	P-ARGV	rec			find . -name "*.txt" -print -exec awk '$9 != "" {print; if(NR > 9) exit; }' {} \;
+NB:7985	differs	P-ARGV	rec			find . -name "*.txt" -print -exec awk '{if($9!=""&&n<11){print;n++}}' {} \;
+NB:7986	differs	P-ARGV	rec			find . -name '*txt' -print -exec awk 'BEGIN {nl=1 ;print FILENAME} $9 !="" {if (nl<11) { print $0 ; nl = nl + 1 }}' {}  
+NB:7989	differs	H-ELF	status,err			/usr/bin/sudo -u `whoami` `which program`
+NB:7996	differs	C-MACHINE	out			env -i perl -V
+NB:800	differs	P-ARGV	rec			find jcho -name *.data -exec sh -c 'f="${0}"; d=$(echo ${f} | sed -re 's/0/2/' ); cp ${f} ${d} ' {} \;
+NB:8001	differs	P-ARGV	status,err,rec		H-WINPATH	sed -i "s#\(export\ PATH=\"\)\(.*\)#\1/home/$(whoami)/bin:~/\.local/bin:\2#" ~/.zshrc
+NB:8013	differs	P-ARGV	rec			nohup sh -c 'for i in mydir/*.fasta; do ./myscript.sh "$i"; done >output.txt' &
+NB:8061	differs	H-WINEFS	rec			FOLDERS=`ls -dm $MY_DIRECTORY/*/ | tr -d ' '`
+NB:8115	differs	C-VARIES	rec	noisy		SELF=$(readlink /proc/$$/fd/255)
+NB:8116	differs	C-VARIES	rec	noisy		SELF=`readlink /proc/$$/fd/255`
+NB:8119	differs	P-ARGV	rec			DIR=$(dirname "$(readlink -f \"$0\")")
+NB:8127	msg	H-WINPATH	err			cat ~/.bashrc | pbcopy
+NB:8141	differs	C-VARIES	rec	noisy		dir=$(dirname $(readlink /proc/$$/fd/255))
+NB:8158	differs	P-ARGV	rec			line_to_be_replaced=`cat itemlist.json | nl |  sed -n '/"item_1"/,/"item_2"/p' | grep -in "}]" | awk '{print $2}'`
+NB:8206	differs	P-ARGV	rec			perl -e '@T=localtime(time-86400);printf("%02d/%02d/%04d",$T[3],$T[4]+1,$T[5]+1900)' | read dt
+NB:8225	differs	P-ARGV	err,rec			userlist=$(w|awk 'BEGIN{ORS=","}NR>2{print $1}'|sed 's/,$//' )
+NB:836	differs	P-ARGV	rec			find . -type f -exec sh -c 'cp "$@" /tmp' {} +
+NB:8385	differs	P-ARGV	rec			cat file | grep pattern | paste -sd'~' | sed -e 's/~/" "/g'
+NB:8387	differs	P-ARGV	err,rec			find . | awk '{FS = "/" ; print "", NF, $F}' | sort -n  | awk '{print $2}' | xargs grep -d skip "search term"
+NB:8548	differs	P-ARGV	rec			find . -name \*.coffee -exec awk '/re/ {print FILENAME ":" $0;exit}' {} \;
+NB:86	differs	H-ENV	rec			v=5 env|less
+NB:862	differs	P-ARGV	rec		H-WINEFS	find . -type f -execdir bash -c '   dest=${1//[0-9]/}   [[ -f $dest ]] || cp -- "$1" "$dest" ' _ {} \;
+NB:8630	differs	P-ARGV	rec			find PDFs/ -name '*.pdf' -exec sh -c 'pdftotext "{}" - | grep -C 2 -i --with-filename --label="{}" --color "perry sound"
+NB:8631	differs	P-ARGV	rec			find PDFs/ -name '*.pdf' -exec sh -c 'pdftotext "{}" - | grep -i --with-filename --label="{}" --color "perry sound"' \;
+NB:8632	differs	P-ARGV	rec			find PDFs/ -name '*.pdf' -exec sh -c 'pdftotext "{}" - | grep -l -i --with-filename --label="{}" --color "perry sound"' 
+NB:8772	differs	H-DOTDOT	out			find . -type f -printf '%20s %p\n' | sort -n | cut -b22- | tr '\n' '\000' | xargs -0 ls -laSr
+NB:8874	differs	P-ARGV	rec			find . -type f -printf '"%p"\n' | xargs grep string
+NB:894	differs	P-ARGV	status,out,err,rec			find . -name "*.php" | xargs grep -v -c '^$' | awk 'BEGIN {FS=":"} { $cnt = $cnt + $2} END {print $cnt}'
+NB:9033	differs	H-KILL2	err,rec		H-KILL	kill -9 16085
+NB:9034	differs	H-KILL2	err,rec		H-KILL	kill -9 18581 18582 18583
+NB:9036	differs	P-ARGV	err,rec			ps -o uid,pid,cmd|awk '{if($1=="username" && $3=="your_command") print $2}'|xargs kill -15
+NB:9044	differs	P-ARGV	status,err,rec			ps aux | awk '$11" "$12 == "python csp_build.py" { system("kill " $2) }'
+NB:9048	differs	H-KILL2	err,rec		H-KILL	kill %1
+NB:9051	differs	H-KILL2	status,err,rec			kill -s WINCH $$
+NB:9085	timeout-both	T-timeout-both				while true ; do nc -l -p 1500 -c 'echo -e "HTTP/1.1 200 OK\n\n $(date)"'; done
+NB:9281	differs	P-ARGV	err,rec			ps -eo size,pid,user,command --sort -size | awk '{ hr=$1/1024 ; printf("%13.2f Mb ",hr) } { for ( x=4 ; x<=NF ; x++ ) { 
+NB:9296	differs	P-ARGV	rec			awk 'BEGIN{srand();} {printf "%06d %s\n", rand()*1000000, $0;}' | sort -n | cut -c8-
+NB:9406	differs	P-ARGV	rec			cat afile | split -l 2 --filter='bzip2 > "$FILE.bz2"'
+NB:9426	differs	P-ARGV	rec			tmux new -d "bash -c \"$CMD\""
+NB:9486	differs	P-ARGV	status,err,rec			var=`echo $var | awk '{gsub(/^ +| +$/,"")}1'`
+NB:9488	differs	P-ARGV	rec			find . -type f -maxdepth 1 -not -empty -print0 | xargs -0i sh -c "cat /dev/null > \"{}\""
+NB:9490	differs	P-ARGV	rec			find . -type f -maxdepth 1 -print0 | xargs -0i sh -c "cat /dev/null > \"{}\""
+NB:9519	differs	P-ARGV	err,rec		H-ENV	unset $(printenv |grep G4 |awk 'BEGIN{FS="=";}{print $1;}')
+NB:9520	differs	P-ARGV	err,rec		H-ENV	unset `printenv |grep G4 |awk 'BEGIN{FS="=";}{printf("%s ",$1);}'`
+NB:9521	msg	H-ELF	err		H-ENV	unset $(/usr/bin/env | /usr/bin/cut -d = -f 1 | /usr/bin/xargs)
+NB:9526	msg	H-ELF	err			unset $(echo "$a" | /usr/bin/cut -d = -f 1)
+NB:9541	differs	P-ARGV	rec			zcat file.gz | awk -F'[|"]' '$5>5'
+NB:9546	differs	P-ARGV	err,rec			zcat file.gz | grep -o '"searchstring":"[^"]*"'| sort | uniq -c | sort -n
+NB:9549	differs	P-ARGV	status,err,rec			gzip -cd path/to/test/file.gz | awk 'BEGIN{global=1}/my regex/{count+=1;print $0 >"part"global".txt";if (count==1000000)
+NB:9583	differs	C-VARIES	err,rec	noisy		touch -t `date +%m%d0000` /tmp/$$
+NB:9609	differs	P-ARGV	status,err,rec			gzip -dc input1.vcf.gz input2.vcf.gz | awk 'FNR==NR { array[$1,$2]=$8; next } ($1,$2) in array { print $0 ";" array[$1,$
+NB:9613	differs	P-ARGV	rec			nohup php -r 'while (true) { echo "a";}' &
+NB:967	differs	P-ARGV	status,out,err,rec			zcat file.gz | awk -v RS="-----------\n" '/A=2[ ,\n]/ && /dummy=2[ ,\n]/{count++} !/dummy=2[ ,\n]/{other++} END{print "F
+NB:9672	msg	H-DEVFD	err			echo 'ee' | tee /dev/stderr | foo
+NB:968	differs	P-ARGV	status,out,err,rec			zcat file.gz | awk -v RS="-----------\n" '/A=2[ ,\n]/ && /dummy=2[ ,\n]/{count++} END{print "Final counter value=",count
+NB:9681	differs	H-DEVFD	out			echo foo | readlink /proc/self/fd/1
+NB:9682	differs	C-VARIES	out	noisy		echo foo | readlink /proc/self/fd/0
+NB:9731	differs	H-NOSTREAM	err,files			tail -F xxxx | tee -a yyyy &
+NB:9801	differs	P-ARGV	rec			find /the/path -depth -name "*.abc" -exec sh -c 'mv "$1" "${1%.abc}.edefg"' _ {} \;
+NB:9802	differs	P-ARGV	rec			find /the/path -depth -type f -name "*.abc" -exec sh -c 'mv "$1" "$(dirname "$1")/$(basename "$1" .abc).edefg"' _ {} \;
+NB:9806	differs	P-ARGV	rec			find . -name '*.txt' -exec sh -c 'mv "$0" "${0%.txt}.txt_bak"' {} \;
+NB:9814	differs	P-ARGV	rec			find . -name "*" -exec sh -c 'chgrp -v new_group "$0" ; chmod -v 770 "$0"' {} \;
+NB:988	differs	P-ARGV	rec			find . -maxdepth 1 -type d -print0 | xargs -0 -I {} sh -c 'echo -e $(find "{}" -printf "\n" | wc -l) "{}"' | sort -n
+NB:9894	differs	P-ARGV	rec		W-WINPATH	find . -lname "`pwd`*" -exec sh -c 'ln -snvf `python -c "from os.path import *; print relpath(\"$(readlink {})\",dirname
+NB:9899	differs	P-ARGV	rec			find "$sourcedir" -type f -name "*.type" -exec sh -c 'for f; do cp "$f" "$0"; done' "$targetdir" {} +
+SC:Analytics.hs:prop_checkCommandWithTrailingSymbol9	differs	H-ELF	status,err			/usr/bin/python[23] file.py
+SC:Analytics.hs:prop_checkPipePitfalls10	differs	H-WCPAD	out			foo | grep -o bar | wc
+SC:Analytics.hs:prop_checkPipePitfalls11	differs	H-WCPAD	out			foo | grep bar | wc
+SC:Analytics.hs:prop_checkPipePitfalls14	differs	H-WCPAD	out			foo | grep -o bar | wc -cmwL
+SC:Analytics.hs:prop_checkPipePitfalls15	differs	H-WCPAD	out			foo | grep bar | wc -cmwL
+SC:Analytics.hs:prop_checkSetESuppressed13	timeout-both	T-timeout-both				set -e; f(){ :; }; while f; do :; done
+SC:Analytics.hs:prop_checkSetESuppressed14	timeout-both	T-timeout-both				set -e; f(){ :; }; while set -e; f; do :; done
+SC:Analytics.hs:prop_checkSpacefulnessCfg14	differs	H-ENV	out		W-WINPATH	foo=$3 env
+SC:Analytics.hs:prop_checkUselessBang3	timeout-both	T-timeout-both				set -e; while true; do ! true; done
+SC:Analytics.hs:prop_checkWhileReadPitfalls3	timeout-both	T-timeout-both				while true; do ssh host uptime; done
+SC:Checks/Commands.hs:prop_checkCatastrophicRm4	differs	H-WINEFS	rec			rm -fr /home/$(whoami)/*
+SC:Checks/Commands.hs:prop_checkCatastrophicRm6	differs	H-WINEFS	rec	noisy		rm --recursive /etc/*$config*
+SC:Checks/Commands.hs:prop_checkCatastrophicRmB	differs	H-WINEFS	rec			rm -rf "$STEAMROOT/"*
+SC:Checks/Commands.hs:prop_checkInjectableFindSh2	differs	P-ARGV	rec			find . -execdir bash -c 'rm "{}"' ';'
+SC:Checks/Commands.hs:prop_checkInjectableFindSh3	differs	P-ARGV	rec			find . -ok sh -c 'rm "$@"' _ {} \;
+SC:Checks/Commands.hs:prop_checkSourceArgs2	differs	H-DOTSOURCE	status,err,rec			#!/bin/sh . script
+SC:Checks/ShellSupport.hs:prop_checkBashisms129	differs	W-STICKY	status			#!/bin/sh [ -k /tmp ]
+SC:Checks/ShellSupport.hs:prop_checkBashisms130	differs	W-STICKY	status			#!/bin/dash test -k /tmp
+SC:Checks/ShellSupport.hs:prop_checkBashisms19	differs	W-FILENAME	status,err,files			foo > file*.txt
+SC:Checks/ShellSupport.hs:prop_checkBashisms69	differs	W-UMASK	out			#!/bin/sh umask -S
+SC:Checks/ShellSupport.hs:prop_checkBashisms72	differs	W-WINPATH	out			#!/bin/sh type ls
+TL:common/arthas-watch.md:13	differs	P-ARGV	rec			watch class_pattern method_pattern '{ params[1],returnObj }' '"5".equals(params[0])' -x 4
+TL:common/awk.md:30	differs	P-ARGV	err,rec			awk '{if ($1 == "string1") print "Exact match string1"; else if ($1 ~ "string2") print "Partial match string2"; else pri
+TL:common/awk.md:38	differs	P-ARGV	status,out,err,rec	noisy		awk 'BEGIN {FS=":";printf "%-20s %6s %25s\n", "Name", "UID", "Shell"} $4 >= 1000 {printf "%-20s %6d %25s\n", $1, $4, $7}
+TL:common/bun-exec.md:17	differs	P-ARGV	rec			bun exec "echo \"hello friends\""
+TL:common/continue.md:8	timeout-both	T-timeout-both				while :; do continue; echo "This will never be reached"; done
+TL:common/curl.md:26	differs	W-CASE	err,rec			curl -k -x http://127.0.0.1:8080 -H 'Authorization: Bearer token' -X GET|PUT|POST|DELETE|PATCH|... https://example.com
+TL:common/curl.md:30	differs	P-ARGV	rec			curl -d '{"name":"bob"}' -H 'Content-Type: application/json' http://example.com/users/1234
+TL:common/echo.md:13	differs	W-PATHSEP	out		W-WINPATH	echo "My path is $PATH"
+TL:common/env.md:8	differs	H-ENV	out		W-WINPATH	env
+TL:common/git-guilt.md:25	differs	P-ARGV	rec			git guilt 'git log --until "3 weeks ago" --format "%H" -n 1'
+TL:common/http.md:17	differs	W-CASE	err,rec			http GET|POST|HEAD|PUT|PATCH|DELETE|... --proxy http|https:http://localhost:8080|socks5://localhost:9050|... https://exa
+TL:common/jq.md:32	differs	P-ARGV	rec			cat path/to/file.json | jq '.[] | select((.key1=="value1") and .key2=="value2")'
+TL:common/jq.md:36	differs	P-ARGV	rec			cat path/to/file.json | jq '. +|- {"key1": "value1", "key2": "value2",}'
+TL:common/kill.md:13	differs	H-KILL2	rec		H-KILL	kill -l
+TL:common/kill.md:17	differs	H-KILL2	err,rec		H-KILL	kill -1 process_id
+TL:common/kill.md:21	differs	H-KILL2	err,rec		H-KILL	kill -2 process_id
+TL:common/kill.md:25	differs	H-KILL2	err,rec		H-KILL	kill -9 process_id
+TL:common/kill.md:29	differs	H-KILL2	err,rec		H-KILL	kill -STOP process_id
+TL:common/kill.md:33	differs	H-KILL2	err,rec		H-KILL	kill -USR1 -group_id
+TL:common/kill.md:9	differs	H-KILL2	err,rec		H-KILL	kill process_id
+TL:common/ls.md:20	differs	H-DOTDOT	out			ls -la
+TL:common/melt.md:12	msg	H-WINPATH	err			cat ~/.ssh/id_ed25519 | melt
+TL:common/nix.md:11	differs	H-WINPATH	status,err,files			mkdir -p ~/.config/nix; echo 'experimental-features = nix-command flakes' >~/.config/nix/nix.conf
+TL:common/npm-query.md:28	differs	P-ARGV	rec			npm query ":attr(scripts, [postinstall])" | jq 'map(.name) | join("\n")' -r | xargs -I _ npm uninstall _
+TL:common/odpscmd-inst.md:24	differs	H-KILL2	err,rec		H-KILL	kill instance_id;
+TL:common/ppmtomitsu.md:16	differs	W-CASE	err,rec			ppmtomitsu -m A|A4|AS|A4S path/to/file.ppm >path/to/file.mitsu
+TL:common/printenv.md:8	differs	H-ENV	out		W-WINPATH	printenv
+TL:common/runit.md:12	differs	H-KILL2	err,rec		H-KILL	kill -CONT runit_process_id
+TL:common/sd.md:20	differs	P-ARGV	rec			find . -type f -exec sd 'from "react"' 'from "preact"' {} \;
+TL:common/sort.md:24	differs	C-MACHINE	out	noisy		sort -t : -k 3n /etc/passwd
+TL:common/sort.md:28	differs	C-MACHINE	out	noisy		sort -t : -k 3,3n -k 4,4g /etc/passwd
+TL:common/tail.md:33	timeout-both	T-timeout-both				tail -F path/to/file
+TL:common/timeout.md:12	differs	W-CASE	err,rec			timeout -s INT|HUP|KILL|... 5s sleep 10
+TL:common/times.md:10	differs	C-VARIES	out	noisy		times
+TL:common/ulimit.md:13	differs	W-ULIMIT	status,out,err			ulimit -H -n
+TL:common/ulimit.md:17	differs	W-ULIMIT	status,out,err			ulimit -S -n
+TL:common/ulimit.md:25	msg	W-ULIMIT	err			ulimit -c|f|s|... unlimited
+TL:common/umask.md:12	differs	W-UMASK	out			umask -S
+TL:common/umask.md:8	differs	W-UMASK	out			umask
+TL:common/until.md:12	timeout-both	T-timeout-both				until ssh username@host; do sleep 2; done
+TL:common/wc.md:24	differs	H-WCPAD	out			find . | wc
+TL:common/while.md:12	timeout-both	T-timeout-both				while :; do command; sleep 1; done
+TL:common/while.md:16	timeout-both	T-timeout-both				while command; do :; done
+TL:common/yq.md:24	differs	P-ARGV	rec			yq eval '.key = "value"' -i path/to/file.yaml
+TL:common/yq.md:32	differs	P-ARGV	rec			yq eval-all 'select(filename == "path/to/file1.yaml") * select(filename == "path/to/file2.yaml")' path/to/file1.yaml pat
+TL:common/~.md:8	differs	H-WINPATH	status,err			ls ~
+TL:linux/fuzzel.md:36	differs	P-ARGV	rec			fuzzel -d -l 0 --placeholder "Type your search" | sed 's/^/\"/g;s/$/\"/g' | xargs firefox --search
+TL:linux/kill.md:13	differs	H-KILL2	rec		H-KILL	kill -l|-L|--table
+TL:linux/kill.md:17	differs	H-KILL2	err,rec		H-KILL	kill %job_id
+TL:linux/kill.md:33	differs	H-KILL2	err,rec		H-KILL	kill -19 process_id
+TL:linux/kill.md:37	differs	H-KILL2	err,rec		H-KILL	kill -10 -group_id
+TL:linux/mopac.md:12	timeout-both	T-timeout-both				touch test.out; echo "PM7\n#comment\n\nH 0.95506 0.05781 -0.03133\nF 1.89426 0.05781 -0.03133" >test.mop; mopac test.mop
+TL:linux/pw-cli.md:9	differs	W-CASE	err,rec			pw-cli ls Node|Link|Port|Client|Device|Metadata|Factory|Module|Profiler|SecurityContext|Core
+TL:linux/sed.md:33	differs	P-ARGV	status,err,rec			sed -i '1i\your new line text\' path/to/file
