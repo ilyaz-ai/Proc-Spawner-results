@@ -23,14 +23,21 @@ rules are quoted from the texts listed under "Sources".
 judgement from the wording of the standard and of the manual, and from whether bash behaves the same way elsewhere.  It
 is not a measurement.
 
-| # | What happens | Snippets | Intended? |
-|---|---|---|---|
-| [1](#1-a-fatal-error-in--c-ends-the-shell-with-status-127) | A fatal error in a `-c` string ends the shell with status 127; the same in a file gives 1 | `NB:4769`, `SC:Analytics.hs:prop_checkUnassignedReferences35`, `SC:Checks/Commands.hs:prop_checkExportedExpansions4` and 13 more | 10% |
-| [2](#2-a-special-builtins-error-does-not-end-the-shell) | `shift 3` and `export "1x=2"` fail, and the shell goes on | probes `shiftover`, `exportbad`; `NB:9215`, `SC:Checks/Commands.hs:prop_checkExportedExpansions2` | 15% |
-| [3](#3--ai--with-i-empty-two-messages-and-success) | `$(( a[$i] ))` with `i` empty: two messages, and success | `SC:Analytics.hs:prop_checkArithmeticDeref6` | 25% |
-| [4](#4-errors-in-a-function-are-labelled-environment) | Errors inside a function of a `-c` string are labelled `environment` | `SC:Analytics.hs:prop_checkUnused16b` | 30% |
-| [5](#5-a-1-of-an-empty-array-a-message-and-success) | `${a[-1]}` of an empty array: a message, and success | `NB:4741` | 70% |
-| [6](#6-set----cannot-restore-the-options) | `set -"$-"` cannot restore the options | `SC:Checks/ShellSupport.hs:prop_checkBashisms89` | 85% |
+Run each command in an empty directory (some write small files there: `s.sh`, `t`, `p/`).  The two columns of
+output were filled by running exactly these commands on 2026-11-27 (dash 0.5.12-6ubuntu5, bash 5.2.21-2ubuntu4, Ubuntu
+24.04); `DIR` stands for that directory, and the last line of output is the exit status that `echo $?` prints.  The
+second shell's column comes from the same command with the other shell's name.  In the Markdown source of the table,
+`\|` stands for `|`.  Each row's number links to a section with more detail and the rules
+quoted in full.
+
+| # | Run this, in an empty directory | bash prints | dash prints | Why it looks wrong | Snippets | Intended? |
+|---|---|---|---|---|---|---|
+| [1](#1-a-fatal-error-in--c-ends-the-shell-with-status-127) | `bash --posix -c 'echo ${x?}; echo after'; echo $?; echo 'echo ${x?}; echo after' > s.sh; bash --posix s.sh; echo $?` | <code>bash: line 1: x: parameter not set</code><br><code>127</code><br><code>s.sh: line 1: x: parameter not set</code><br><code>1</code> | <code>dash: 1: x: parameter not set</code><br><code>2</code><br><code>s.sh: 1: x: parameter not set</code><br><code>2</code> | POSIX 2.8.2: a command that fails in expansion has status 1 to 125; 127 means "not found". The same text in a file gives 1 | `NB:4769`, `SC:Analytics.hs:prop_checkUnassignedReferences35`, `SC:Checks/Commands.hs:prop_checkExportedExpansions4` and 13 more | 10% |
+| [2](#2-a-special-builtins-error-does-not-end-the-shell) | `bash --posix -c 'shift 3; echo after'; echo $?` | <code>bash: line 1: shift: 3: shift count out of range</code><br><code>after</code><br><code>0</code> | <code>dash: 1: shift: can't shift that many</code><br><code>2</code> | bash's manual, POSIX mode item 24, and POSIX 2.8.1: a special builtin's error ends a non-interactive shell | probes `shiftover`, `exportbad`; `NB:9215`, `SC:Checks/Commands.hs:prop_checkExportedExpansions2` | 15% |
+| [3](#3--ai--with-i-empty-two-messages-and-success) | `bash --posix -c 'i=; echo $(( a[$i] ))'; echo $?` | <code>bash: line 1: a[]: bad array subscript</code><br><code>bash: line 1: a[]: bad array subscript</code><br><code>0</code><br><code>0</code> | <code>dash: 1: arithmetic expression: expecting EOF: " a[] "</code><br><code>2</code> | One error, two messages, and the expansion succeeds | `SC:Analytics.hs:prop_checkArithmeticDeref6` | 25% |
+| [4](#4-errors-in-a-function-are-labelled-environment) | `bash --posix -c 'f(){ nosuchcmd; }; f; nosuchcmd' myname` | <code>environment: line 1: nosuchcmd: command not found</code><br><code>myname: line 1: nosuchcmd: command not found</code> | <code>myname: 1: nosuchcmd: not found</code><br><code>myname: 1: nosuchcmd: not found</code> | bash's manual, `-c`: `$0` (here `myname`) is the name used in error messages | `SC:Analytics.hs:prop_checkUnused16b` | 30% |
+| [5](#5-a-1-of-an-empty-array-a-message-and-success) | `bash --posix -c 'a=(); echo "[${a[-1]}]"'; echo $?` | <code>bash: line 1: a: bad array subscript</code><br><code>[]</code><br><code>0</code> | <code>dash: 1: Syntax error: "(" unexpected</code><br><code>2</code> | An error message, and success (arrays are bash's own) | `NB:4741` | 70% |
+| [6](#6-set----cannot-restore-the-options) | `bash --posix -c 'set -"$-"; echo after'; echo $?` | <code>bash: line 1: set: -c: invalid option</code><br><code>set: usage: set [-abefhkmnptuvxBCEHPT] [-o option-name] [--] [-] [arg ...]</code><br><code>2</code> | <code>after</code><br><code>0</code> | Allowed: POSIX 2.5.2 lets `$-` hold flags that `set` does not take | `SC:Checks/ShellSupport.hs:prop_checkBashisms89` | 85% |
 
 ## 1. A fatal error in `-c` ends the shell with status 127
 

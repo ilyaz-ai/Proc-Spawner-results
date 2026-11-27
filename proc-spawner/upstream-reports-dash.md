@@ -22,19 +22,26 @@ starts a command; `[status N]` is its exit status).  The rules are quoted from t
 judgement from the wording of the standard and of the manual, and from whether dash behaves the same way elsewhere.  It
 is not a measurement.
 
-| # | What happens | Snippets | Intended? |
-|---|---|---|---|
-| [1](#1-a-quote-right-after--is-not-a-quote) | A quote right after `${` is not paired, so a script with an invalid `${…}` fails to parse even where it never runs | `SC:Analytics.hs:prop_checkBadParameterSubstitution6`, `SC:Analytics.hs:prop_checkBadParameterSubstitution10` | 15% |
-| [2](#2-with-home-empty--gives-no-field) | With `HOME` empty, `~` gives no field instead of an empty one | `NB:10096`, `NB:10108`, `NB:10109` and 85 more | 20% |
-| [3](#3-type-and-alias-do-not-discard---) | `type` and `alias` do not discard a first `--` | `NB:8077`, `SC:Checks/ShellSupport.hs:prop_checkBashisms124` | 20% |
-| [4](#4-cd-nosuch-succeeds) | `cd nosuch/..` succeeds | `SC:Analytics.hs:prop_checkUncheckedPopd13` | 30% |
-| [5](#5-kill--l-lists-0-and-kill--l-0-refuses-it) | `kill -l` lists `0`, and `kill -l 0` refuses it | `TL:common/kill.md:13`, `TL:linux/kill.md:13` | 35% |
-| [6](#6--without-an-operand-succeeds) | `.` without an operand succeeds silently | `TL:common/regex.md:10` | 40% |
-| [7](#7-traps-message-lacks-the-shells-prefix) | `trap`'s error message lacks the `dash: LINE:` prefix | `SC:Checks/Commands.hs:prop_checkNonportableSignals4`, `SC:Checks/Commands.hs:prop_checkTrapQuotes3` | 70% |
-| [8](#8----a-file--is-an-error) | `[ ! -a file ]` is an error | `SC:Checks/ShellSupport.hs:prop_checkNegatedUnaryOps5`, `SC:Analytics.hs:prop_checkUnaryTestA2` | 75% |
-| [9](#9-a-message-is-written-in-three-pieces) | A message is written in three pieces, so messages of a pipeline can mix | `TL:linux/gcrane-completion.md:21`, `TL:linux/abbr.md:21` | 75% |
-| [10](#10-a-non-executable-file-on-path-permission-denied-with-status-127) | A non-executable file on `PATH`: "Permission denied" with status 127 | `PB:README.md:1630`, `PB:README.md:1636`, `PB:README.md:1672`, `PB:README.md:1682` | 80% |
-| [11](#11-type-writes-not-found-to-standard-output) | `type` writes "not found" to standard output | `NB:5652` | 90% |
+Run each command in an empty directory (some write small files there: `s.sh`, `t`, `p/`).  The two columns of
+output were filled by running exactly these commands on 2026-11-27 (dash 0.5.12-6ubuntu5, bash 5.2.21-2ubuntu4, Ubuntu
+24.04); `DIR` stands for that directory, and the last line of output is the exit status that `echo $?` prints.  The
+second shell's column comes from the same command with the other shell's name.  In the Markdown source of the table,
+`\|` stands for `|`.  Row 9 needs `strace`.  Each row's number links to a section with more detail and the rules
+quoted in full.
+
+| # | Run this, in an empty directory | dash prints | bash prints | Why it looks wrong | Snippets | Intended? |
+|---|---|---|---|---|---|---|
+| [1](#1-a-quote-right-after--is-not-a-quote) | `dash -c 'false && echo ${x"y"}; echo ok'; echo $?` | <code>dash: 1: Syntax error: Unterminated quoted string</code><br><code>2</code> | <code>ok</code><br><code>0</code> | The `${…}` is never run, yet the whole script fails to parse. POSIX 2.3 rule 5, 2.6.2: quotes inside `${…}` are skipped over | `SC:Analytics.hs:prop_checkBadParameterSubstitution6`, `SC:Analytics.hs:prop_checkBadParameterSubstitution10` | 15% |
+| [2](#2-with-home-empty--gives-no-field) | `dash -c 'HOME=; set -- ~; echo $#'` | <code>0</code> | <code>1</code> | POSIX.1-2024 2.6.1: `~` with `HOME` empty gives one empty field | `NB:10096`, `NB:10108`, `NB:10109` and 85 more | 20% |
+| [3](#3-type-and-alias-do-not-discard---) | `dash -c 'type -- ls'; echo $?; dash -c 'alias -- a=b'; echo $?` | <code>--: not found</code><br><code>ls is /usr/bin/ls</code><br><code>127</code><br><code>alias: -- not found</code><br><code>1</code> | <code>ls is /usr/bin/ls</code><br><code>0</code><br><code>0</code> | POSIX 1.4: a utility without options discards a first `--` | `NB:8077`, `SC:Checks/ShellSupport.hs:prop_checkBashisms124` | 20% |
+| [4](#4-cd-nosuch-succeeds) | `cd /tmp; dash -c 'cd nosuch/.. && pwd'; echo $?` | <code>/tmp</code><br><code>0</code> | <code>bash: line 1: cd: nosuch/..: No such file or directory</code><br><code>1</code> | POSIX `cd` step 8.b.i: if `nosuch` is not a directory, an error and nothing more | `SC:Analytics.hs:prop_checkUncheckedPopd13` | 30% |
+| [5](#5-kill--l-lists-0-and-kill--l-0-refuses-it) | `dash -c 'kill -l \| head -n 2 \| cut -c 1-20; kill -l 0'; echo $?` | <code>0</code><br><code>HUP</code><br><code>dash: 1: kill: invalid signal number or exit status: 0</code><br><code>2</code> | <code>HUP INT QUIT ILL TRA</code><br><code>EXIT</code><br><code>0</code> | `0` is not a signal name, and dash refuses to name it. POSIX `kill -l`; dash's manual | `TL:common/kill.md:13`, `TL:linux/kill.md:13` | 35% |
+| [6](#6--without-an-operand-succeeds) | `dash -c '.; echo after'; echo $?` | <code>after</code><br><code>0</code> | <code>bash: line 1: .: filename argument required</code><br><code>.: usage: . filename [arguments]</code><br><code>2</code> | POSIX `dot`: the file operand is required; 2.8.1: a special built-in's error ends a non-interactive shell | `TL:common/regex.md:10` | 40% |
+| [7](#7-traps-message-lacks-the-shells-prefix) | `dash -c 'trap f SIGKILL; local'; echo $?` | <code>trap: SIGKILL: bad trap</code><br><code>dash: 1: local: not in a function</code><br><code>2</code> | <code>bash: line 1: local: can only be used in a function</code><br><code>1</code> | Only `trap`'s message lacks the `dash: 1:` prefix | `SC:Checks/Commands.hs:prop_checkNonportableSignals4`, `SC:Checks/Commands.hs:prop_checkTrapQuotes3` | 70% |
+| [8](#8----a-file--is-an-error) | `dash -c '[ ! -a file ]; echo $?; [ ! = x ]; echo $?'` | <code>dash: 1: [: -a: unexpected operator</code><br><code>2</code><br><code>1</code> | <code>0</code><br><code>1</code> | POSIX.1-2017 `test`, 3 arguments: a binary primary in the middle wins (`-a` is one there; POSIX.1-2024 removed it) | `SC:Checks/ShellSupport.hs:prop_checkNegatedUnaryOps5`, `SC:Analytics.hs:prop_checkUnaryTestA2` | 75% |
+| [9](#9-a-message-is-written-in-three-pieces) | `strace -e trace=write -o t dash -c nosuchA 2>/dev/null; grep -c '^write(2' t` | <code>3</code> | <code>1</code> | One message, three writes (prefix, text, newline), so two commands of a pipeline that fail together can mix their messages; the section shows it. No rule; output quality | `TL:linux/gcrane-completion.md:21`, `TL:linux/abbr.md:21` | 75% |
+| [10](#10-a-non-executable-file-on-path-permission-denied-with-status-127) | `mkdir -p p; echo 'echo hi' > p/foo; chmod 644 p/foo; dash -c 'PATH=$PWD/p; foo'; echo $?` | <code>dash: 1: foo: Permission denied</code><br><code>127</code> | <code>bash: line 1: DIR/p/foo: Permission denied</code><br><code>126</code> | 127 is right (XBD 8.3: PATH finds only executable files); the message is that of 126 | `PB:README.md:1630`, `PB:README.md:1636`, `PB:README.md:1672`, `PB:README.md:1682` | 80% |
+| [11](#11-type-writes-not-found-to-standard-output) | `dash -c 'type nosuchcmd' 2>/dev/null; echo $?` | <code>nosuchcmd: not found</code><br><code>127</code> | <code>1</code> | Allowed: POSIX `type` leaves the output's form open, and dash's manual lists "not found" as a result | `NB:5652` | 90% |
 
 ## 1. A quote right after `${` is not a quote
 
@@ -242,7 +249,7 @@ $ mkdir p && printf 'echo hi\n' > p/foo && chmod 644 p/foo
 $ dash -c 'PATH=$PWD/p; foo; echo "st=$?"; $PWD/p/foo; echo "st=$?"'
 dash: 1: foo: Permission denied
 st=127
-dash: 1: /tmp/repro/p/foo: Permission denied
+dash: 1: DIR/p/foo: Permission denied
 st=126
 [status 0]
 $ dash -c '""; echo "st=$?"'
@@ -251,7 +258,7 @@ st=127
 [status 0]
 ```
 
-(`/tmp/repro` stands for the current directory.)  127 is right: XBD 8.3, PATH, is searched "until an executable file
+(`DIR` stands for the current directory.)  127 is right: XBD 8.3, PATH, is searched "until an executable file
 with the specified name and appropriate execution permissions is found", and POSIX.1-2017 2.9.1.1: "If the search is
 unsuccessful, the command shall fail with an exit status of 127".  But the message says "Permission denied", as for a
 file found and not executable (126).  bash says 126 both times.  An empty command name gets the same message.
