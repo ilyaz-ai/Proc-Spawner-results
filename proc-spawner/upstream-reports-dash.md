@@ -1,10 +1,14 @@
-# Possible bugs of dash 0.5.12
+# Possible bugs of dash 0.5.13
 
-Eleven places where dash 0.5.12 (Ubuntu's 0.5.12-6ubuntu5, Ubuntu 24.04) seems to contradict POSIX, its own manual,
-or itself.  The bash report is [`upstream-reports-bash.md`](upstream-reports-bash.md).
+Eleven places where dash seems to contradict POSIX, its own manual, or itself.  They were found with Ubuntu's dash
+0.5.12 (package 0.5.12-6ubuntu5, Ubuntu 24.04), and all eleven are still there in the latest release, dash 0.5.13.6
+(the tag `v0.5.13.6`, which is also the head of the branch `master`, commit `0a896bf` of 2026-11-11).  In one of them
+0.5.13.6 fixed a part ("Fixed in dash 0.5.13", at the end).  The bash report is
+[`upstream-reports-bash.md`](upstream-reports-bash.md).
 
-**Configuration** of the machine of the runs: Ubuntu's package `dash` 0.5.12-6ubuntu5 (amd64), Ubuntu 24.04, in a
-container; `uname -a`: `Linux vm 6.18.44-fc-v880 #1 SMP PREEMPT_DYNAMIC @0 x86_64 x86_64 x86_64 GNU/Linux`.  Not yet checked against the latest release of dash or its development version.
+**Configuration**: dash 0.5.13.6 built on the machine of the runs from <https://git.kernel.org/pub/scm/utils/dash/dash.git>,
+tag `v0.5.13.6`, with `./autogen.sh && ./configure` (CFLAGS `-g -O2`) and gcc 13.3.0 (Ubuntu
+13.3.0-6ubuntu2~24.04.1); Ubuntu 24.04 in a container, x86_64; `uname -a`: `Linux vm 6.18.44-fc-v880 #1 SMP PREEMPT_DYNAMIC @0 x86_64 x86_64 x86_64 GNU/Linux`.
 
 **Where they come from.**  The Perl module Proc::ShellSpawn, of the CPAN distribution Proc-Spawner
 (<https://metacpan.org/dist/Proc-Spawner>), runs shell text itself.  To test it, 41,952 snippets of shell text, taken
@@ -19,8 +23,10 @@ the file `samples.jsonl` of the collections
 and
 [`proc-spawner/2026-11-26-post-0.13-rejected/`](https://github.com/ilyaz-ai/Proc-Spawner-results/tree/main/proc-spawner/2026-11-26-post-0.13-rejected).
 
-**Checked.**  Each command below was run again on 2026-11-27, in an empty directory, and printed what is shown (`$`
-starts a command; `[status N]` is the exit status of that whole command line).  The rules are quoted from the texts listed under "Sources".
+**Checked.**  Each command below was run on 2026-11-27, in an empty directory, with dash 0.5.13.6 and bash 5.3.20 (the
+latest releases, built from source), and printed what is shown (`$` starts a command; `[status N]` is the exit status
+of that whole command line).  Ubuntu's dash 0.5.12 printed the same, apart from section 3 and the form of `alias`'s
+listing there; Ubuntu's bash 5.2.21 apart from the wording of its usage line in section 6.  The rules are quoted from the texts listed under "Sources".
 
 **Intended?** is an estimate of the probability that the behaviour is deliberate, or allowed by the standard: a
 judgement from the wording of the standard and of the manual, and from whether dash behaves the same way elsewhere.  It
@@ -28,8 +34,8 @@ is not a measurement.
 
 How to use the table: copy a row's command as one line and run it in bash, in a new empty directory (rows 9 and 10 write
 the files `t` and `p/foo` there; row 9 needs `strace`).  The column "dash prints" is what that command printed on
-2026-11-27 (dash 0.5.12-6ubuntu5, bash 5.2.21-2ubuntu4, Ubuntu 24.04); the column "bash prints" is what the same
-command printed with every `dash` replaced by `bash --posix` (bash in its POSIX mode; plain `bash` differs in rows 5
+2026-11-27 with dash 0.5.13.6 and bash 5.3.20 first on `PATH`; the column "bash prints" is what the same command
+printed with every `dash` replaced by `bash --posix` (bash in its POSIX mode; plain `bash` differs in rows 5
 and 6).  The output columns show standard output and standard error together, one output line per line, as a terminal
 shows them.  Each `echo $?` prints the exit status of the command just before it; `DIR` stands for the directory the
 command ran in.  In the Markdown source of the table, `\|` stands for `|`.  The number of each row links to a section
@@ -39,10 +45,10 @@ with more detail and the rules quoted in full.
 |---|---|---|---|---|---|---|
 | [1](#1-a-quote-right-after--is-not-a-quote) | `dash -c 'false && echo ${x"y"}; echo ok'; echo $?` | <code>dash: 1: Syntax error: Unterminated quoted string</code><br><code>2</code> | <code>ok</code><br><code>0</code> | The `${…}` is never run, yet the whole script fails to parse. POSIX 2.3 rule 5, 2.6.2: quotes inside `${…}` are skipped over | `SC:Analytics.hs:prop_checkBadParameterSubstitution6`, `SC:Analytics.hs:prop_checkBadParameterSubstitution10` | 15% |
 | [2](#2-with-home-empty--gives-no-field) | `dash -c 'HOME=; set -- ~; echo $#'; echo $?` | <code>0</code><br><code>0</code> | <code>1</code><br><code>0</code> | POSIX.1-2024 2.6.1: `~` with `HOME` empty gives one empty field | 88 in all, among them `NB:10096`, `NB:10108`, `NB:10109` | 20% |
-| [3](#3-type-and-alias-do-not-discard---) | `dash -c 'type -- ls'; echo $?; dash -c 'alias -- a=b'; echo $?` | <code>--: not found</code><br><code>ls is /usr/bin/ls</code><br><code>127</code><br><code>alias: -- not found</code><br><code>1</code> | <code>ls is /usr/bin/ls</code><br><code>0</code><br><code>0</code> | POSIX 1.4: a utility that takes no options must discard a first `--`; `type` and `alias` take none | `NB:8077`, `SC:Checks/ShellSupport.hs:prop_checkBashisms124` | 20% |
+| [3](#3-alias-does-not-discard---) | `dash -c 'alias -- a=b'; echo $?` | <code>alias: -- not found</code><br><code>1</code> | <code>0</code> | POSIX 1.4: a utility that takes no options must discard a first `--`; `alias` takes none (`type --` was the same in 0.5.12; fixed) | `NB:8077`, `SC:Checks/ShellSupport.hs:prop_checkBashisms124` (both `type`) | 20% |
 | [4](#4-cd-nosuch-succeeds) | `cd /tmp; dash -c 'cd nosuch/.. && pwd'; echo $?` | <code>/tmp</code><br><code>0</code> | <code>bash: line 1: cd: nosuch/..: No such file or directory</code><br><code>1</code> | POSIX `cd` step 8.b.i: if `nosuch` is not a directory, an error and nothing more | `SC:Analytics.hs:prop_checkUncheckedPopd13` | 30% |
 | [5](#5-kill--l-lists-0-and-kill--l-0-refuses-it) | `dash -c 'kill -l \| head -n 2 \| cut -c 1-20; kill -l 0'; echo $?` | <code>0</code><br><code>HUP</code><br><code>dash: 1: kill: invalid signal number or exit status: 0</code><br><code>2</code> | <code>HUP INT QUIT ILL TRA</code><br><code>EXIT</code><br><code>0</code> | `0` is not a signal name, and dash refuses to name it. POSIX `kill -l`; dash's manual | `TL:common/kill.md:13`, `TL:linux/kill.md:13` | 35% |
-| [6](#6--without-an-operand-succeeds) | `dash -c '.; echo after'; echo $?` | <code>after</code><br><code>0</code> | <code>bash: line 1: .: filename argument required</code><br><code>.: usage: . filename [arguments]</code><br><code>2</code> | POSIX `dot`: the file operand is required; 2.8.1: a special built-in's error ends a non-interactive shell | `TL:common/regex.md:10` | 40% |
+| [6](#6--without-an-operand-succeeds) | `dash -c '.; echo after'; echo $?` | <code>after</code><br><code>0</code> | <code>bash: line 1: .: filename argument required</code><br><code>.: usage: . [-p path] filename [arguments]</code><br><code>2</code> | POSIX `dot`: the file operand is required; 2.8.1: a special built-in's error ends a non-interactive shell | `TL:common/regex.md:10` | 40% |
 | [7](#7-traps-message-lacks-the-shells-prefix) | `dash -c 'trap f SIGKILL; local'; echo $?` | <code>trap: SIGKILL: bad trap</code><br><code>dash: 1: local: not in a function</code><br><code>2</code> | <code>bash: line 1: local: can only be used in a function</code><br><code>1</code> | Only `trap`'s message lacks the `dash: 1:` prefix | `SC:Checks/Commands.hs:prop_checkNonportableSignals4`, `SC:Checks/Commands.hs:prop_checkTrapQuotes3` | 70% |
 | [8](#8----a-file--is-an-error) | `dash -c '[ ! -a file ]; echo $?; [ ! = x ]; echo $?'` | <code>dash: 1: [: -a: unexpected operator</code><br><code>2</code><br><code>1</code> | <code>0</code><br><code>1</code> | POSIX.1-2017 `test`, 3 arguments: a binary primary in the middle wins (`-a` is one there; POSIX.1-2024 removed it) | `SC:Checks/ShellSupport.hs:prop_checkNegatedUnaryOps5`, `SC:Analytics.hs:prop_checkUnaryTestA2` | 75% |
 | [9](#9-a-message-is-written-in-three-pieces) | `strace -e trace=write -o t dash -c nosuchA 2>/dev/null; grep -c '^write(2' t` | <code>3</code> | <code>1</code> | One message, three writes (prefix, text, newline), so two commands of a pipeline that fail together can mix their messages; the section shows it. No rule; output quality | `TL:linux/gcrane-completion.md:21`, `TL:linux/abbr.md:21` | 75% |
@@ -101,18 +107,13 @@ this reason:
 
 Intended: 20%.
 
-## 3. `type` and `alias` do not discard `--`
+## 3. `alias` does not discard `--`
 
 ```
-$ dash -c 'type -- ls; echo "st=$?"'
---: not found
-ls is /usr/bin/ls
-st=127
-[status 0]
 $ dash -c 'alias -- a=b; echo "st=$?"; alias a'
 alias: -- not found
 st=1
-a='b'
+'a=b'
 [status 0]
 $ dash -c 'command -V -- ls; echo "st=$?"'
 ls is /usr/bin/ls
@@ -120,15 +121,16 @@ st=0
 [status 0]
 ```
 
-`type` takes `--` for a name to look up, and fails (127); `alias` complains about it but sets the alias.  dash's
-`command`, `umask`, `cd` and `read` do discard a first `--`.
+`alias` complains about the `--` but sets the alias.  dash's `command`, `umask`, `cd`, `read` and, since 0.5.13,
+`type` do discard a first `--` ("Fixed in dash 0.5.13", at the end).
 
 POSIX.1-2017, 1.4 Utility Description Defaults, OPTIONS: "Standard utilities that do not accept options, but that do
-accept operands, shall recognize "--" as a first argument to be discarded."  The OPTIONS of `type` and of `alias`:
-"None."  (2.14 lifts the rule only for some special built-ins; `type` and `alias` are not special built-ins.)
+accept operands, shall recognize "--" as a first argument to be discarded."  The OPTIONS of `alias`: "None."  (2.14
+lifts the rule only for some special built-ins; `alias` is not a special built-in.)
 
 Snippets: `NB:8077` (`SCRIPT=$( readlink -m $( type -p $0 ))`), `SC:Checks/ShellSupport.hs:prop_checkBashisms124`
-(`type -p test`).  Both pass `-p`, which `type` need not accept; trying them showed the `--` case.  Intended: 20%.
+(`type -p test`).  Both pass `-p` to `type`, which need not accept it; trying them showed the `--` case, first with
+`type`, then with `alias`.  Intended: 20%.
 
 ## 4. `cd nosuch/..` succeeds
 
@@ -175,7 +177,7 @@ after, st=0
 [status 0]
 $ bash --posix -c '.; echo after'
 bash: line 1: .: filename argument required
-.: usage: . filename [arguments]
+.: usage: . [-p path] filename [arguments]
 [status 2]
 ```
 
@@ -294,6 +296,20 @@ bash writes it to standard error.  Allowed: POSIX.1-2017, `type`, STDOUT: "The s
 information about each operand in an unspecified format."  dash's manual: "Possible resolutions are: shell keyword,
 alias, shell builtin, command, tracked alias and not found."  Listed because a script that captures `$(type -p x)`
 gets the text: `NB:5652` (`file $(readlink -f $(type -p rename))`).  Intended: 90%.
+
+## Fixed in dash 0.5.13
+
+**`type` discards a first `--`.**  dash 0.5.12:
+
+```
+$ dash -c 'type -- ls; echo "st=$?"'
+--: not found
+ls is /usr/bin/ls
+st=127
+[status 0]
+```
+
+dash 0.5.13.6 prints `ls is /usr/bin/ls` and `st=0`, as bash does.
 
 ## Not listed
 
